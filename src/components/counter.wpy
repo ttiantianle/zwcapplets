@@ -3,6 +3,7 @@
 </style>
 <template>
   <view >
+  <text>哈哈</text>
     <!--<button @tap="plus" size="mini">  +  </button>-->
     <!--<button @tap="minus" size="mini">  -  </button>-->
     <!--<button @tap="incNum" size="mini">  INCREMENT  </button>-->
