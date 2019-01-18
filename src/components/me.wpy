@@ -1,13 +1,94 @@
 <style>
-
+  .m20{
+    margin: 20rpx;
+  }
+  .mt20{
+    margin-top: 20rpx;
+  }
+  .mb20{
+    margin-bottom: 20rpx;
+  }
+  .ml{
+    margin-left: 20rpx;
+  }
+  .mr{
+    margin-right: 20rpx;
+  }
+  .fr{
+    float: right;
+  }
+  .item{
+    border-radius: 10rpx;
+    background-color: #edece8;
+    padding: 10rpx;
+    margin: 10rpx 20rpx 0rpx 20rpx;
+    font-size: 30rpx;
+  }
+  .tabTitle,.tabTitle_active{
+    display:inline-block;
+    width:33.3%;
+    text-align: center
+  }
+  .tabTitle_active{
+    color: #1296db;
+  }
 </style>
 <template>
   <view>
-    <view style="margin: 20rpx;">
-      <view style="display:inline-block;width:33.3%;text-align: center">我发布的</view>
-      <view style="display:inline-block;width:33.3%;text-align: center">我回复的</view>
-      <view style="display:inline-block;width:33.3%;text-align: center">我的委托单</view>
+    <view class="m20">
+      <view class="tabTitle{{selectId == 0 ? '_active':''}}" @tap="select(0)" >我发布的</view>
+      <view class="tabTitle{{selectId == 1 ? '_active':''}}" @tap="select(1)">我回复的</view>
+      <view class="tabTitle{{selectId == 2 ? '_active':''}}" @tap="select(2)">我的委托单</view>
     </view>
+
+    <view hidden="{{selectId != 0}}">
+      <view class="userinfo" @tap="handleViewTap">
+        <image class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" background-size="cover"/>
+        <view class="userinfo-nickname">{{ userInfo.nickName }}</view>
+      </view>
+
+      <!--<block wx:for="{{replyList}}">-->
+        <!--<view class="item">-->
+          <!--<view><text>检测单位：{{item.shop_name}}</text></view>-->
+          <!--<view><text>检测内容：{{item.content}}</text></view>-->
+          <!--<view><text>检测价格：{{item.price}}</text></view>-->
+          <!--<view>-->
+            <!--<text>检测时间：{{item.time}}</text>-->
+            <!--<text style="color:#1296db;" class="fr" @tap="viewDetail()">查看详细内容</text>-->
+          <!--</view>-->
+        <!--</view>-->
+      <!--</block>-->
+    </view>
+
+
+    <view hidden="{{selectId != 1}}">
+      <block wx:for="{{replyList}}">
+        <view class="item">
+          <view><text>检测单位：{{item.shop_name}}</text></view>
+          <view><text>检测内容：{{item.content}}</text></view>
+          <view><text>检测价格：{{item.price}}</text></view>
+          <view>
+            <text>检测时间：{{item.time}}</text>
+            <text style="color:#1296db;" class="fr" @tap="viewDetail()">查看详细内容</text>
+          </view>
+        </view>
+      </block>
+    </view>
+
+    <view hidden="{{selectId != 2}}">
+      <block wx:for="{{infoList}}">
+        <view class="item">
+          <view><text>检测单位：{{item.shop_name}}</text></view>
+          <view><text>检测内容：{{item.content}}</text></view>
+          <view><text>检测价格：{{item.price}}</text></view>
+          <view>
+            <text>检测时间：{{item.time}}</text>
+            <text style="color:#1296db;" class="fr" @tap="viewDetail()">查看详细内容</text>
+          </view>
+        </view>
+      </block>
+    </view>
+
   </view>
 </template>
 
@@ -18,12 +99,35 @@
 
     };
     data = {
+      requireList:[
+        {},{}
+      ],
+      replyList:[
+        {},{}
+      ],
+      infoList:[
+        {
+          shop_name:'金码头',
+          content:'检测内容测试',
+          time:'2019-01-05',
+          price:'100'
+        },
+        {
+          shop_name:'ttl',
+          content:'检测内容测试',
+          time:'2019-01-05',
+          price:'66.66'
+        }
+      ],
+      selectId:0,
     };
     onLoad(){
 
     };
     methods = {
-
+      select(idx,evt){
+        this.selectId = +idx;
+      }
     };
 
   }
