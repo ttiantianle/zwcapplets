@@ -3,7 +3,11 @@
 </style>
 <template>
   <view>
-    我的
+    <view style="margin: 20rpx;">
+      <view style="display:inline-block;width:33.3%;text-align: center">我发布的</view>
+      <view style="display:inline-block;width:33.3%;text-align: center">我回复的</view>
+      <view style="display:inline-block;width:33.3%;text-align: center">我的委托单</view>
+    </view>
   </view>
 </template>
 

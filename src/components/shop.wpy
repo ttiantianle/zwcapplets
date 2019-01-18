@@ -3,7 +3,11 @@
 </style>
 <template>
   <view>
-    机构
+    <view style="margin: 30rpx;">
+      <input type="text" style="height:70rpx;width: 500rpx; border: 1rpx solid black; display: inline-block;margin-right: 20rpx;"/>
+      <button style="color:#fff;background-color:#3388ff;font-size:30rpx;padding-bottom:20rpx;display: inline-block;width: 150rpx;height: 70rpx;">搜索</button>
+    </view>
+
   </view>
 </template>
 
