@@ -1,0 +1,91 @@
+
+<template>
+  <view class="tab">
+    <view class="tab_item{{active == 0 ? '_active' : ''}}" @tap="change(0)">
+      <image class="icon" src="../images/tabBarBottom/home{{active == 0 ? '_active' : ''}}.png"></image>
+      <text class="title">首页</text>
+    </view>
+    <view class="tab_item{{active == 1 ? '_active' : ''}}" @tap="change(1)">
+      <image class="icon" src="../images/tabBarBottom/demand{{active == 1 ? '_active' : ''}}.png"></image>
+      <text class="title">需求</text>
+    </view>
+    <view class="tab_item{{active == 2 ? '_active' : ''}}" @tap="change(2)">
+      <image class="icon" src="../images/tabBarBottom/shop{{active == 2 ? '_active' : ''}}.png"></image>
+      <text class="title">机构</text>
+    </view>
+    <view class="tab_item{{active == 3 ? '_active' : ''}}" @tap="change(3)">
+      <image class="icon" src="../images/tabBarBottom/me{{active == 3 ? '_active' : ''}}.png"></image>
+      <text class="title">我的</text>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+export default class tabBarBottom extends wepy.component{
+  props = {
+    active:{
+      type: Number,
+      default: 0,// 设定选中项
+      twoWay:true//双向绑定
+    }
+  };
+  data = {
+  };
+  onLoad(){
+
+  };
+  watch = {
+    active (newValue, oldValue) {
+      console.log(`num value: ${oldValue} -> ${newValue}`)
+    }
+  };
+  methods = {
+    change(idx,evt){
+      //感觉+没有意义
+      this.active = +idx;
+    }
+  };
+
+}
+</script>
+<style scoped>
+  .tab{
+    padding-top: 6rpx;
+    position: fixed;
+    bottom: 0;
+    height: 106rpx;
+    width: 100%;
+    border-top: 1px solid #dad9d6;
+    background-color: #f7f7f7;
+    font-size: 24rpx;
+    white-space: nowrap;
+  }
+  .tab .tab_item{
+    display: inline-block;
+    /*vertical-align: top;*/
+    width: 25%;
+    text-align: center;
+  }
+  .tab .tab_item_active{
+    display: inline-block;
+    /*vertical-align: top;*/
+    width: 25%;
+    text-align: center;
+    color:#1296db;
+  }
+  .tab .icon{
+    width: 60rpx;
+    height: 60rpx;
+    display: block;
+    margin:0 auto;
+    padding: 0;
+
+  }
+  .tab .title{
+    padding: 6rpx;
+    display: block;
+
+  }
+</style>
+

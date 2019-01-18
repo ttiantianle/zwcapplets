@@ -1,4 +1,5 @@
 <style lang="less">
+<<<<<<< HEAD
 
 </style>
 <template>
@@ -12,10 +13,33 @@
     <!--<text class="count"> {{num}} </text>-->
     <!--<text class="count"> {{stateNum}} </text>-->
     <!--<text class="count"> {{asyncNum}} </text>-->
+=======
+  .counter {
+    text-align: left;
+    font-size: 12px;
+  }
+  .count {
+    font-size: 18px;
+    font-weight: bold;
+    &.red {
+      color: red;
+    }
+    &.green {
+      color: green;
+    }
+  }
+</style>
+<template>
+  <view class="counter {{style}}">
+    <button @tap="plus" size="mini">  +  </button>
+    <button @tap="minus" size="mini">  -  </button>
+    <text class="count" :class="{red: num > 55, green: num < 45}"> {{num}} </text>
+>>>>>>> 256a0947500c7558359fb4ace2421fa6d735e210
   </view>
 </template>
 <script>
   import wepy from 'wepy'
+<<<<<<< HEAD
   import { connect } from 'wepy-redux'
   import { INCREMENT, DECREMENT } from '../store/types/counter'
   import { asyncInc } from '../store/actions'
@@ -32,6 +56,8 @@
     decNum: DECREMENT,
     asyncInc
   })
+=======
+>>>>>>> 256a0947500c7558359fb4ace2421fa6d735e210
 
   export default class Counter extends wepy.component {
     props = {

@@ -1,0 +1,65 @@
+
+<template>
+  <view>
+    <view>
+      <image src="../images/default.png" style="width:750rpx;height:182rpx;"></image>
+    </view>
+    <field :activeField.sync="currentField"></field>
+
+    <view class="newDemand" style="margin-top: 30rpx;font-size: 24rpx;width: 100%;">
+
+      <view class="body-view">
+        <text style="margin-left: 20rpx;font-size: 30rpx;margin-right: 20rpx;">名片</text>
+        <switch bindchange="switch1Change" />
+        <!--<switch bindchange="switch2Change" />-->
+      </view>
+      <view style="">
+         <textarea style="border: 2px solid #edece8;padding: 10rpx;margin: 20rpx auto;width: 80%;"
+                   placeholder="请输入您的需求" maxlength=300 />
+      </view>
+
+      <view>
+        <button style="width: 250rpx;color: #fff;background-color: #3388ff">确认发布</button>
+      </view>
+
+
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  import field from './field'
+  export default class home extends wepy.component{
+    data = {
+      currentField:0,
+      desc:"",
+    };
+    onLoad(){
+
+    };
+    methods = {
+      //定义一个索引数组与领域相对应
+    };
+    components = {
+      field: field
+    }
+  }
+</script>
+<style>
+  /*.wx-switch-input{*/
+    /*width:82rpx !important;*/
+    /*height:40rpx !important;*/
+  /*}*/
+  /*!*白色样式（false的样式）*!*/
+  /*.wx-switch-input::before{*/
+    /*width:80rpx !important;*/
+    /*height: 36rpx !important;*/
+  /*}*/
+  /*!*绿色样式（true的样式）*!*/
+  /*.wx-switch-input::after{*/
+    /*width: 40rpx !important;*/
+    /*height: 36rpx !important;*/
+  /*}*/
+</style>
+
