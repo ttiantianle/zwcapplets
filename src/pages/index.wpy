@@ -14,7 +14,7 @@
 </style>
 <template>
   <view class="container">
-    <text>Hello</text>
+    <!--<text>Hello</text>-->
     <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" style="width: 750rpx">
       <block wx:for="{{imgUrls}}" wx:key="index">
         <swiper-item>
@@ -45,13 +45,11 @@
         'https://img.pc841.com/2018/0815/20180815101229911.jpg',
         'https://img.pc841.com/2018/0815/20180815101229911.jpg',
         'https://img.pc841.com/2018/0815/20180815101229911.jpg',
-
       ],
       indicatorDots: true,  //是否显示面板指示点
       autoplay: true,      //是否自动切换
       interval: 3000,       //自动切换时间间隔
       duration: 1000,       //滑动动画时长
-      inputShowed: false,
       inputVal: "",
 
     };
@@ -68,7 +66,7 @@
     //   // }
     // };
     methods = {
-
+      // component
     };
 
     components = {
