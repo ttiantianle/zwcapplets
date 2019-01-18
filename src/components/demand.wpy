@@ -1,25 +1,76 @@
-<style>
+<style scoped>
+  page{
+    min-height: 100%;
+    background: #F1F4FD;
+  }
+  .demand_box{
 
+    min-height: 100%;
+  }
+  .demand{
+    /*font-size: 24rpx;*/
+    padding: 24rpx 24rpx 0;
+  }
+  .text{
+    display: inline-block;
+    padding:10rpx 20rpx;
+    text-align: center;
+  }
+  .active{
+    background: #489DFF;
+    color: #ffffff;
+    border-radius: 5rpx;
+  }
+  .p1020{
+    padding: 10rpx 20rpx;
+  }
+  .box_show{
+    box-shadow: 0 0 15rpx #DDDDDD;
+    border-radius: 10rpx;
+    background: #ffffff;
+  }
+  .lh40{
+    line-height: 40rpx;
+  }
 </style>
 <template>
-  <view>
-   需求
+  <view class="demand_box">
+    <view class="field demand">
+      <view class="text" :class="{active: item== 0}" @tap="fieldItem(0)">全部</view>
+      <view class="text" :class="{active: item== 1}" @tap="fieldItem(1)">全部</view>
+      <view class="text" :class="{active: item== 2}" @tap="fieldItem(2)">全部</view>
+    </view>
+    <view class="demand">
+      <view class="p1020 box_show">
+        <view class="lh40">检测领域：食品 <text></text></view>
+        <view class="lh40">详细描述：</view>
+      </view>
+    </view>
+
   </view>
 </template>
 
 <script>
   import wepy from 'wepy';
   export default class demand extends wepy.component{
+    config = {
+
+    };
     props = {
 
     };
     data = {
+      item: 0
     };
     onLoad(){
-
+      wx.setNavigationBarTitle({
+        title: '需求列表'
+      })
     };
     methods = {
-
+      fieldItem(num){
+        this.item = num
+      }
     };
 
   }
