@@ -1,7 +1,13 @@
 {
+<<<<<<< HEAD
   "name": "y",
   "version": "0.0.2",
   "description": "y",
+=======
+  "name": "zwcapplets",
+  "version": "0.0.2",
+  "description": "A WePY project",
+>>>>>>> 256a0947500c7558359fb4ace2421fa6d735e210
   "main": "dist/app.js",
   "scripts": {
     "dev": "wepy build --watch",
@@ -14,6 +20,7 @@
     "module-a": false,
     "./src/components/list": "./src/components/wepy-list.wpy"
   },
+<<<<<<< HEAD
   "author": "w18810651015 <18810651015@163.com>",
   "license": "MIT",
   "dependencies": {
@@ -24,6 +31,14 @@
     "wepy-async-function": "^1.4.4",
     "wepy-com-toast": "^1.0.2",
     "wepy-redux": "^1.5.3"
+=======
+  "author": "ttiantianle <ttiantianle@163.com>",
+  "license": "MIT",
+  "dependencies": {
+    "wepy": "^1.6.0",
+    "wepy-async-function": "^1.4.4",
+    "wepy-com-toast": "^1.0.2"
+>>>>>>> 256a0947500c7558359fb4ace2421fa6d735e210
   },
   "devDependencies": {
     "babel-eslint": "^7.2.1",
