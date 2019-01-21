@@ -1,5 +1,4 @@
 {
-
   "name": "zwcapplets",
   "version": "0.0.2",
   "description": "A WePY project",
@@ -15,12 +14,11 @@
     "module-a": false,
     "./src/components/list": "./src/components/wepy-list.wpy"
   },
-
   "author": "ttiantianle <ttiantianle@163.com>",
   "license": "MIT",
   "dependencies": {
     "wepy": "^1.6.0",
-    "wepy-async-function": "^1.4.4",
+    "wepy-async-function": "^1.4.7",
     "wepy-com-toast": "^1.0.2"
   },
   "devDependencies": {

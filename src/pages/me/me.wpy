@@ -73,7 +73,7 @@
     <!--我回复的-->
     <view hidden="{{selectId != 1}}">
       <repeat for="{{replyList}}">
-        <view style="margin: 20rpx;">
+        <view>
           <view style="height: 60rpx;background-color: #fff;padding-left: 30rpx;line-height: 60rpx;border-bottom: gray 1rpx solid;"
                 @tap="conversion()"
           >
@@ -249,16 +249,21 @@
       this_setdata:"",
     };
     onLoad(){
-
       let that = this;
-      wepy.getUserInfo({
-        success: (res) => {
-          console.log('wepy.getUserInfo.success:', res);
-          that.userInfo = res.userInfo;
-        },
-        fail: (res) => {
-        }
+
+      let p = new Promise(function () {
+        wepy.getUserInfo({
+          success: (res) => {
+            console.log('wepy.getUserInfo.success:', res);
+            that.userInfo = res.userInfo;
+            that.$apply();
+          },
+          fail: (res) => {
+          }
+        })
       });
+
+
     }
 
     methods = {
