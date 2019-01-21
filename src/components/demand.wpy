@@ -22,15 +22,33 @@
     border-radius: 5rpx;
   }
   .p1020{
-    padding: 10rpx 20rpx;
+    padding: 20rpx 20rpx;
   }
   .box_show{
     box-shadow: 0 0 15rpx #DDDDDD;
     border-radius: 10rpx;
     background: #ffffff;
+    margin-bottom: 30rpx;
   }
   .lh40{
-    line-height: 40rpx;
+    line-height: 45rpx;
+  }
+  .fr{
+    float: right;
+  }
+  .filelist text{
+    color: #8A8A8A;
+  }
+  .complete{
+    background: #CFDDFA;
+    position: relative;
+  }
+  .complete image{
+    width: 80rpx;
+    height: 70rpx;
+    position: absolute;
+    right: 30rpx;
+    bottom: 20rpx;
   }
 </style>
 <template>
@@ -42,8 +60,13 @@
     </view>
     <view class="demand">
       <view class="p1020 box_show">
-        <view class="lh40">检测领域：食品 <text></text></view>
-        <view class="lh40">详细描述：</view>
+        <view class="lh40 filelist">检测领域：<text>食品</text> <text class="fr">2019-01-18 16:56:10</text></view>
+        <view class="lh40 filelist">详细描述：<text>食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品</text></view>
+      </view>
+      <view class="p1020 box_show complete">
+        <view class="lh40 filelist">检测领域：<text>食品</text> <text class="fr">2019-01-18 16:56:10</text></view>
+        <view class="lh40 filelist">详细描述：<text>食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品</text></view>
+        <image src="../../images/complete.png"></image>
       </view>
     </view>
 
