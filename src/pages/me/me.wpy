@@ -48,15 +48,15 @@
       </view>
 
       <!--<block wx:for="{{replyList}}">-->
-        <!--<view class="item">-->
-          <!--<view><text>检测单位：{{item.shop_name}}</text></view>-->
-          <!--<view><text>检测内容：{{item.content}}</text></view>-->
-          <!--<view><text>检测价格：{{item.price}}</text></view>-->
-          <!--<view>-->
-            <!--<text>检测时间：{{item.time}}</text>-->
-            <!--<text style="color:#1296db;" class="fr" @tap="viewDetail()">查看详细内容</text>-->
-          <!--</view>-->
-        <!--</view>-->
+      <!--<view class="item">-->
+      <!--<view><text>检测单位：{{item.shop_name}}</text></view>-->
+      <!--<view><text>检测内容：{{item.content}}</text></view>-->
+      <!--<view><text>检测价格：{{item.price}}</text></view>-->
+      <!--<view>-->
+      <!--<text>检测时间：{{item.time}}</text>-->
+      <!--<text style="color:#1296db;" class="fr" @tap="viewDetail()">查看详细内容</text>-->
+      <!--</view>-->
+      <!--</view>-->
       <!--</block>-->
     </view>
 
@@ -88,13 +88,14 @@
         </view>
       </block>
     </view>
-
+    <tabBarBottom :active.sync="currentTab"></tabBarBottom>
   </view>
 </template>
 
 <script>
   import wepy from 'wepy';
-  export default class me extends wepy.component{
+  import tabBarBottom from "../../components/tabBarBottom"
+  export default class me extends wepy.page{
     props = {
 
     };
@@ -120,6 +121,7 @@
         }
       ],
       selectId:0,
+      currentTab:3,
     };
     onLoad(){
 
@@ -129,7 +131,9 @@
         this.selectId = +idx;
       }
     };
-
+    components ={
+      tabBarBottom:tabBarBottom,
+    }
   }
 </script>
 
