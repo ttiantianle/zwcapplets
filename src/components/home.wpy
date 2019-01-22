@@ -8,9 +8,9 @@
 
     <view class="newDemand" style="margin-top: 30rpx;font-size: 24rpx;width: 100%;">
 
-      <view class="body-view">
-        <text style="margin-left: 20rpx;font-size: 30rpx;margin-right: 20rpx;">名片</text>
-        <switch bindchange="switch1Change" />
+      <view class="body-view" style="">
+        <view style="display:inline-block;margin-left: 20rpx;font-size: 30rpx;margin-right: 20rpx;">名片</view>
+        <switch bindchange="switch1Change" style="display: inline-block;vertical-align: top"/>
         <!--<switch bindchange="switch2Change" />-->
       </view>
       <view style="">
@@ -47,19 +47,21 @@
   }
 </script>
 <style>
-  /*.wx-switch-input{*/
-    /*width:82rpx !important;*/
-    /*height:40rpx !important;*/
-  /*}*/
-  /*!*白色样式（false的样式）*!*/
-  /*.wx-switch-input::before{*/
-    /*width:80rpx !important;*/
-    /*height: 36rpx !important;*/
-  /*}*/
-  /*!*绿色样式（true的样式）*!*/
-  /*.wx-switch-input::after{*/
-    /*width: 40rpx !important;*/
-    /*height: 36rpx !important;*/
-  /*}*/
+  .wx-switch-input{
+    width:80rpx !important;
+    height:40rpx !important;
+    background: #50D2C2 !important;
+    border: #50d2c2 !important; /* 2018-07-18 重置开关边框颜色 */
+  }
+  /*白色样式（false的样式）*/
+  .wx-switch-input::before{
+    width:80rpx !important;
+    height: 40rpx !important;
+  }
+  /*绿色样式（true的样式）*/
+  .wx-switch-input::after{
+    width: 40rpx !important;
+    height: 40rpx !important;
+  }
 </style>
 

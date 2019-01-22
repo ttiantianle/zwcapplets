@@ -6,8 +6,6 @@
     <!--</view>-->
 
     <view  hidden="{{currentTab != 0}}">
-
-
       <home></home>
     </view>
     <view  hidden="{{currentTab != 1}}">
