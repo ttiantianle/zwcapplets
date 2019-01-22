@@ -5,11 +5,10 @@
       <!--<text bindtap="demands()">需求</text>-->
     <!--</view>-->
 
-
     <view  hidden="{{currentTab != 0}}">
 
-      <home></home>
 
+      <home></home>
     </view>
     <view  hidden="{{currentTab != 1}}">
       <demand></demand>
@@ -34,6 +33,7 @@
   import demand from  '../components/demand';
   import shop from  '../components/shop';
   import me from  '../components/me';
+
   // import inaver from '../inaver/inaver';
   export default class Index extends wepy.page {
     config = {

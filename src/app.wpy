@@ -11,6 +11,8 @@
     min-height: 100%;
     background: #F1F4FD;
     font-size: 28rpx;
+    padding-bottom: 120rpx;
+    box-sizing: border-box;
   }
 </style>
 
@@ -60,14 +62,14 @@ export default class extends wepy.app {
     //   }]
     // },
 
-  }
+  };
     globalData = {
-      userInfo: null
+      userInfo: null,
+      url: "https://zwcap.zhaowoce.com:4433",
 
-
-    }
+    };
     constructor () {
-      super()
+      super();
       this.use('requestfix')//修复小程序请求并发问题
       // this.use('promisefy')//使用wepy.xxx的方式请求小程序原生API都将Promise化
     }
@@ -86,20 +88,42 @@ export default class extends wepy.app {
 
     async testAsync () {
       const data = await this.sleep(3)
-      console.log(data)
+      // console.log(data)
     }
 
     getUserInfo(cb) {
-      const that = this
+      const that = this;
       if (this.globalData.userInfo) {
         return this.globalData.userInfo
       }
       wepy.getUserInfo({
         success (res) {
-          that.globalData.userInfo = res.userInfo
+          that.globalData.userInfo = res.userInfo;
           cb && cb(res.userInfo)
         }
       })
     }
+  // postData: function (url, data) {
+  //   var that = this;
+  //   return new Promise(function (resolve, reject) {
+  //     wx.request({
+  //       url: that.globalData.baseURL + url,
+  //       data: data,
+  //       method: "GET",
+  //       header: {
+  //         "Content-Type": "application/json;charset=UTF-8",
+  //         "token": that.globalData.token
+  //       },
+  //       success: function (res) {
+  //         resolve(res.data);
+  //       },
+  //       fail: function (res) {
+  //         reject(res);
+  //       },
+  //     })
+  //
+  //
+  //   });
+  // }
   }
 </script>

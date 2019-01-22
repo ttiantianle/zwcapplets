@@ -37,13 +37,14 @@ export default class tabBarBottom extends wepy.component{
   };
   watch = {
     active (newValue, oldValue) {
-      console.log(`num value: ${oldValue} -> ${newValue}`)
+      // console.log(`num value: ${oldValue} -> ${newValue}`)
     }
   };
   methods = {
     change(idx,evt){
       //感觉+没有意义
       this.active = +idx;
+
       // switch (this.active){
       //   case 0: wx.redirectTo({
       //     url: '/pages/shop/shopDevice'
@@ -59,6 +60,7 @@ export default class tabBarBottom extends wepy.component{
       //     url: '/pages/me/me'
       //   });break;
       // }
+
     }
   };
 
