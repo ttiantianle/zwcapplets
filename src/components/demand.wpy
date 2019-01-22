@@ -152,7 +152,7 @@
           }else{
             _this.length = false;
           }
-          console.log( _this.demandList, data.data.data.length ==0);
+          // console.log( _this.demandList, data.data.data.length ==0);
           _this.$apply();
         }
       })

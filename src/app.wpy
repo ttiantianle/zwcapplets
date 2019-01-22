@@ -24,6 +24,7 @@ export default class extends wepy.app {
   config = {
     pages: [
       'pages/index',
+      'pages/login/login',
 
       'pages/shop/shopDetail',//机构详情
       'pages/shop/shopPicture',//机构相册
@@ -66,16 +67,27 @@ export default class extends wepy.app {
     globalData = {
       userInfo: null,
       url: "https://zwcap.zhaowoce.com:4433",
-
+      Authorization:false,
     };
     constructor () {
       super();
       this.use('requestfix')//修复小程序请求并发问题
-      // this.use('promisefy')//使用wepy.xxx的方式请求小程序原生API都将Promise化
+      // this.use('promisify');//使用wepy.xxx的方式请求小程序原生API都将Promise化
     }
 
     onLaunch() {
-      this.testAsync()
+      this.testAsync();
+        wx.login({
+          success: function (res) {
+            if (res.code) {
+              //发起网络请求
+              console.log(res.code)
+            } else {
+              console.log('获取用户登录态失败！' + res.errMsg)
+            }
+          }
+        });
+
     }
 
     sleep (s) {
