@@ -54,27 +54,36 @@
 <template>
   <view class="demand_box">
     <view class="field demand">
-      <view class="text" :class="{active: item== 0}" @tap="fieldItem(0)">全部</view>
-      <view class="text" :class="{active: item== 1}" @tap="fieldItem(1)">全部</view>
-      <view class="text" :class="{active: item== 2}" @tap="fieldItem(2)">全部</view>
+      <view class="text" :class="{active: items == ''}" @tap="fieldItem('')">全部</view>
+      <!--<repeat class="text" for="{{ territory }}" key="index" item="item">aaa-->
+        <!--<view>{{ item}}</view>-->
+      <!--</repeat>-->
+
+
+      <repeat class="text" wx:for="{{ territory }}" key="index" item="item">
+        <view class="text" :class="{active: items == item.cat_id}" @tap="fieldItem({{ item.cat_id }})">{{ item.cat_name}}</view>
+      </repeat>
     </view>
     <view class="demand">
-      <view class="p1020 box_show">
-        <view class="lh40 filelist">检测领域：<text>食品</text> <text class="fr">2019-01-18 16:56:10</text></view>
-        <view class="lh40 filelist">详细描述：<text>食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品</text></view>
+      <view class="p1020 box_show" :class="{complete: items==4}" wx:for="{{ demandList }}" key="index">
+        <view class="lh40 filelist">检测领域：<text>{{ item.cat_name }}</text> <text class="fr">{{ item.create_time }}</text></view>
+        <view class="lh40 filelist">详细描述：<text>{{ item.text }}</text></view>
       </view>
-      <view class="p1020 box_show complete">
-        <view class="lh40 filelist">检测领域：<text>食品</text> <text class="fr">2019-01-18 16:56:10</text></view>
-        <view class="lh40 filelist">详细描述：<text>食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品</text></view>
-        <image src="../../images/complete.png"></image>
-      </view>
-    </view>
+      <!--<view class="p1020 box_show ">-->
+        <!--<view class="lh40 filelist">检测领域：<text>食品</text> <text class="fr">2019-01-18 16:56:10</text></view>-->
+        <!--<view class="lh40 filelist">详细描述：<text>食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品</text></view>-->
+        <!--<image src="../../images/complete.png"></image>-->
+      <!--</view>-->
 
+    </view>
   </view>
 </template>
 
 <script>
   import wepy from 'wepy';
+  // import common from '@/js/common.js';
+  import Utils from '@/js/utils.js';
+
   export default class demand extends wepy.component{
     config = {
 
@@ -83,19 +92,68 @@
 
     };
     data = {
-      item: 0
+      territory: [],
+      items: "",
+      demandList:"",
     };
     onLoad(){
+      // let meth = common;
+      // let _this = this;
+      // _this.$apply();
+      // meth.common("/releaserequir/fieldlist", this.territory,_this,{});
+      //   // console.log(this.territory,1256,meth.common);
+      // setTimeout(function(){
+      //   console.log(_this.territory,2223);
+      // },300);
+      // // console.log(this.datat,26564);
+      // this.$apply();
+
+      let _this = this;
+      _this.datasa();
+      let url = wepy.$instance.globalData.url;
       wx.setNavigationBarTitle({
         title: '需求列表'
+      });
+      // let _this = this;
+      wepy.request({
+        url: url + "/releaserequir/fieldlist",
+        method: "POST",
+        success(res){
+          let str = res.data.substr(1);
+          str = str.substr(0, str.length-1);
+          let data = JSON.parse(str);
+          _this.territory = data.data;
+          // console.log(_this.territory);
+          _this.$apply()
+        }
       })
+
     };
     methods = {
       fieldItem(num){
-        this.item = num
-      }
+        this.items = num;
+        this.datasa();
+      },
     };
-
+    datasa(){  // 需求列表
+      let _this = this;
+      wepy.request({
+        url: wepy.$instance.globalData.url + "/releaserequir/list",
+        // method: "POST",
+        data: {
+          re_type: Utils.get("1"),
+          field_id: Utils.get(_this.items),
+        },
+        success(res){
+          let str = res.data.substr(1);
+          str = str.substr(0, str.length-1);
+          let data = JSON.parse(str);
+          _this.demandList = data.data.data;
+          console.log( _this.demandList);
+          _this.$apply();
+        }
+      })
+    }
   }
 </script>
 

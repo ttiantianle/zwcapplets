@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
   "description": "y",
-=======
-  "description": "A WePY project",
->>>>>>> 256a0947500c7558359fb4ace2421fa6d735e210
   "setting": {
     "urlCheck": true,
     "es6": false,
@@ -11,12 +7,7 @@
     "minified": false
   },
   "compileType": "miniprogram",
-<<<<<<< HEAD
   "appid": "y",
   "projectname": "y",
-=======
-  "appid": "touristappid",
-  "projectname": "zwcapplets",
->>>>>>> 256a0947500c7558359fb4ace2421fa6d735e210
   "miniprogramRoot": "./dist"
 }
