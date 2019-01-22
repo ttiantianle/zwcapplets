@@ -76,6 +76,7 @@
   .tab{
     background-color: #fff;
     font-size: 24rpx;
+    padding-bottom: 20rpx;
   }
   .tab_item,.tab_item_active{
     display: inline-block;

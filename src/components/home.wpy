@@ -8,16 +8,18 @@
 
     <view class="newDemand" style="margin-top: 30rpx;font-size: 24rpx;width: 100%;">
 
-      <view class="body-view" style="">
+      <view class="body-view" style="background-color: #fff;padding: 20rpx 0">
         <view style="display:inline-block;margin-left: 20rpx;font-size: 30rpx;margin-right: 20rpx;">名片</view>
         <switch bindchange="switch1Change" style="display: inline-block;vertical-align: top"/>
+        <image src="../images/card.png" style="width:40rpx;height: 40rpx; "></image>
         <!--<switch bindchange="switch2Change" />-->
-      </view>
-      <view style="">
-         <textarea style="border: 2px solid #edece8;padding: 10rpx;margin: 20rpx auto;width: 80%;"
-                   placeholder="请输入您的需求" maxlength=300 />
-      </view>
 
+        <view style="">
+           <textarea style="border: 2px solid #edece8;padding: 10rpx;margin: 20rpx auto;width: 80%;"
+                     placeholder="请输入您的需求" maxlength=300 />
+        </view>
+        <image src="../images/upload1.png" style="width:60rpx;height: 60rpx;margin-left: 10% "></image>
+    </view>
       <view>
         <button style="width: 250rpx;color: #fff;background-color: #3388ff">确认发布</button>
       </view>
@@ -57,6 +59,7 @@
   .wx-switch-input::before{
     width:80rpx !important;
     height: 40rpx !important;
+    background: #F1F4FD !important;
   }
   /*绿色样式（true的样式）*/
   .wx-switch-input::after{

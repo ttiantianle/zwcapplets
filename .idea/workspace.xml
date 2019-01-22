@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dab6f251-696c-4844-b0d9-cf0fc645a761" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/src/components/field.wpy" afterPath="$PROJECT_DIR$/src/components/field.wpy" />
       <change beforePath="$PROJECT_DIR$/src/components/home.wpy" afterPath="$PROJECT_DIR$/src/components/home.wpy" />
-      <change beforePath="$PROJECT_DIR$/src/pages/index.wpy" afterPath="$PROJECT_DIR$/src/pages/index.wpy" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -60,12 +59,40 @@
       <file leaf-file-name="home.wpy" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/home.wpy">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="20" column="12" lean-forward="true" selection-start-line="20" selection-start-column="12" selection-end-line="20" selection-end-column="12" />
+            <state relative-caret-position="399">
+              <caret line="28" column="9" lean-forward="true" selection-start-line="28" selection-start-column="9" selection-end-line="28" selection-end-column="9" />
               <folding>
+                <element signature="n#style#0;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#view#0;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#view#0;n#view#0;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#switch#0;n#view#0;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#image#0;n#view#0;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#textarea#0;n#view#1;n#view#0;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#image#1;n#view#0;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#button#0;n#view#1;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="field.wpy" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/field.wpy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1680">
+              <caret line="80" column="29" lean-forward="false" selection-start-line="80" selection-start-column="29" selection-end-line="80" selection-end-column="29" />
+              <folding>
+                <element signature="n#style#0;n#view#0;n#view#0;n#template#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="app.wpy" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/app.wpy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="231">
+              <caret line="11" column="23" lean-forward="false" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="23" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -96,7 +123,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/components/demand.wpy" />
-        <option value="$PROJECT_DIR$/src/components/field.wpy" />
         <option value="$PROJECT_DIR$/src/pages/gt.wpy" />
         <option value="$PROJECT_DIR$/src/components/search.wpy" />
         <option value="$PROJECT_DIR$/src/pages/demand/demand.wpy" />
@@ -111,6 +137,7 @@
         <option value="$PROJECT_DIR$/src/components/tabBarBottom.wpy" />
         <option value="$PROJECT_DIR$/src/components/me.wpy" />
         <option value="$PROJECT_DIR$/src/pages/index.wpy" />
+        <option value="$PROJECT_DIR$/src/components/field.wpy" />
         <option value="$PROJECT_DIR$/src/components/home.wpy" />
       </list>
     </option>
@@ -242,12 +269,12 @@
       <workItem from="1547688945744" duration="3068000" />
       <workItem from="1547693742417" duration="24387000" />
       <workItem from="1548032397081" duration="27020000" />
-      <workItem from="1548117872760" duration="10457000" />
+      <workItem from="1548117872760" duration="12308000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="81846000" />
+    <option name="totallyTimeSpent" value="83697000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -315,7 +342,7 @@
         <state relative-caret-position="84">
           <caret line="4" column="22" lean-forward="false" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
           <folding>
-            <element signature="n#style#0;n#view#0;n#view#0;n#template#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#view#0;n#view#0;n#template#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -326,11 +353,11 @@
           <caret line="61" column="17" lean-forward="false" selection-start-line="61" selection-start-column="17" selection-end-line="61" selection-end-column="17" />
           <folding>
             <element signature="n#style#0;n#image#0;n#view#0;n#view#0;n#template#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#view#1;n#view#0;n#template#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#view#0;n#view#0;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#textarea#0;n#view#1;n#view#1;n#view#0;n#template#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#button#0;n#view#2;n#view#1;n#view#0;n#template#0;n#!!top" expanded="false" />
-            <element signature="e#941#965#0" expanded="false" />
+            <element signature="n#style#0;n#textarea#0;n#view#1;n#view#0;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#0;n#view#1;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#1175#1199#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -404,16 +431,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/field.wpy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="4" column="22" lean-forward="false" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
-          <folding>
-            <element signature="n#style#0;n#view#0;n#view#0;n#template#0;n#!!top" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -592,16 +609,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app.wpy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="588">
-          <caret line="28" column="37" lean-forward="false" selection-start-line="28" selection-start-column="37" selection-end-line="28" selection-end-column="37" />
-          <folding>
-            <element signature="e#349#372#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/shop/shopDevice.wpy">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-170">
@@ -659,13 +666,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/app.wpy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="11" column="23" lean-forward="false" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/field.wpy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1680">
+          <caret line="80" column="29" lean-forward="false" selection-start-line="80" selection-start-column="29" selection-end-line="80" selection-end-column="29" />
+          <folding>
+            <element signature="n#style#0;n#view#0;n#view#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/home.wpy">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="20" column="12" lean-forward="true" selection-start-line="20" selection-start-column="12" selection-end-line="20" selection-end-column="12" />
+        <state relative-caret-position="399">
+          <caret line="28" column="9" lean-forward="true" selection-start-line="28" selection-start-column="9" selection-end-line="28" selection-end-column="9" />
           <folding>
+            <element signature="n#style#0;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#view#0;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#view#0;n#view#0;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#switch#0;n#view#0;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#image#0;n#view#0;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#textarea#0;n#view#1;n#view#0;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#image#1;n#view#0;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#0;n#view#1;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
