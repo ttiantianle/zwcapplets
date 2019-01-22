@@ -46,7 +46,7 @@ export default class tabBarBottom extends wepy.component{
       this.active = +idx;
       // switch (this.active){
       //   case 0: wx.redirectTo({
-      //     url: '/pages/index'
+      //     url: '/pages/shop/shopDevice'
       //   });break;
       //   case 1: wx.redirectTo({
       //     url: '/pages/demand/demand'

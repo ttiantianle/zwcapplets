@@ -22,9 +22,14 @@ export default class extends wepy.app {
   config = {
     pages: [
       'pages/index',
+
+      'pages/shop/shopDetail',//机构详情
+      'pages/shop/shopPicture',//机构相册
+      'pages/shop/shopDevice',//仪器设备
+
       // 'pages/demand/demand',
       // 'pages/shop/shop',
-      'pages/me/me',
+      // 'pages/me/me',
     ],
     window: {
       backgroundTextStyle: 'light',

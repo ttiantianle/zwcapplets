@@ -1,0 +1,128 @@
+<style scoped>
+  .df{
+    display: flex;
+  }
+  .dl{
+    display: inline-block;
+  }
+  .db{
+    display: block;
+  }
+  .m30{
+    margin: 30rpx;
+  }
+  .mlr20{
+    margin-left:20rpx ;
+    margin-right:20rpx ;
+  }
+  .mr20{
+
+    margin-right:20rpx ;
+  }
+  .ml20{
+    margin-left:20rpx ;
+  }
+  .f8{
+    flex: 8;
+  }
+  .f1{
+    flex: 1;
+  }
+  .f4{
+    flex: 4;
+  }
+  image{
+    width: 100%;
+    height: 150rpx;
+  }
+  .h50{
+    height: 50rpx;
+  }
+  .l50{
+    line-height: 50rpx;
+  }
+  .borderGray{
+    border: 1rpx solid gray;
+  }
+  .p10{
+    padding: 10rpx;
+  }
+  .pl15{
+    padding-left: 15rpx;
+  }
+  .fw600{
+    font-weight: bold;
+    font-size: 28rpx;
+  }
+  .lh40{
+    line-height: 40rpx;
+  }
+  .itemShop{
+
+  }
+  .box_show{
+    box-shadow: 0 0 15rpx #DDDDDD;
+    border-radius: 10rpx;
+    background: #ffffff;
+    margin: 30rpx;
+    padding: 15rpx;
+  }
+  .shopDetailbtn{
+    background-color: #3388ff;
+    color: #fff;
+    text-align: center;
+    margin-top: 20rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    font-size: 40rpx;
+  }
+</style>
+<template>
+    <view>
+      <view class="itemShop df box_show">
+        <view class="f4">
+          <image src="/images/default.png"></image>
+        </view>
+        <view class="f8 pl15">
+          <view class="lh40"><text class="fw600">所在城市：</text></view>
+          <view class="lh40">业务领域：</view>
+          <view class="lh40">联系方式：</view>
+          <view class="lh40">资质认证：</view>
+        </view>
+      </view>
+
+      <view style="margin: 20rpx;">
+         <view style="text-align: center;font-size: 40rpx;font-weight: bold ;">公司简介</view>
+         <view style="margin-top: 20rpx;">经济日报讯 记者姜天骄报道：1月21日13时42分
+           ，航天科技集团有限公司所属中国运载火箭技术研究院抓总研制的
+           长征十一号遥六火箭在酒泉卫星发射中心点火升空，成功将4颗卫星送入预定轨道，发射取得圆满成功。
+
+           此次发射的卫星包括两颗主星和两颗搭载小卫星，
+           其中两颗主星是来自吉林长光卫星技术有限公司的“吉林一号”光谱01/02星，
+           主要为林业系统和海洋领域提供遥感数据和产品服务；一颗小卫星来自长沙天仪研究院，
+           另一颗小卫星来自北京零重空间技术有限公司。
+         </view>
+        <view class="db shopDetailbtn" >机构相册 >></view>
+        <view class="db shopDetailbtn">仪器设备 >></view>
+      </view>
+    </view>
+</template>
+
+<script>
+    import wepy from 'wepy';
+
+    export default class shopDetail extends wepy.page {
+        config = {
+            navigationBarTitleText: "国标（北京）检验认证有限公司"
+        };
+        props = {};
+        data = {
+
+        };
+        onLoad() {
+
+        };
+
+        methods = {};
+    }
+</script>
