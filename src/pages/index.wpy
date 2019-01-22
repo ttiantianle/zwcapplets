@@ -5,9 +5,10 @@
       <!--<text bindtap="demands()">需求</text>-->
     <!--</view>-->
 
-    <view  hidden="{{currentTab != 1}}">
-      <home></home>
 
+    <view  hidden="{{currentTab != 1}}">
+
+      <home></home>
     </view>
     <view  hidden="{{currentTab != 0}}">
       <demand></demand>

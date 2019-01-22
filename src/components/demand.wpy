@@ -4,11 +4,9 @@
     background: #F1F4FD;
   }
   .demand_box{
-
     min-height: 100%;
   }
   .demand{
-    /*font-size: 24rpx;*/
     padding: 24rpx 24rpx 0;
   }
   .text{
@@ -50,6 +48,10 @@
     right: 30rpx;
     bottom: 20rpx;
   }
+  .available{
+    background: #ffffff;
+    font-weight: 600;
+  }
 </style>
 <template>
   <view class="demand_box">
@@ -65,23 +67,18 @@
       </repeat>
     </view>
     <view class="demand">
-      <view class="p1020 box_show" :class="{complete: items==4}" wx:for="{{ demandList }}" key="index">
+      <view class="p1020 box_show" :class="{complete: item.status==4}" wx:for="{{ demandList }}" key="index">
         <view class="lh40 filelist">检测领域：<text>{{ item.cat_name }}</text> <text class="fr">{{ item.create_time }}</text></view>
         <view class="lh40 filelist">详细描述：<text>{{ item.text }}</text></view>
+        <image wx:if="{{item.status==4}}" src="../../images/complete.png"></image>
       </view>
-      <!--<view class="p1020 box_show ">-->
-        <!--<view class="lh40 filelist">检测领域：<text>食品</text> <text class="fr">2019-01-18 16:56:10</text></view>-->
-        <!--<view class="lh40 filelist">详细描述：<text>食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品食品</text></view>-->
-        <!--<image src="../../images/complete.png"></image>-->
-      <!--</view>-->
-
+      <view class="p1020 available" wx:if="{{length }}">暂无此类需求</view>
     </view>
   </view>
 </template>
 
 <script>
   import wepy from 'wepy';
-  // import common from '@/js/common.js';
   import Utils from '@/js/utils.js';
 
   export default class demand extends wepy.component{
@@ -95,6 +92,7 @@
       territory: [],
       items: "",
       demandList:"",
+      length: false,
     };
     onLoad(){
       // let meth = common;
@@ -149,7 +147,12 @@
           str = str.substr(0, str.length-1);
           let data = JSON.parse(str);
           _this.demandList = data.data.data;
-          console.log( _this.demandList);
+          if(data.data.data.length ==0){
+            _this.length = true;
+          }else{
+            _this.length = false;
+          }
+          console.log( _this.demandList, data.data.data.length ==0);
           _this.$apply();
         }
       })
