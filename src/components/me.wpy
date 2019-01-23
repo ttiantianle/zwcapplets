@@ -32,6 +32,15 @@
   .tabTitle_active{
     color: #1296db;
   }
+  /*使用 button::after{ border: none; } 来去除边框*/
+  .free-btn-bordernone{
+    background: none !important;
+    color: #000 !important;
+  }
+  .free-btn-bordernone::after{
+    border: none;
+  }
+
 </style>
 <template>
   <view>
@@ -43,9 +52,17 @@
     <!--我发布的-->
     <view hidden="{{selectId != 0}}">
       <view class="userinfo" style="margin: 20rpx 60rpx 20rpx 60rpx;">
-        <image mode="scaleToFill" style="width: 150rpx;height: 150rpx;border-radius: 200rpx;display: inline-block" class="userinfo-avatar" src="{{userInfo.avatarUrl}}"/>
-        <view class="userinfo-nickname" style="margin-left:50rpx;vertical-align:top;display: inline-block;line-height: 150rpx;height: 150rpx;">{{userInfo.nickName}}，您好</view>
-        <text style="display: block;">系统提示：您今天发布了{{requireNum}}个需求，得到{{replyNum}}个回复</text>
+        <view style="display: inline-block;vertical-align: top;width:150rpx;height: 150rpx;">
+          <open-data type="userAvatarUrl" style="">
+          </open-data>
+        </view>
+        <view style="display: inline-block;vertical-align:top;line-height: 150rpx;height: 150rpx;margin-left:50rpx;">
+          <open-data type="userNickName" style="">
+          </open-data>,您好!
+        </view>
+        <!--<image mode="scaleToFill" style="width: 150rpx;height: 150rpx;border-radius: 200rpx;display: inline-block" class="userinfo-avatar" src="{{userInfo.avatarUrl}}"/>-->
+        <!--<view class="userinfo-nickname" style="margin-left:50rpx;vertical-align:top;display: inline-block;line-height: 150rpx;height: 150rpx;">{{userInfo.nickName}}，您好</view>-->
+        <text style="display: block;margin-top: 20rpx;">系统提示：您今天发布了{{requireNum}}个需求，得到{{replyNum}}个回复</text>
       </view>
 
       <repeat for="{{requireList}}" item="item">
@@ -104,7 +121,6 @@
         </view>
       </repeat>
     </view>
-    <!--<tabBarBottom :active.sync="currentTab"></tabBarBottom>-->
   </view>
 </template>
 
@@ -245,25 +261,31 @@
       ],
       selectId:0,
       currentTab:3,
-      userInfo:{
-        nickName:""
-      },
+      // userInfo:{
+      //   nickName:""
+      // },
       this_setdata:"",
     };
     onLoad(){
-      let that = this;
-
-      let p = new Promise(function () {
-        wepy.getUserInfo({
-          success: (res) => {
-            // console.log('wepy.getUserInfo.success:', res);
-            that.userInfo = res.userInfo;
-            that.$apply();
-          },
-          fail: (res) => {
-          }
-        })
-      });
+      // let that = this;
+      // wx.getUserInfo({
+      //   success:(res)=>{
+      //     console.log('wepy.getUserInfo.success:', res);
+      //     that.userInfo = res.userInfo;
+      //     that.$apply();
+      //   }
+      // })
+      // let p = new Promise(function () {
+      //   wepy.getUserInfo({
+      //     success: (res) => {
+      //       console.log('wepy.getUserInfo.success:', res);
+      //       that.userInfo = res.userInfo;
+      //       that.$apply();
+      //     },
+      //     fail: (res) => {
+      //     }
+      //   })
+      // });
 
 
     }
