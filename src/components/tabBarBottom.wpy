@@ -56,11 +56,12 @@ export default class tabBarBottom extends wepy.component{
       //     // wx.redirectTo({
       //     // url: '/pages/shop/shop'
       //   // });break;
+
       //   case 3: wx.redirectTo({
       //     url: '/pages/me/me'
       //   });break;
       // }
-
+      
     }
   };
 

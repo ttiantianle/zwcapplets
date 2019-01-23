@@ -25,14 +25,15 @@ export default class extends wepy.app {
     pages: [
       'pages/index',
       'pages/login/login',
-
       'pages/shop/shopDetail',//机构详情
       'pages/shop/shopPicture',//机构相册
       'pages/shop/shopDevice',//仪器设备
 
       // 'pages/demand/demand',
       // 'pages/shop/shop',
+      'pages/demand/demandDetails',
       // 'pages/me/me',
+
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -67,6 +68,7 @@ export default class extends wepy.app {
     globalData = {
       userInfo: null,
       url: "https://zwcap.zhaowoce.com:4433",
+      img: "http://img.zhaowoce.com",
       Authorization:false,
     };
     constructor () {

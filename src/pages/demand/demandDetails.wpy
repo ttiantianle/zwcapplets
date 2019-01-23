@@ -1,0 +1,247 @@
+<style>
+  .demandDetails{
+    padding: 24rpx 24rpx 0;
+  }
+  .box_show{
+    box-shadow: 0 0 15rpx #DDDDDD;
+    border-radius: 10rpx;
+    background: #ffffff;
+    margin-bottom: 30rpx;
+  }
+  .p20{
+    padding: 20rpx;
+  }
+  .fr{
+    float: right;
+  }
+  .fl{
+    float: left;
+  }
+  .filelist text{
+    color: #8A8A8A;
+  }
+  .lh40{
+    line-height: 45rpx;
+  }
+  .replyList image{
+    width: 48rpx;
+    height: 40rpx;
+    vertical-align: text-bottom;
+    font-size: 0;
+  }
+  .replyList .list{
+    line-height: 45rpx;
+  }
+  .p30{
+    padding: 30rpx 30rpx;
+  }
+  .mb25{
+    margin-bottom: 25rpx;
+  }
+  .replyList text{
+    display: inline-block;
+    line-height: 50rpx;
+    margin-top: 0;
+  }
+  .ml15{
+    margin-left: 15rpx;
+  }
+  button{
+    font-size: 30rpx;
+    width: 185rpx;
+    display: inline-block;
+    margin-left: 110rpx;
+  }
+  .reply{
+    background: #3388FF;
+    color: #ffffff;
+  }
+  .share{
+    color: #3388FF;
+  }
+  .animation-element{
+    position: fixed;
+    left: 0;
+    bottom: -100%;
+    background: #ffffff;
+    width: 100%;
+    height: 500rpx;
+    transition: 1s;
+    font-size: 24rpx;
+  }
+  .actives{
+    bottom: 0!important;
+  }
+  .cancel{
+    overflow: hidden;
+    border-bottom: 1px solid #eee;
+  }
+  .cancel text{
+    color: #3388FF;
+    padding: 15rpx;
+  }
+  .cardList{
+    /*position: absolute;*/
+    /*top: 0;*/
+    /*position: relative;*/
+    margin-top: 50rpx;
+    /*height: 40rpx;*/
+    /*width: ;*/
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    /*overflow-y: scroll;*/
+    /*white-space: nowrap;*/
+  }
+  .cardList text{
+    display: inline-block;
+  }
+  /*.username{*/
+    /*width: 35%;*/
+    /*text-align: right;*/
+  /*}*/
+  /*.relation{*/
+    /*width: 65%;*/
+    /*padding-left: 40rpx;*/
+    /*box-sizing: border-box;*/
+  /*}*/
+</style>
+
+<template>
+  <view class="demandDetails">
+    <view class="p20 box_show">
+      <view class="lh40 filelist">检测领域：<text>{{ details.cat_name }}</text> <text class="fr">{{ details.create_time }}</text></view>
+      <view class="lh40 filelist">详细描述：<text>{{ details.text }}</text></view>
+      <view class="lh40" wx:if="{{details.file_path!=''}}">样图：<image @tap="imgPreview({{details.file_path}})" src="http://img.zhaowoce.com{{details.file_path}}"></image></view>
+      <!--<image wx:if="{{item.status==4}}" src="../../images/complete.png"></image>-->
+    </view>
+    <view class="mb25">
+      <button class="reply" @tap="replyCart">立即回复</button><button class="share">分享需求</button>
+    </view>
+    <view class="p20 box_show replyList" wx:if="{{reply.length != 0 }}">
+      <view class="lh40 filelist">回复列表</view>
+      <view class="p30">
+        <view wx:for="{{reply}}" wx:key="index" class="list mb25">
+          <image src="../../images/shop.png"></image>
+          <text class="ml15">{{item.shop_name}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="animation-element" :class="{ actives: cart }">
+      <view class="cancel">
+        <text class="fl">取消</text><text class="fr">确定</text>
+      </view>
+      <!--<scroll-view scroll-y style="height: 50rpx;" scroll-top="45rpx">-->
+        <!--<view class="cardList">-->
+        <!--<scroll-view scroll-y style="height: 50rpx;position: absolute;" scroll-top="45rpx">-->
+          <!--<view wx:for="{{ cardList }}" wx:key="index" class="lh40">-->
+            <!--<text class="username">{{ item.username}}</text>-->
+            <!--<text class="relation" wx:if="{{item.mobile!=''}}">手机号：{{ item.mobile }}</text>-->
+            <!--<text class="relation" wx:elif="{{item.wechat!=''}}">微信号：{{ item.wechat }}</text>-->
+            <!--<text class="relation" wx:elif="{{item.qq_num!=''}}">Q Q号{{ item.qq_num }}</text>-->
+            <!--<text class="relation" wx:else="{{item.mobile!=''}}">邮 箱：{{ item.email }}</text>-->
+          <!--</view>-->
+          <!--</scroll-view>-->
+          <picker-view
+            indicator-style="height: 50rpx;"
+            style="width: 100%; height: 100%;"
+            value="{{value}}"
+            bindchange="bindChange"
+          >
+            <picker-view-column >
+              <view wx:for="{{ cardList }}" wx:key="index" class="lh40">
+                <text class="username">{{ item.username}}</text>
+                <text class="relation" wx:if="{{item.mobile!=''}}">手机号：{{ item.mobile }}</text>
+                <text class="relation" wx:elif="{{item.wechat!=''}}">微信号：{{ item.wechat }}</text>
+                <text class="relation" wx:elif="{{item.qq_num!=''}}">Q Q号{{ item.qq_num }}</text>
+                <text class="relation" wx:else="{{item.mobile!=''}}">邮 箱：{{ item.email }}</text>
+              </view>
+            </picker-view-column>
+          </picker-view>
+        <!--</view>-->
+      <!--</scroll-view>-->
+    </view>
+  </view>
+</template>
+
+<script>
+    import wepy from 'wepy';
+
+    export default class demandDetails extends wepy.page {
+        config = {
+
+        };
+        data = {
+          details: [],
+          reply: [],
+          cart: false,
+          cardList: [],
+          value: "",
+        };
+
+        onLoad(option) {
+          ///releaserequir/redetail
+          let _this = this;
+          wepy.request({
+            url: wepy.$instance.globalData.url + "/releaserequir/redetail",
+            // method: "POST",
+            data: {
+              id: option.id,
+              // id: 1108
+            },
+            success(res){
+              // console.log(res.data);
+              let str = res.data.substr(1);
+              str = str.substr(0, str.length-1);
+              let data = JSON.parse(str);
+              _this.details = data.data.require;
+              _this.reply = data.data.reply;
+              // console.log( _this.details,data.data,);
+              _this.$apply();
+            }
+          });
+          wepy.request({
+            url: wepy.$instance.globalData.url + "/usercard/list",
+            // method: "POST",
+            data: {
+              from_type: 'xcx_shop',
+              shop_id: 1
+            },
+            success(res){
+              let str = res.data.substr(1);
+              str = str.substr(0, str.length-1);
+              let data = JSON.parse(str);
+              _this.cardList = data.data;
+              console.log( _this.cardList, data);
+              _this.$apply();
+            }
+          });
+          wx.setNavigationBarTitle({
+            title: '需求详情'
+          });
+        };
+
+        methods = {
+          imgPreview(file_path){  // 图片预览
+            wx.previewImage({
+              current: 'https://img.zhaowoce.com'+file_path, // 当前显示图片的http链接
+              urls: ['https://img.zhaowoce.com'+file_path,'https://img.zhaowoce.com'+file_path,'https://img.zhaowoce.com'+file_path] // 需要预览的图片http链接列表
+            })
+          },
+          replyCart(){
+            this.cart = true
+          },
+          bindChange(e) {
+            const val = e.detail.value
+            console.log(e);
+            this.setData({
+              // year: this.data.years[val[0]],
+              // month: this.data.months[val[1]],
+              // day: this.data.days[val[2]]
+            })
+          }
+        };
+        components = {
+
+        }
+    }
+</script>

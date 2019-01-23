@@ -60,14 +60,12 @@
       <!--<repeat class="text" for="{{ territory }}" key="index" item="item">aaa-->
         <!--<view>{{ item}}</view>-->
       <!--</repeat>-->
-
-
       <repeat class="text" wx:for="{{ territory }}" key="index" item="item">
         <view class="text" :class="{active: items == item.cat_id}" @tap="fieldItem({{ item.cat_id }})">{{ item.cat_name}}</view>
       </repeat>
     </view>
     <view class="demand">
-      <view class="p1020 box_show" :class="{complete: item.status==4}" wx:for="{{ demandList }}" key="index">
+      <view class="p1020 box_show" :class="{complete: item.status==4}" wx:for="{{ demandList }}" key="index" @tap="demandDetails({{ item.id }})">
         <view class="lh40 filelist">检测领域：<text>{{ item.cat_name }}</text> <text class="fr">{{ item.create_time }}</text></view>
         <view class="lh40 filelist">详细描述：<text>{{ item.text }}</text></view>
         <image wx:if="{{item.status==4}}" src="../../images/complete.png"></image>
@@ -93,8 +91,10 @@
       items: "",
       demandList:"",
       length: false,
+      page: 1,
     };
     onLoad(){
+      // 公共方法
       // let meth = common;
       // let _this = this;
       // _this.$apply();
@@ -132,17 +132,25 @@
         this.items = num;
         this.datasa();
       },
+      demandDetails(id){
+        wx.navigateTo({
+          url: '/pages/demand/demandDetails?id='+id
+        })
+      },
     };
     datasa(){  // 需求列表
       let _this = this;
       wepy.request({
-        url: wepy.$instance.globalData.url + "/releaserequir/list",
+        url: wepy.$instance.globalData.url + "/releaserequir/releaselist",
         // method: "POST",
         data: {
-          re_type: Utils.get("1"),
-          field_id: Utils.get(_this.items),
+          from_type: "xcx_user",
+          user_id: "3804",
+          re_type: "1",
+          field_id: _this.items,
         },
         success(res){
+          // console.log(res.data);
           let str = res.data.substr(1);
           str = str.substr(0, str.length-1);
           let data = JSON.parse(str);

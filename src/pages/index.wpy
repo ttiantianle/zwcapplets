@@ -59,7 +59,7 @@
     };
     methods = {
       demands(){
-        console.log(1);
+        // console.log(1);
         wx.navigateTo({
           url: '/pages/demand/demand'
         })
