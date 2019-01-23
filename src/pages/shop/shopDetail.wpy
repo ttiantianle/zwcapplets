@@ -76,6 +76,12 @@
     line-height: 80rpx;
     font-size: 40rpx;
   }
+  .synopsis:nth-child(odd){
+    max-width: 100%;
+  }
+  .synopsis:nth-child(even){
+    max-width: 100%;
+  }
 </style>
 <template>
     <view>
@@ -84,7 +90,7 @@
           <image src="/images/default.png"></image>
         </view>
         <view class="f8 pl15">
-          <view class="lh40"><text class="fw600">所在城市：</text></view>
+          <view class="lh40"><text class="fw600">所在城市：{{ shopDetail.city_name }}</text></view>
           <view class="lh40">业务领域：</view>
           <view class="lh40">联系方式：</view>
           <view class="lh40">资质认证：</view>
@@ -93,14 +99,10 @@
 
       <view style="margin: 20rpx;">
          <view style="text-align: center;font-size: 40rpx;font-weight: bold ;">公司简介</view>
-         <view style="margin-top: 20rpx;">经济日报讯 记者姜天骄报道：1月21日13时42分
-           ，航天科技集团有限公司所属中国运载火箭技术研究院抓总研制的
-           长征十一号遥六火箭在酒泉卫星发射中心点火升空，成功将4颗卫星送入预定轨道，发射取得圆满成功。
 
-           此次发射的卫星包括两颗主星和两颗搭载小卫星，
-           其中两颗主星是来自吉林长光卫星技术有限公司的“吉林一号”光谱01/02星，
-           主要为林业系统和海洋领域提供遥感数据和产品服务；一颗小卫星来自长沙天仪研究院，
-           另一颗小卫星来自北京零重空间技术有限公司。
+         <view>
+           <rich-text style="margin-top: 20rpx;padding: 10rpx;" class="synopsis" nodes={{shopDetail.introduction}}></rich-text>
+           <!--<template is="wxParse" data="{{wxParseData:shopDetail.introduction}}"/>-->
          </view>
         <view class="db shopDetailbtn" >机构相册 >></view>
         <view class="db shopDetailbtn">仪器设备 >></view>
@@ -115,12 +117,34 @@
         config = {
             navigationBarTitleText: "国标（北京）检验认证有限公司"
         };
-        props = {};
-        data = {
+        props = {
 
         };
-        onLoad() {
-
+        data = {
+          shopDetail: [],
+        };
+        onLoad(params) {
+          wx.setNavigationBarTitle({
+            title: '机构详情'
+          });
+          let _this = this;
+          console.log(params);
+          wepy.request({
+            url: wepy.$instance.globalData.url + "/shop/detail",
+            // method: "POST",
+            data: {
+              shop_id: params.id
+            },
+            success(res){
+              // console.log(res.data);
+              let str = res.data.substr(1);
+              str = str.substr(0, str.length-1);
+              let data = JSON.parse(str);
+              _this.shopDetail = data.data;
+              console.log( _this.shopDetail,data);
+              _this.$apply();
+            }
+          })
         };
 
         methods = {};
