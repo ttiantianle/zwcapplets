@@ -4,43 +4,43 @@
     <view style="font-size: 30rpx;margin-left: 20rpx;margin-top: 15rpx;">选择领域</view>
     <view class="tab">
       <view class="tab_item{{activeField == 3801 ? '_active' : ''}}" @tap="change(3801)">
-        <image class="icon" src="../images/fields/huanjing{{activeField == 0 ? '_active' : ''}}.png"></image>
+        <image class="icon" src="../images/fields/huanjing{{activeField == 3801 ? '_active' : ''}}.png"></image>
         <text class="title">环境</text>
       </view>
       <view class="tab_item{{activeField == 4722 ? '_active' : ''}}" @tap="change(4722)">
-        <image class="icon" src="../images/fields/cailiao{{activeField == 1 ? '_active' : ''}}.png"></image>
+        <image class="icon" src="../images/fields/cailiao{{activeField == 4722 ? '_active' : ''}}.png"></image>
         <text class="title">材料</text>
       </view>
       <view class="tab_item{{activeField == 631 ? '_active' : ''}}" @tap="change(631)">
-        <image class="icon" src="../images/fields/gongcheng{{activeField == 2 ? '_active' : ''}}.png"></image>
+        <image class="icon" src="../images/fields/gongcheng{{activeField == 631 ? '_active' : ''}}.png"></image>
         <text class="title">工程</text>
       </view>
       <view class="tab_item{{activeField == 936 ? '_active' : ''}}" @tap="change(936)">
-        <image class="icon" src="../images/fields/shipin{{activeField == 3 ? '_active' : ''}}.png"></image>
+        <image class="icon" src="../images/fields/shipin{{activeField == 936 ? '_active' : ''}}.png"></image>
         <text class="title">食品</text>
       </view>
       <view class="tab_item{{activeField == 632 ? '_active' : ''}}" @tap="change(632)">
-        <image class="icon" src="../images/fields/huagong{{activeField == 4 ? '_active' : ''}}.png"></image>
+        <image class="icon" src="../images/fields/huagong{{activeField == 632 ? '_active' : ''}}.png"></image>
         <text class="title">化工</text>
       </view>
       <view class="tab_item{{activeField == 4728 ? '_active' : ''}}" @tap="change(4728)">
-        <image class="icon" src="../images/fields/jiaotong{{activeField == 5 ? '_active' : ''}}.png"></image>
+        <image class="icon" src="../images/fields/jiaotong{{activeField == 4728 ? '_active' : ''}}.png"></image>
         <text class="title">交通运输</text>
       </view>
       <view class="tab_item{{activeField == 4724 ? '_active' : ''}}" @tap="change(4724)">
-        <image class="icon" src="../images/fields/xiaofei{{activeField == 6 ? '_active' : ''}}.png"></image>
+        <image class="icon" src="../images/fields/xiaofei{{activeField == 4724 ? '_active' : ''}}.png"></image>
         <text class="title">消费品</text>
       </view>
       <view class="tab_item{{activeField == 2139 ? '_active' : ''}}" @tap="change(2139)">
-        <image class="icon" src="../images/fields/nengyuan{{activeField == 7 ? '_active' : ''}}.png"></image>
+        <image class="icon" src="../images/fields/nengyuan{{activeField == 2139 ? '_active' : ''}}.png"></image>
         <text class="title">能源矿产</text>
       </view>
       <view class="tab_item{{activeField == 4725 ? '_active' : ''}}" @tap="change(4725)">
-        <image class="icon" src="../images/fields/dianzi{{activeField == 8 ? '_active' : ''}}.png"></image>
+        <image class="icon" src="../images/fields/dianzi{{activeField == 4725 ? '_active' : ''}}.png"></image>
         <text class="title">电子电气</text>
       </view>
       <view class="tab_item{{activeField == 4730 ? '_active' : ''}}" @tap="change(4730)">
-        <image class="icon" src="../images/fields/shengming{{activeField == 9 ? '_active' : ''}}.png"></image>
+        <image class="icon" src="../images/fields/shengming{{activeField == 4730 ? '_active' : ''}}.png"></image>
         <text class="title">生命科学</text>
       </view>
     </view>
