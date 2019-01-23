@@ -13,7 +13,7 @@
         <view>
           <view style="display:inline-block;margin-left: 20rpx;font-size: 30rpx;margin-right: 20rpx;vertical-align: middle">名片</view>
 
-          <switch checked={{status}} bindchange="switch1Change" style="display: inline-block;vertical-align: middle"/>
+          <switch checked="{{status}}" bindchange="switch1Change" style="display: inline-block;vertical-align: middle"/>
           <!--<image src="../images/11.png" style="width:40rpx;height: 40rpx;" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"></image>-->
 
           <button wx:if="{{cardId ==''&&anonymous}}" style="padding: 0rpx;vertical-align: middle;line-height: 60rpx;height: 60rpx;display: inline-block;background: #3388ff;"
@@ -30,7 +30,7 @@
 
         <view style="">
            <textarea style="border: 2px solid #edece8;padding: 10rpx;margin: 20rpx auto;width: 80%;"
-                     placeholder="请输入您的需求" maxlength=300 />
+                     placeholder="请输入您的需求" maxlength="300" />
         </view>
         <image src="../images/upload1.png" style="width:60rpx;height: 60rpx;margin-left: 8%" @tap="upload()"></image>
     </view>
@@ -44,13 +44,13 @@
       </view>
 
 
-      <view hidden={{showCards}} style="z-index:9999;background-color: #fff;width:65%;height:90%;position: fixed;top: 0;right:0;">
+      <view hidden="{{showCards}}" style="z-index:9999;background-color: #fff;width:65%;height:90%;position: fixed;top: 0;right:0;">
         <scroll-view scroll-y="true" style="height: 100%;">
           <view style="margin: 20rpx;">
             <text style="color: deepskyblue">点击添加名片</text><text style="float: right;color: deepskyblue">确定</text>
             <radio-group class="radio-group" bindchange="radioChange">
               <view wx:if="{{cardList.length == 0}}">您还没有添加名片,请添加名片后发布需求</view>
-              <label wx:for="{{cardList}}" class="radio">
+              <label wx:for="{{cardList}}" wx:key="index" class="radio">
                 <view style="margin: 20rpx auto;background-color: lightgray;border-radius: 10rpx;padding: 10rpx;">
                   <radio value="{{item.id}}" />
                   <view style="display: inline-block;vertical-align: middle;margin-left: 20rpx;">

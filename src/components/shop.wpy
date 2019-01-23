@@ -58,7 +58,7 @@
     line-height: 40rpx;
   }
   .itemShop{
-
+    font-size: 26rpx;
   }
   .box_show{
     box-shadow: 0 0 15rpx #DDDDDD;
@@ -76,15 +76,15 @@
       <button type="primary" size="mini" class="f1">搜索</button>
     </view>
     <repeat>
-      <view class="itemShop df box_show">
+      <view class="itemShop df box_show" wx:for="{{ shopList }}" wx:key="index">
         <view class="f4">
           <image src="../images/default.png"></image>
         </view>
         <view class="f8 pl15">
-          <view class="lh40"><text class="fw600">国标的</text></view>
-          <view class="lh40">所在地</view>
-          <view class="lh40">主营领域</view>
-          <view class="lh40">资质</view>
+          <view class="lh40"><text class="fw600">{{ item.shop_name }}</text></view>
+          <view class="lh40">所在地：{{ item.province_name_receive}}</view>
+          <view class="lh40">主营领域：</view>
+          <view class="lh40">资质：<text wx:for="{{ item.cnas }}"  wx:for-item="items" wx:key="items">{{items}} </text></view>
         </view>
       </view>
       <view class="itemShop df box_show">
@@ -122,8 +122,10 @@
       }
     };
     data = {
+      shopList: "",
     };
     onLoad(){
+      this.datas();
       wx.setNavigationBarTitle({
         title: '机构列表'
     })
@@ -131,6 +133,25 @@
     methods = {
 
     };
+    datas(){
+      let _this = this;
+      wepy.request({
+        url: wepy.$instance.globalData.url + "/shop/list",
+        // method: "POST",
+        data: {
+
+        },
+        success(res){
+          // console.log(res.data);
+          let str = res.data.substr(1);
+          str = str.substr(0, str.length-1);
+          let data = JSON.parse(str);
+          _this.shopList = data.data.data;
+          console.log( _this.shopList,);
+          _this.$apply();
+        }
+      })
+    }
 
   }
 </script>

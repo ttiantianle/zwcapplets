@@ -56,16 +56,16 @@
 <template>
   <view class="demand_box">
     <view class="field demand">
-      <view class="text" :class="{active: items == ''}" @tap="fieldItem('')">全部</view>
+      <view class="text {{ items == '' ? 'active': ''}}" @tap="fieldItem('')">全部</view>
       <!--<repeat class="text" for="{{ territory }}" key="index" item="item">aaa-->
         <!--<view>{{ item}}</view>-->
       <!--</repeat>-->
-      <repeat class="text" wx:for="{{ territory }}" key="index" item="item">
-        <view class="text" :class="{active: items == item.cat_id}" @tap="fieldItem({{ item.cat_id }})">{{ item.cat_name}}</view>
-      </repeat>
+      <view class="text" wx:for="{{ territory }}" wx:key="index">
+        <view class="text {{ items == item.cat_id ? 'active': ''}}" @tap="fieldItem({{ item.cat_id }})">{{ item.cat_name}}</view>
+      </view>
     </view>
     <view class="demand">
-      <view class="p1020 box_show" :class="{complete: item.status==4}" wx:for="{{ demandList }}" key="index" @tap="demandDetails({{ item.id }})">
+      <view wx:for="{{ demandList }}" class="p1020 box_show {{ item.status==4 ? 'complete': ''}}" wx:key="index" @tap="demandDetails({{ item.id }})">
         <view class="lh40 filelist">检测领域：<text>{{ item.cat_name }}</text> <text class="fr">{{ item.create_time }}</text></view>
         <view class="lh40 filelist">详细描述：<text>{{ item.text }}</text></view>
         <image wx:if="{{item.status==4}}" src="../../images/complete.png"></image>
@@ -160,7 +160,7 @@
           }else{
             _this.length = false;
           }
-          // console.log( _this.demandList, data.data.data.length ==0);
+          // console.log( _this.demandList,);
           _this.$apply();
         }
       })

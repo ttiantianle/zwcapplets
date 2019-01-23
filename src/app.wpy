@@ -24,7 +24,7 @@ export default class extends wepy.app {
   config = {
     pages: [
       'pages/index',
-      'pages/login/login',
+      // 'pages/login/login',
       'pages/shop/shopDetail',//机构详情
       'pages/shop/shopPicture',//机构相册
       'pages/shop/shopDevice',//仪器设备

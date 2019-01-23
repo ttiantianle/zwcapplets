@@ -61,7 +61,7 @@ export default class tabBarBottom extends wepy.component{
       //     url: '/pages/me/me'
       //   });break;
       // }
-      
+
     }
   };
 
