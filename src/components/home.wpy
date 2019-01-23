@@ -16,15 +16,17 @@
           <switch checked={{status}} bindchange="switch1Change" style="display: inline-block;vertical-align: middle"/>
           <!--<image src="../images/11.png" style="width:40rpx;height: 40rpx;" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"></image>-->
 
-          <button style="padding: 0rpx;vertical-align: middle;line-height: 60rpx;height: 60rpx;display: inline-block;background: #3388ff;"
+          <button wx:if="{{cardId ==''&&anonymous}}" style="padding: 0rpx;vertical-align: middle;line-height: 60rpx;height: 60rpx;display: inline-block;background: #3388ff;"
                   open-type="getPhoneNumber" @tap="getPhoneNumber" type="primary">
             选择名片
           </button>
-
-          <button style="padding: 0rpx;vertical-align: middle;line-height: 60rpx;height: 60rpx;display: inline-block;background: #3388ff;" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" type="primary">选择名片</button>
+          <button wx:elif="{{cardId !=''&&anonymous}}" style="padding: 0rpx;vertical-align: middle;line-height: 60rpx;height: 60rpx;display: inline-block;background: #3388ff;"
+                  open-type="getPhoneNumber" @tap="getPhoneNumber" type="primary">
+            更换名片
+          </button>
+          <!--<text>名片id:{{cardId}}</text>-->
+          <!--<button style="padding: 0rpx;vertical-align: middle;line-height: 60rpx;height: 60rpx;display: inline-block;background: #3388ff;" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" type="primary">选择名片</button>-->
         </view>
-
-
 
         <view style="">
            <textarea style="border: 2px solid #edece8;padding: 10rpx;margin: 20rpx auto;width: 80%;"
@@ -33,29 +35,37 @@
         <image src="../images/upload1.png" style="width:60rpx;height: 60rpx;margin-left: 8%" @tap="upload()"></image>
     </view>
       <view>
-        <button style="width: 250rpx;color: #fff;background-color: #3388ff">确认发布</button>
+        <!--不匿名的发布-->
+        <button wx:if="{{anonymous}}" style="width: 250rpx;color: #fff;background-color: #3388ff">确认发布1</button>
+        <!--匿名发布，匿名发布的话因为没有选择名片所以没有授权手机号需要先授权手机号-->
+        <button wx:else style="width: 250rpx;color:#fff;background-color: #3388ff" open-type="getPhoneNumber" @tap="getPhoneNumber"
+        >确认发布2</button>
+
       </view>
 
-      <view hidden={{showCards}} style="z-index:1000;background-color: rosybrown;width:65%;height:70%;position: fixed;top: 0;right:0;">
-        <view style="margin: 20rpx;">
-          <text style="color: deepskyblue">点击添加名片</text><text style="float: right;color: deepskyblue">确定</text>
-          <radio-group class="radio-group" bindchange="radioChange">
-            <label wx:for="{{cardList}}" class="radio">
-              <view style="margin: 20rpx auto;background-color: lightgray;border-radius: 10rpx;padding: 10rpx;">
-                <radio value="{{item.id}}" />
-                <view style="display: inline-block;vertical-align: middle;margin-left: 20rpx;">
-                  <view>名字：{{item.user}}</view>
-                  <view>手机：{{item.mobile}}</view>
-                  <view>微信：{{item.wechat}}</view>
-                  <view>Q Q：{{item.QQ}}</view>
-                  <view>邮箱：{{item.Email}}</view>
+
+      <view hidden={{showCards}} style="z-index:9999;background-color: #fff;width:65%;height:90%;position: fixed;top: 0;right:0;">
+        <scroll-view scroll-y="true" style="height: 100%;">
+          <view style="margin: 20rpx;">
+            <text style="color: deepskyblue">点击添加名片</text><text style="float: right;color: deepskyblue">确定</text>
+            <radio-group class="radio-group" bindchange="radioChange">
+              <view wx:if="{{cardList.length == 0}}">您还没有添加名片,请添加名片后发布需求</view>
+              <label wx:for="{{cardList}}" class="radio">
+                <view style="margin: 20rpx auto;background-color: lightgray;border-radius: 10rpx;padding: 10rpx;">
+                  <radio value="{{item.id}}" />
+                  <view style="display: inline-block;vertical-align: middle;margin-left: 20rpx;">
+                    <view>名字：{{item.user}}</view>
+                    <view>手机：{{item.mobile}}</view>
+                    <view>微信：{{item.wechat}}</view>
+                    <view>Q Q：{{item.QQ}}</view>
+                    <view>邮箱：{{item.Email}}</view>
+                  </view>
                 </view>
 
-              </view>
-
-            </label>
-          </radio-group>
-        </view>
+              </label>
+            </radio-group>
+          </view>
+        </scroll-view>
       </view>
 
     </view>
@@ -67,80 +77,82 @@
   import field from './field'
   export default class home extends wepy.component{
     data = {
-      currentField:0,
-      desc:"",
+      currentField:3801,//记录当前所选择的的领域
+      desc:"",//发布的需求内容
       // status:false,
-      cardsId:"",
-      Permission:false,
-      showCards:false,
+      cardId:"",//所选择的的名片的id
+      anonymous:false,//是否匿名回复,false匿名true不匿名
+      // Permission:false,
+      showCards:true,//显示选择名片的div，true是隐藏，false显示
       cardList:[
-        {
-          id:123,
-          user:"田少腾",
-          mobile:"18812101090",
-          wechat:"",
-          QQ:"",
-          Email:"",
-        },
-        {
-          id:124,
-          user:"田少腾",
-          mobile:"18812101090",
-          wechat:"",
-          QQ:"",
-          Email:"",
-        },
-        {
-          id:125,
-          user:"田少腾",
-          mobile:"18812101090",
-          wechat:"",
-          QQ:"",
-          Email:"",
-        },
-        {
-          id:125,
-          user:"田少腾",
-          mobile:"18812101090",
-          wechat:"",
-          QQ:"",
-          Email:"",
-        },
-        {
-          id:125,
-          user:"田少腾",
-          mobile:"18812101090",
-          wechat:"",
-          QQ:"",
-          Email:"",
-        },
-        {
-          id:125,
-          user:"田少腾",
-          mobile:"18812101090",
-          wechat:"",
-          QQ:"",
-          Email:"",
-        },
-        {
-          id:125,
-          user:"田少腾",
-          mobile:"18812101090",
-          wechat:"",
-          QQ:"",
-          Email:"",
-        },
-        {
-          id:125,
-          user:"田少腾",
-          mobile:"18812101090",
-          wechat:"",
-          QQ:"",
-          Email:"",
-        },
+        // {
+        //   id:123,
+        //   user:"田少腾",
+        //   mobile:"18812101090",
+        //   wechat:"",
+        //   QQ:"",
+        //   Email:"",
+        // },
+        // {
+        //   id:124,
+        //   user:"田少腾",
+        //   mobile:"18812101090",
+        //   wechat:"",
+        //   QQ:"",
+        //   Email:"",
+        // },
+        // {
+        //   id:125,
+        //   user:"田少腾",
+        //   mobile:"18812101090",
+        //   wechat:"",
+        //   QQ:"",
+        //   Email:"",
+        // },
+        // {
+        //   id:126,
+        //   user:"田少腾",
+        //   mobile:"18812101090",
+        //   wechat:"",
+        //   QQ:"",
+        //   Email:"",
+        // },
+        // {
+        //   id:127,
+        //   user:"田少腾",
+        //   mobile:"18812101090",
+        //   wechat:"",
+        //   QQ:"",
+        //   Email:"",
+        // },
+        // {
+        //   id:128,
+        //   user:"田少腾",
+        //   mobile:"18812101090",
+        //   wechat:"",
+        //   QQ:"",
+        //   Email:"",
+        // },
+        // {
+        //   id:129,
+        //   user:"田少腾",
+        //   mobile:"18812101090",
+        //   wechat:"",
+        //   QQ:"",
+        //   Email:"",
+        // },
+        // {
+        //   id:130,
+        //   user:"田少腾",
+        //   mobile:"18812101090",
+        //   wechat:"",
+        //   QQ:"",
+        //   Email:"",
+        // },
       ],
     };
     onLoad(){
+      // console.log()
       // this.status = wepy.$instance.globalData.Authorization;
     };
     methods = {
@@ -149,7 +161,7 @@
         console.log('radio发生change事件，携带value值为：', e.detail.value)
       },
       switch1Change(e) {
-        this.status = e.detail.value;
+        this.anonymous = e.detail.value;
         // wepy.$instance.globalData.Authorization = this.status;
         // console.log('switch1 发生 change 事件，携带值为', e.detail.value);
         // console.log(wepy.$instance.globalData.Authorization)
