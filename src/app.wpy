@@ -26,7 +26,7 @@ export default class extends wepy.app {
       'pages/index',
       // 'pages/demand/demand',
       // 'pages/shop/shop',
-      'pages/me/me',
+      'pages/demand/demandDetails',
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -61,7 +61,7 @@ export default class extends wepy.app {
     globalData = {
       userInfo: null,
       url: "https://zwcap.zhaowoce.com:4433",
-
+      img: "http://img.zhaowoce.com"
     };
     constructor () {
       super();
