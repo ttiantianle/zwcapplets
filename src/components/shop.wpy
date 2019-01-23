@@ -76,37 +76,16 @@
       <button type="primary" size="mini" class="f1">搜索</button>
     </view>
     <repeat>
-      <view class="itemShop df box_show" wx:for="{{ shopList }}" wx:key="index">
+      <view class="itemShop df box_show" wx:for="{{ shopList }}" wx:key="index" @tap="shopDetails({{item.shop_id}})">
         <view class="f4">
-          <image src="../images/default.png"></image>
+          <image src="https://img.zhaowoce.com/{{item.shop_avatar}}"></image>
+          {{wepy.$instance.globalData.img}}
         </view>
         <view class="f8 pl15">
           <view class="lh40"><text class="fw600">{{ item.shop_name }}</text></view>
           <view class="lh40">所在地：{{ item.province_name_receive}}</view>
-          <view class="lh40">主营领域：</view>
-          <view class="lh40">资质：<text wx:for="{{ item.cnas }}"  wx:for-item="items" wx:key="items">{{items}} </text></view>
-        </view>
-      </view>
-      <view class="itemShop df box_show">
-        <view class="f4">
-          <image src="../images/default.png"></image>
-        </view>
-        <view class="f8 pl15">
-          <view class="lh40"><text class="fw600">你的</text></view>
-          <view class="lh40">所在地</view>
-          <view class="lh40">主营领域</view>
-          <view class="lh40">资质</view>
-        </view>
-      </view>
-      <view class="itemShop df box_show">
-        <view class="f4">
-          <image src="../images/default.png"></image>
-        </view>
-        <view class="f8 pl15">
-          <view class="lh40"><text class="fw600">我的</text></view>
-          <view class="lh40">所在地</view>
-          <view class="lh40">主营领域</view>
-          <view class="lh40">资质</view>
+          <view class="lh40">主营领域：<text wx:for="{{ item.field_name }}"  wx:for-item="items" wx:key="items"> {{ items.cat_name}}  </text></view>
+          <view class="lh40">资质：<text wx:for="{{ item.cnas }}"  wx:for-item="items" wx:key="items"> {{items}} </text></view>
         </view>
       </view>
     </repeat>
@@ -128,10 +107,14 @@
       this.datas();
       wx.setNavigationBarTitle({
         title: '机构列表'
-    })
+      })
     };
     methods = {
-
+      shopDetails(id){
+        wx.navigateTo({
+          url: '/pages/shop/shopDetail?id='+id
+        })
+      },
     };
     datas(){
       let _this = this;
@@ -147,7 +130,7 @@
           str = str.substr(0, str.length-1);
           let data = JSON.parse(str);
           _this.shopList = data.data.data;
-          console.log( _this.shopList,);
+          // console.log( _this.shopList,);
           _this.$apply();
         }
       })
