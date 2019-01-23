@@ -1,81 +1,58 @@
+<style>
+
+</style>
 <template>
   <view>
-
-    <!--<view>-->
-    <!--<text bindtap="demands()">需求</text>-->
-    <!--</view>-->
-
-    <view  hidden="{{currentTab != 0}}">
-      <home></home>
-    </view>
-    <view  hidden="{{currentTab != 1}}">
-      <demand></demand>
-    </view>
-    <view  hidden="{{currentTab != 2}}">
-      <shop></shop>
-    </view>
-    <view  hidden="{{currentTab != 3}}">
-      <me></me>
-    </view>
-    <!--<view  hidden="{{currentTab != 5}}">-->
-    <!--<navigator url='/pages/login/login'>点击跳转</navigator>-->
-    <!--</view>-->
-    <view>
-      <tabBarBottom :active.sync="currentTab"></tabBarBottom>
-    </view>
-
+    <image src="/images/login.jpg" style="width: 100%">
+    </image>
+    <view style="margin:20rpx 30rpx 0rpx;color:gray;">授权之后，您可以体验当前小程序的所有功能。</view>
+    <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" type="primary" style="margin: 30rpx">
+      微信手机授权
+    </button>
   </view>
 </template>
 
 <script>
   import wepy from 'wepy';
-  import tabBarBottom from '../components/tabBarBottom';
-  import home from  '../components/home';
-  import demand from  '../components/demand';
-  import shop from  '../components/shop';
-  import me from  '../components/me';
-
-  // import inaver from '../inaver/inaver';
-  export default class Index extends wepy.page {
+  export default class index extends wepy.page {
     config = {
-      // navigationBarTitleText: this.name
+      navigationBarTitleText: "授权"
     };
-
+    props = {};
     data = {
-      imgUrls:[
-        'https://img.pc841.com/2018/0815/20180815101229911.jpg',
-        'https://img.pc841.com/2018/0815/20180815101229911.jpg',
-        'https://img.pc841.com/2018/0815/20180815101229911.jpg',
-        'https://img.pc841.com/2018/0815/20180815101229911.jpg',
-      ],
-      currentTab:0,
+      finish:true,
     };
-    onLoad(){
-      // if(this.currentTab==5){
-      //   wepy.navigateTo({
-      //     url:'/pages/login/login',  //跳转页面的路径，可带参数 ？隔开，不同参数用 & 分隔；相对路径，不需要.wxml后缀
-      //   })
-      // }
+    onLoad() {
+
     };
     methods = {
-      demands(){
-        // console.log(1);
-        wx.navigateTo({
-          url: '/pages/demand/demand'
-        })
-      }
+      getPhoneNumber: function (e) {
+        console.log(e.detail.errMsg)
+        console.log(e.detail.iv)
+        console.log(e.detail.encryptedData)
+        if (e.detail.errMsg == 'getPhoneNumber:fail user deny') {
+          // console.log(this.$parent.globalData.Authorization);
+          this.$parent.globalData.Authorization = false;
+          wepy.redirectTo({
+            url:"./main"
+          })
+          // wx.showModal({
+          //   title: '提示', showCancel: false, content: '未授权', success: function (res) {
+          //
+          //   }
+          // })
+        } else {
+          this.$parent.globalData.Authorization = true;
+          wepy.redirectTo({
+            url:"./main"
+          })
+          // wx.showModal({
+          //   title: '提示', showCancel: false, content: '同意授权', success: function (res) {
+          //
+          //   }
+          // })
+        }
+      },
     };
-    //引入组件
-    components = {
-      tabBarBottom:tabBarBottom,
-      home:home,
-      demand:demand,
-      shop:shop,
-      me:me,
-    }
   }
 </script>
-
-<style>
-
-</style>
