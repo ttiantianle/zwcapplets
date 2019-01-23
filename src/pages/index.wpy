@@ -6,8 +6,9 @@
     <image src="/images/login.jpg" style="width: 100%">
     </image>
     <view style="margin:20rpx 30rpx 0rpx;color:gray;">授权之后，您可以体验当前小程序的所有功能。</view>
+    <!--<button open-type="getUserInfo"></button>-->
     <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" type="primary" style="margin: 30rpx">
-      微信手机授权
+     微信手机授权
     </button>
   </view>
 </template>
@@ -20,12 +21,13 @@
     };
     props = {};
     data = {
-      finish:true,
+      next:false,
     };
     onLoad() {
 
     };
     methods = {
+
       getPhoneNumber: function (e) {
         console.log(e.detail.errMsg)
         console.log(e.detail.iv)
