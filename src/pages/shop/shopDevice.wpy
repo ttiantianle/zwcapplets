@@ -1,0 +1,58 @@
+<style>
+
+</style>
+<template>
+  <view>
+    <swiper style="height:800rpx;"
+            autoplay=true interval=4000 duration=800 circular=true >
+      <block wx:for="{{device}}" wx:for-index="index">
+        <swiper-item>
+          <view style="float:left;width: 100%;background-color: rgba(0,0,0,0.5);text-align: center;color: #fff;">{{index+1}}/{{len}}</view>
+          <image src="{{item.imgurl}}" class="slide-image" style="display:block;width:100%;height:400rpx"/>
+          <view style="margin: 20rpx;">
+            <view>设备名称：{{item.deviceName}}</view>
+            <view>设备型号：{{item.deviceModel}}</view>
+            <view>设备品牌：{{item.deviceBrand}}</view>
+            <view>备注说明：{{item.deviceRemarks}}</view>
+          </view>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+</template>
+
+<script>
+    import wepy from 'wepy';
+
+    export default class shopDevice extends wepy.page {
+        config = {
+            navigationBarTitleText: "需求"
+        };
+        props = {};
+        data = {
+          len:2,
+          device:[
+            {
+              imgurl:"https://img.pc841.com/2018/0815/20180815101229911.jpg",//设备图片地址
+              deviceName:"钨灯丝电子显微镜",//设备名称
+              deviceModel:"Su3500",//设备型号
+              deviceBrand:"hitachi",//设备品牌
+              deviceRemarks:"sem;eds;面扫",//设备备注
+            },
+            {
+              imgurl:"https://img.pc841.com/2018/0815/20180815101229911.jpg",//设备图片地址
+              deviceName:"光学表面分析仪",//设备名称
+              deviceModel:"cs10",//设备型号
+              deviceBrand:"KLA",//设备品牌
+              deviceRemarks:"单晶片；外延片表面缺陷",//设备备注
+            }
+          ]
+        };
+
+        onLoad() {
+
+        };
+
+        methods = {};
+    }
+</script>

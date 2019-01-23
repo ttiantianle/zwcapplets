@@ -44,17 +44,12 @@ export default class tabBarBottom extends wepy.component{
     change(idx,evt){
       //感觉+没有意义
       this.active = +idx;
+
       // switch (this.active){
       //   case 0: wx.redirectTo({
-      //     url: '/pages/index'
+      //     url: '/pages/shop/shopDevice'
       //   });break;
       //   case 1: wx.redirectTo({
-
-      //     // url: '/pages/demand/demand'
-      //   });break;
-      //   case 2: wx.redirectTo({
-      //     // url: '/pages/shop/shop'
-      //   });break;
       //     url: '/pages/demand/demand'
       //   });break;
       //   case 2:
@@ -66,6 +61,7 @@ export default class tabBarBottom extends wepy.component{
       //     url: '/pages/me/me'
       //   });break;
       // }
+      
     }
   };
 

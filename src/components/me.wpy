@@ -19,10 +19,10 @@
   }
   .item{
     border-radius: 10rpx;
-    background-color: #edece8;
+    background-color: #fff;
     padding: 10rpx;
     margin: 10rpx 20rpx 0rpx 20rpx;
-    font-size: 30rpx;
+    /*font-size: 30rpx;*/
   }
   .tabTitle,.tabTitle_active{
     display:inline-block;
@@ -40,43 +40,59 @@
       <view class="tabTitle{{selectId == 1 ? '_active':''}}" @tap="select(1)">我回复的</view>
       <view class="tabTitle{{selectId == 2 ? '_active':''}}" @tap="select(2)">我的委托单</view>
     </view>
-
+    <!--我发布的-->
     <view hidden="{{selectId != 0}}">
-      <view class="userinfo" @tap="handleViewTap">
-        <image class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" background-size="cover"/>
-        <view class="userinfo-nickname">{{ userInfo.nickName }}</view>
+      <view class="userinfo" style="margin: 20rpx 60rpx 20rpx 60rpx;">
+        <image mode="scaleToFill" style="width: 150rpx;height: 150rpx;border-radius: 200rpx;display: inline-block" class="userinfo-avatar" src="{{userInfo.avatarUrl}}"/>
+        <view class="userinfo-nickname" style="margin-left:50rpx;vertical-align:top;display: inline-block;line-height: 150rpx;height: 150rpx;">{{userInfo.nickName}}，您好</view>
+        <text style="display: block;">系统提示：您今天发布了{{requireNum}}个需求，得到{{replyNum}}个回复</text>
       </view>
 
-      <!--<block wx:for="{{replyList}}">-->
-        <!--<view class="item">-->
-          <!--<view><text>检测单位：{{item.shop_name}}</text></view>-->
-          <!--<view><text>检测内容：{{item.content}}</text></view>-->
-          <!--<view><text>检测价格：{{item.price}}</text></view>-->
-          <!--<view>-->
-            <!--<text>检测时间：{{item.time}}</text>-->
-            <!--<text style="color:#1296db;" class="fr" @tap="viewDetail()">查看详细内容</text>-->
-          <!--</view>-->
-        <!--</view>-->
-      <!--</block>-->
+      <repeat for="{{requireList}}" item="item">
+        <view style="height: 60rpx;background-color: #fff;padding-left: 30rpx;line-height: 60rpx;border-bottom: gray 1rpx solid;"
+              @tap="conversion()">
+          {{item.field}}
+        </view>
+
+        <repeat for="{{item.requires}}" item="itemRequire" style="margin: 20rpx;">
+          <view style="margin: 20rpx;">
+            <view style="margin-bottom: 5rpx;">{{itemRequire.content}}</view>
+            <repeat for="{{itemRequire.replyCards}}" item="itemCard">
+              <view>{{itemCard.shopName}}回复了您 <text style="color:#1296db;">查看名片</text></view>
+            </repeat>
+
+          </view>
+
+        </repeat>
+
+      </repeat>
+
+
     </view>
 
-
+    <!--我回复的-->
     <view hidden="{{selectId != 1}}">
-      <block wx:for="{{replyList}}">
-        <view class="item">
-          <view><text>检测单位：{{item.shop_name}}</text></view>
-          <view><text>检测内容：{{item.content}}</text></view>
-          <view><text>检测价格：{{item.price}}</text></view>
-          <view>
-            <text>检测时间：{{item.time}}</text>
-            <text style="color:#1296db;" class="fr" @tap="viewDetail()">查看详细内容</text>
+      <repeat for="{{replyList}}">
+        <view>
+          <view style="height: 60rpx;background-color: #fff;padding-left: 30rpx;line-height: 60rpx;border-bottom: gray 1rpx solid;"
+                @tap="conversion()">
+            {{item.field}}
           </view>
+          <repeat  for="{{item.reply}}" item="list">
+            <view style="margin: 20rpx;">
+              <view>{{list.title}}:{{list.content}}</view>
+              <view style="margin-bottom:10rpx ;">我的回复：{{list.meReply}}</view>
+            </view>
+
+          </repeat>
         </view>
-      </block>
+
+
+      </repeat>
     </view>
 
     <view hidden="{{selectId != 2}}">
-      <block wx:for="{{infoList}}">
+      <repeat for="{{infoList}}">
         <view class="item">
           <view><text>检测单位：{{item.shop_name}}</text></view>
           <view><text>检测内容：{{item.content}}</text></view>
@@ -86,25 +102,80 @@
             <text style="color:#1296db;" class="fr" @tap="viewDetail()">查看详细内容</text>
           </view>
         </view>
-      </block>
+      </repeat>
     </view>
-
+    <!--<tabBarBottom :active.sync="currentTab"></tabBarBottom>-->
   </view>
 </template>
 
 <script>
   import wepy from 'wepy';
+  // import tabBarBottom from "../../components/tabBarBottom"
   export default class me extends wepy.component{
     props = {
 
     };
     data = {
+      requireNum:5,
+      replyNum:10,
       requireList:[
-        {},{}
+        {
+          field:"食品",
+          requires:[
+            {
+              content:"密度导热系统 渣球含量 纤维平均直径 热荷重收缩 湿度 有机物含量 没有指定的标准，需要资质报告" +
+              "CMA和CNAS都可以又能做的吗",
+              replyCards:[
+                {
+                  cardsId:"1",
+                  shopName:"金码头",
+                },{
+                  cardsId:"2",
+                  shopName:"金码头2",
+                }
+              ]
+            },
+            {
+              content:"密度导热系统 渣球含量 纤维平均直径 热荷重收缩 湿度 有机物含量 没有指定的标准，需要资质报告" +
+              "CMA和CNAS都可以又能做的吗",
+              replyCards:[
+                {
+                  cardsId:"12",
+                  shopName:"金码头1",
+                }
+              ]
+            },
+          ]
+
+        },
+        {
+          field:"材料",
+          requires:[
+            {
+              content:"密度导热系统 渣球含量 纤维平均直径 热荷重收缩 湿度 有机物含量 没有指定的标准，需要资质报告" +
+              "CMA和CNAS都可以又能做的吗",
+              replyCards:[
+                {
+                  cardsId:"1",
+                  shopName:"金码头",
+                }
+              ]
+            },
+            {
+              content:"密度导热系统 渣球含量 纤维平均直径 热荷重收缩 湿度 有机物含量 没有指定的标准，需要资质报告" +
+              "CMA和CNAS都可以又能做的吗",
+              replyCards:[
+                {
+                  cardsId:"12",
+                  shopName:"金码头1",
+                }
+              ]
+            },
+          ]
+
+        },
       ],
-      replyList:[
-        {},{}
-      ],
+
       infoList:[
         {
           shop_name:'金码头',
@@ -119,17 +190,95 @@
           price:'66.66'
         }
       ],
+      replyList:[
+        {
+          field:"食品",
+          reply:[
+            {
+              title:'岩棉检测，项目',
+              content:"密度导热系统 渣球含量 纤维平均直径 热荷重收缩 湿度 有机物含量 没有指定的标准，需要资质报告，" +
+              "CMA和CNAS都可以又能做的吗",
+              meReply:"金码头检测机构能做，详细查看"
+            }, {
+              title:'岩棉检测，项目',
+              content:"：密度导热系统 渣球含量 纤维平均直径 热荷重收缩 湿度 有机物含量 没有指定的标准，需要资质报告，" +
+              "CMA和CNAS都可以又能做的吗",
+              meReply:"金码头检测机构能做，详细查看"
+            },
+
+          ]
+        },
+        {
+          field:"材料",
+          reply:[
+            {
+              title:'岩棉检测，项目',
+              content:"：密度导热系统 渣球含量 纤维平均直径 热荷重收缩 湿度 有机物含量 没有指定的标准，需要资质报告，" +
+              "CMA和CNAS都可以又能做的吗",
+              meReply:"金码头检测机构能做，详细查看"
+            }, {
+              title:'岩棉检测，项目',
+              content:"：密度导热系统 渣球含量 纤维平均直径 热荷重收缩 湿度 有机物含量 没有指定的标准，需要资质报告，" +
+              "CMA和CNAS都可以又能做的吗",
+              meReply:"金码头检测机构能做，详细查看"
+            },
+
+          ]
+        },
+        {
+          field:"电气",
+          reply:[
+            {
+              title:'岩棉检测，项目',
+              content:"：密度导热系统 渣球含量 纤维平均直径 热荷重收缩 湿度 有机物含量 没有指定的标准，需要资质报告，" +
+              "CMA和CNAS都可以又能做的吗",
+              meReply:"金码头检测机构能做，详细查看"
+            }, {
+              title:'岩棉检测，项目',
+              content:"：密度导热系统 渣球含量 纤维平均直径 热荷重收缩 湿度 有机物含量 没有指定的标准，需要资质报告，" +
+              "CMA和CNAS都可以又能做的吗",
+              meReply:"金码头检测机构能做，详细查看"
+            },
+
+          ]
+        },
+      ],
       selectId:0,
+      currentTab:3,
+      userInfo:{
+        nickName:""
+      },
+      this_setdata:"",
     };
     onLoad(){
+      let that = this;
 
-    };
+      let p = new Promise(function () {
+        wepy.getUserInfo({
+          success: (res) => {
+            // console.log('wepy.getUserInfo.success:', res);
+            that.userInfo = res.userInfo;
+            that.$apply();
+          },
+          fail: (res) => {
+          }
+        })
+      });
+
+
+    }
+
     methods = {
       select(idx,evt){
         this.selectId = +idx;
+      },
+      conversion(evt){
+        // console.log(evt);
       }
     };
-
+    components ={
+      // tabBarBottom:tabBarBottom,
+    }
   }
 </script>
 

@@ -2,15 +2,13 @@
   <view>
 
     <!--<view>-->
-      <!--<text bindtap="demands()">需求</text>-->
+    <!--<text bindtap="demands()">需求</text>-->
     <!--</view>-->
 
-
-    <view  hidden="{{currentTab != 1}}">
-
+    <view  hidden="{{currentTab != 0}}">
       <home></home>
     </view>
-    <view  hidden="{{currentTab != 0}}">
+    <view  hidden="{{currentTab != 1}}">
       <demand></demand>
     </view>
     <view  hidden="{{currentTab != 2}}">
@@ -19,6 +17,9 @@
     <view  hidden="{{currentTab != 3}}">
       <me></me>
     </view>
+    <!--<view  hidden="{{currentTab != 5}}">-->
+    <!--<navigator url='/pages/login/login'>点击跳转</navigator>-->
+    <!--</view>-->
     <view>
       <tabBarBottom :active.sync="currentTab"></tabBarBottom>
     </view>
@@ -50,11 +51,15 @@
       currentTab:0,
     };
     onLoad(){
-
+      // if(this.currentTab==5){
+      //   wepy.navigateTo({
+      //     url:'/pages/login/login',  //跳转页面的路径，可带参数 ？隔开，不同参数用 & 分隔；相对路径，不需要.wxml后缀
+      //   })
+      // }
     };
     methods = {
       demands(){
-        console.log(1);
+        // console.log(1);
         wx.navigateTo({
           url: '/pages/demand/demand'
         })

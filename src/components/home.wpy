@@ -1,6 +1,7 @@
 
 <template>
   <view>
+
     <view>
       <image src="../images/default.png" style="width:750rpx;height:182rpx;"></image>
     </view>
@@ -8,20 +9,54 @@
 
     <view class="newDemand" style="margin-top: 30rpx;font-size: 24rpx;width: 100%;">
 
-      <view class="body-view">
-        <text style="margin-left: 20rpx;font-size: 30rpx;margin-right: 20rpx;">名片</text>
-        <switch bindchange="switch1Change" />
-        <!--<switch bindchange="switch2Change" />-->
-      </view>
-      <view style="">
-         <textarea style="border: 2px solid #edece8;padding: 10rpx;margin: 20rpx auto;width: 80%;"
-                   placeholder="请输入您的需求" maxlength=300 />
-      </view>
+      <view class="body-view" style="background-color: #fff;padding: 20rpx 0">
+        <view>
+          <view style="display:inline-block;margin-left: 20rpx;font-size: 30rpx;margin-right: 20rpx;vertical-align: middle">名片</view>
 
+          <switch checked={{status}} bindchange="switch1Change" style="display: inline-block;vertical-align: middle"/>
+          <!--<image src="../images/11.png" style="width:40rpx;height: 40rpx;" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"></image>-->
+
+          <button style="padding: 0rpx;vertical-align: middle;line-height: 60rpx;height: 60rpx;display: inline-block;background: #3388ff;"
+                  open-type="getPhoneNumber" @tap="getPhoneNumber" type="primary">
+            选择名片
+          </button>
+
+          <button style="padding: 0rpx;vertical-align: middle;line-height: 60rpx;height: 60rpx;display: inline-block;background: #3388ff;" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" type="primary">选择名片</button>
+        </view>
+
+
+
+        <view style="">
+           <textarea style="border: 2px solid #edece8;padding: 10rpx;margin: 20rpx auto;width: 80%;"
+                     placeholder="请输入您的需求" maxlength=300 />
+        </view>
+        <image src="../images/upload1.png" style="width:60rpx;height: 60rpx;margin-left: 8%" @tap="upload()"></image>
+    </view>
       <view>
         <button style="width: 250rpx;color: #fff;background-color: #3388ff">确认发布</button>
       </view>
 
+      <view hidden={{showCards}} style="z-index:1000;background-color: rosybrown;width:65%;height:70%;position: fixed;top: 0;right:0;">
+        <view style="margin: 20rpx;">
+          <text style="color: deepskyblue">点击添加名片</text><text style="float: right;color: deepskyblue">确定</text>
+          <radio-group class="radio-group" bindchange="radioChange">
+            <label wx:for="{{cardList}}" class="radio">
+              <view style="margin: 20rpx auto;background-color: lightgray;border-radius: 10rpx;padding: 10rpx;">
+                <radio value="{{item.id}}" />
+                <view style="display: inline-block;vertical-align: middle;margin-left: 20rpx;">
+                  <view>名字：{{item.user}}</view>
+                  <view>手机：{{item.mobile}}</view>
+                  <view>微信：{{item.wechat}}</view>
+                  <view>Q Q：{{item.QQ}}</view>
+                  <view>邮箱：{{item.Email}}</view>
+                </view>
+
+              </view>
+
+            </label>
+          </radio-group>
+        </view>
+      </view>
 
     </view>
   </view>
@@ -34,12 +69,111 @@
     data = {
       currentField:0,
       desc:"",
+      // status:false,
+      cardsId:"",
+      Permission:false,
+      showCards:false,
+      cardList:[
+        {
+          id:123,
+          user:"田少腾",
+          mobile:"18812101090",
+          wechat:"",
+          QQ:"",
+          Email:"",
+        },
+        {
+          id:124,
+          user:"田少腾",
+          mobile:"18812101090",
+          wechat:"",
+          QQ:"",
+          Email:"",
+        },
+        {
+          id:125,
+          user:"田少腾",
+          mobile:"18812101090",
+          wechat:"",
+          QQ:"",
+          Email:"",
+        },
+        {
+          id:125,
+          user:"田少腾",
+          mobile:"18812101090",
+          wechat:"",
+          QQ:"",
+          Email:"",
+        },
+        {
+          id:125,
+          user:"田少腾",
+          mobile:"18812101090",
+          wechat:"",
+          QQ:"",
+          Email:"",
+        },
+        {
+          id:125,
+          user:"田少腾",
+          mobile:"18812101090",
+          wechat:"",
+          QQ:"",
+          Email:"",
+        },
+        {
+          id:125,
+          user:"田少腾",
+          mobile:"18812101090",
+          wechat:"",
+          QQ:"",
+          Email:"",
+        },
+        {
+          id:125,
+          user:"田少腾",
+          mobile:"18812101090",
+          wechat:"",
+          QQ:"",
+          Email:"",
+        },
+      ],
     };
     onLoad(){
-
+      // this.status = wepy.$instance.globalData.Authorization;
     };
     methods = {
       //定义一个索引数组与领域相对应
+      radioChange(e) {
+        console.log('radio发生change事件，携带value值为：', e.detail.value)
+      },
+      switch1Change(e) {
+        this.status = e.detail.value;
+        // wepy.$instance.globalData.Authorization = this.status;
+        // console.log('switch1 发生 change 事件，携带值为', e.detail.value);
+        // console.log(wepy.$instance.globalData.Authorization)
+      },
+      getPhoneNumber: function (e) {
+        console.log(e.detail.errMsg)
+        console.log(e.detail.iv)
+        console.log(e.detail.encryptedData)
+        if (e.detail.errMsg == 'getPhoneNumber:fail user deny') {
+          wepy.$instance.globalData.Authorization = false;
+          wepy.showModal({
+            title: '提示', showCancel: false, content: '您未授权,将不能继续发布需求', success: function (res) {
+              console.log(wepy.$instance.globalData.Authorization)
+            }
+          })
+        } else {
+          wepy.$instance.globalData.Authorization = true;
+          wepy.showModal({
+            title: '提示', showCancel: false, content: '您已授权，请选择您要使用的名片', success: function (res) {
+              console.log(wepy.$instance.globalData.Authorization)
+            }
+          })
+        }
+      },
     };
     components = {
       field: field
@@ -47,19 +181,22 @@
   }
 </script>
 <style>
-  /*.wx-switch-input{*/
-    /*width:82rpx !important;*/
-    /*height:40rpx !important;*/
-  /*}*/
-  /*!*白色样式（false的样式）*!*/
-  /*.wx-switch-input::before{*/
-    /*width:80rpx !important;*/
-    /*height: 36rpx !important;*/
-  /*}*/
-  /*!*绿色样式（true的样式）*!*/
-  /*.wx-switch-input::after{*/
-    /*width: 40rpx !important;*/
-    /*height: 36rpx !important;*/
-  /*}*/
+  .wx-switch-input{
+    width:80rpx !important;
+    height:40rpx !important;
+    background: #50D2C2 !important;
+    border: #50d2c2 !important; /* 2018-07-18 重置开关边框颜色 */
+  }
+  /*白色样式（false的样式）*/
+  .wx-switch-input::before{
+    width:80rpx !important;
+    height: 40rpx !important;
+    background: #F1F4FD !important;
+  }
+  /*绿色样式（true的样式）*/
+  .wx-switch-input::after{
+    width: 40rpx !important;
+    height: 40rpx !important;
+  }
 </style>
 
