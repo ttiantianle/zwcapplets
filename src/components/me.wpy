@@ -40,7 +40,14 @@
   .free-btn-bordernone::after{
     border: none;
   }
-
+  .portrait{
+    display: inline-block;
+    vertical-align: top;
+    width:150rpx;
+    height: 150rpx;
+    border-radius: 75rpx;
+    overflow: hidden;
+  }
 </style>
 <template>
   <view>
@@ -52,7 +59,7 @@
     <!--我发布的-->
     <view hidden="{{selectId != 0}}">
       <view class="userinfo" style="margin: 20rpx 60rpx 20rpx 60rpx;">
-        <view style="display: inline-block;vertical-align: top;width:150rpx;height: 150rpx;">
+        <view class="portrait">
           <open-data type="userAvatarUrl" style="">
           </open-data>
         </view>
@@ -126,7 +133,8 @@
 
 <script>
   import wepy from 'wepy';
-  // import tabBarBottom from "../../components/tabBarBottom"
+  import Utils from '@/js/utils.js';
+
   export default class me extends wepy.component{
     props = {
 
@@ -267,7 +275,22 @@
       this_setdata:"",
     };
     onLoad(){
-
+      let url = wepy.$instance.globalData.url;
+      let _this = this;
+      wepy.request({
+        url: url + "/releaserequir/list",
+        data: {
+          re_type: Utils.get("2"),
+        },
+        success(res){
+          let str = res.data.substr(1);
+          str = str.substr(0, str.length-1);
+          let data = JSON.parse(str);
+          _this.requireList = data.data;
+          console.log(_this.requireList);
+          _this.$apply()
+        }
+      })
     }
 
     methods = {

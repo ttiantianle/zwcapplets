@@ -48,7 +48,7 @@
         'https://img.pc841.com/2018/0815/20180815101229911.jpg',
         'https://img.pc841.com/2018/0815/20180815101229911.jpg',
       ],
-      currentTab:0,
+      currentTab:3,
     };
     onLoad(){
       // if(this.currentTab==5){
