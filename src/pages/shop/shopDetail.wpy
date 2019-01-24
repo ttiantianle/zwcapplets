@@ -64,7 +64,7 @@
     box-shadow: 0 0 15rpx #DDDDDD;
     border-radius: 10rpx;
     background: #ffffff;
-    margin: 30rpx;
+    margin: 25rpx;
     padding: 15rpx;
   }
   .shopDetailbtn{
@@ -76,44 +76,43 @@
     line-height: 80rpx;
     font-size: 40rpx;
   }
-  .synopsis:nth-child(odd){
-    max-width: 100%;
-  }
-  .synopsis:nth-child(even){
-    max-width: 100%;
+  .synopsis{
+    text-align: center;
+    font-size: 40rpx;
+    font-weight: bold ;
   }
 </style>
 <template>
     <view>
       <view class="itemShop df box_show">
         <view class="f4">
-          <image src="/images/default.png"></image>
+          <image src="https://img.zhaowoce.com/{{shopDetail.shop_avatar}}"></image>
         </view>
         <view class="f8 pl15">
           <view class="lh40"><text class="fw600">所在城市：{{ shopDetail.city_name }}</text></view>
-          <view class="lh40">业务领域：</view>
-          <view class="lh40">联系方式：</view>
-          <view class="lh40">资质认证：</view>
+          <view class="lh40">业务领域：<text wx:for="{{shopDetail.field_name}}" wx:key="index">{{item.cat_name}} </text></view>
+          <view class="lh40">联系方式：{{ shopDetail.receive_mobile }}</view>
+          <view class="lh40">资质认证：<text wx:for="{{shopDetail.cnas}}" wx:key="index">{{item}} </text></view>
         </view>
       </view>
 
-      <view style="margin: 20rpx;">
-         <view style="text-align: center;font-size: 40rpx;font-weight: bold ;">公司简介</view>
-
-         <view>
-           <rich-text style="margin-top: 20rpx;padding: 10rpx;" class="synopsis" nodes={{shopDetail.introduction}}></rich-text>
-           <!--<template is="wxParse" data="{{wxParseData:shopDetail.introduction}}"/>-->
-         </view>
+      <view class="box_show">
         <view class="db shopDetailbtn" @tap="shopPicture()">机构相册 >></view>
-        <view class="db shopDetailbtn">仪器设备 >></view>
+        <view class="db shopDetailbtn" @tap="shopDevice()">仪器设备 >></view>
+
+         <view class="synopsis">公司简介</view>
+          <import src="../../wxParse/wxParse.wxml"/>
+          <template is="wxParse" data="{{wxParseData:article.nodes}}"/>
       </view>
     </view>
 </template>
 
 <script>
     import wepy from 'wepy';
+    var WxParse = require('../../wxParse/wxParse.js');
 
     export default class shopDetail extends wepy.page {
+
         config = {
             navigationBarTitleText: "国标（北京）检验认证有限公司"
         };
@@ -125,12 +124,13 @@
           shopId: "",
         };
         onLoad(params) {
-          this.shopId = params.id
+
+          this.shopId = params.id;
           wx.setNavigationBarTitle({
             title: '机构详情'
           });
           let _this = this;
-          console.log(params);
+          // console.log(params);
           wepy.request({
             url: wepy.$instance.globalData.url + "/shop/detail",
             // method: "POST",
@@ -143,7 +143,9 @@
               str = str.substr(0, str.length-1);
               let data = JSON.parse(str);
               _this.shopDetail = data.data;
-              console.log( _this.shopDetail,data);
+              var article = _this.shopDetail.introduction;
+              WxParse.wxParse('article', 'html', article, _this,5);
+              console.log( _this.shopDetail,);
               _this.$apply();
             }
           })
@@ -153,6 +155,11 @@
           shopPicture(){
             wx.navigateTo({
               url: '/pages/shop/shopPicture?id=' + this.shopId
+            })
+          },
+          shopDevice(){
+            wx.navigateTo({
+              url: '/pages/shop/shopDevice?id=' + this.shopId
             })
           }
         };

@@ -64,7 +64,7 @@
     box-shadow: 0 0 15rpx #DDDDDD;
     border-radius: 10rpx;
     background: #ffffff;
-    margin: 30rpx;
+    margin: 25rpx;
     padding: 15rpx;
   }
 

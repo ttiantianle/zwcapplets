@@ -19,7 +19,7 @@
 <script>
 import wepy from 'wepy'
 import 'wepy-async-function'
-
+import "/page/wxParse/wxParse.wxss";
 export default class extends wepy.app {
   config = {
     pages: [

@@ -25,9 +25,7 @@
       next:false,
     };
     onLoad() {
-      // wepy.redirectTo({
-      //         url:"./main"
-      // })
+
 
     };
     methods = {
@@ -82,7 +80,6 @@
                   }
                 });
               }
-
             }
           })
         }
