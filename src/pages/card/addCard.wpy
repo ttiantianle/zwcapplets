@@ -58,29 +58,27 @@
         <button type="primary" size="mini" style="float: right" @tap="newCard()">新建名片</button>
         <view style="clear: both"></view>
       </view>
-      <!--<scroll-view scroll-y="true" style="flex: 5;width: 100%">-->
-          <repeat wx:for="{{cardList}}" wx:for-index="index" >
+          <repeat wx:for="{{cardList}}" wx:for-index="index" wx:key="{{item.id}}">
             <view style="margin: 20rpx auto;background-color: lightgray;border-radius: 10rpx;padding: 10rpx;width: 90%">
               <view style="padding:20rpx; ">
-                <view>名字：{{item.user}}</view>
+                <view>名字：{{item.username}}</view>
                 <view>手机：{{item.mobile}}</view>
                 <view>微信：{{item.wechat}}</view>
-                <view>Q Q：{{item.QQ}}</view>
-                <view>邮箱：{{item.Email}}</view>
+                <view>Q Q：{{item.qq_num}}</view>
+                <view>邮箱：{{item.email}}</view>
                 <button size="mini" type="primary" style="float: right" @tap="deleteCard({{item.id}})">删除</button>
                 <view style="clear: both"></view>
               </view>
             </view>
           </repeat>
 
-      <!--</scroll-view>-->
     </view>
-
   </view>
 </template>
 
 <script>
   import wepy from 'wepy';
+  import Utils from '@/js/utils.js';
 
   export default class addCard extends wepy.page {
     config = {
@@ -95,75 +93,11 @@
       email:"",
 
       cardList:[
-        {
-          id:123,
-          user:"田少腾",
-          mobile:"18812101090",
-          wechat:"",
-          QQ:"",
-          Email:"",
-        },
-        {
-          id:124,
-          user:"田少腾",
-          mobile:"18812101090",
-          wechat:"",
-          QQ:"",
-          Email:"",
-        },
-        {
-          id:125,
-          user:"田少腾",
-          mobile:"18812101090",
-          wechat:"",
-          QQ:"",
-          Email:"",
-        },
-        {
-          id:126,
-          user:"田少腾",
-          mobile:"18812101090",
-          wechat:"",
-          QQ:"",
-          Email:"",
-        },
-        {
-          id:127,
-          user:"田少腾",
-          mobile:"18812101090",
-          wechat:"",
-          QQ:"",
-          Email:"",
-        },
-        {
-          id:128,
-          user:"田少腾",
-          mobile:"18812101090",
-          wechat:"",
-          QQ:"",
-          Email:"",
-        },
-        {
-          id:129,
-          user:"田少腾",
-          mobile:"18812101090",
-          wechat:"",
-          QQ:"",
-          Email:"",
-        },
-        {
-          id:130,
-          user:"田少腾",
-          mobile:"18812101090",
-          wechat:"",
-          QQ:"",
-          Email:"",
-        },
       ],
     };
 
     onLoad() {
-
+      this.datas();
     };
 
     methods = {
@@ -174,6 +108,7 @@
       bindEmail(e){this.email = e.detail.value;},
 
       newCard(){
+        let that = this;
         let mobile = /^(0|86|17951)?(13[0-9]|15[012356789]|16[5]|17[012345678]|18[0-9]|14[579][0-9]|19[9])[0-9]{8}$/; // 手机号
         let weChat = /^[a-zA-Z0-9]([-_a-zA-Z0-9]{5,19})+$/;  // 微信
         let qq = /^[1-9][0-9]{4,11}$/; // qq号
@@ -186,28 +121,28 @@
           })
           return;
         }
-        if(mobile.test(this.mobile)){
+        if(!mobile.test(this.mobile)){
           wx.showModal({
             title: '添加名片',
             content: '请填写有效的手机号码',
           })
           return;
         }
-        if(this.wechat !=''&&weChat.test(this.wechat)){
+        if(this.wechat !=''&& (!weChat.test(this.wechat))){
           wx.showModal({
             title: '添加名片',
             content: '请填写有效的微信号',
           })
           return;
         }
-        if(this.QQ !=''&&qq.test(this.QQ)){
+        if(this.QQ !=''&& (!qq.test(this.QQ))){
           wx.showModal({
             title: '添加名片',
             content: '请填写有效的QQ号',
           })
           return;
         }
-        if(this.email !=''&&mailbox.test(this.email)){
+        if(this.email !='' && (!mailbox.test(this.email))){
           wx.showModal({
             title: '添加名片',
             content: '请填写有效的邮箱',
@@ -216,12 +151,58 @@
         }
 
         //todo 发起请求
+        wepy.request({
+          url:this.$parent.globalData.url+"/usercard/addshop",
+          data:{
+            username: Utils.get(that.name),  // 称呼
+            wechat: Utils.get(that.wechat),  // 微信
+            mobile: Utils.get(that.mobile),  // 手机号
+            qq_num: Utils.get(that.QQ),     // qq
+            email: Utils.get(that.email),  // 邮箱
+          },
+          success(res){
+            let data = Utils.formatJson(res.data);
+            // console.log(data);
+            that.datas();
+          }
+        });
 
 
       },
       deleteCard(cardId){
+        let that = this;
+        wepy.request({
+          url:this.$parent.globalData.url+"/usercard/delshop",
+          data:{
+            id: Utils.get(cardId)
+          },
+          success(res){
+            that.datas();
+          },
+        });
+      },
 
-      }
+    };
+    datas(){
+      let that = this;
+      wepy.request({
+        url:wepy.$instance.globalData.url+"/usercard/list",
+        success(res){
+          let data = Utils.formatJson(res.data);
+          // console.log(data);
+          if(data.code == 0 ){
+            //todo
+            that.cardList = data.data;
+          }else{
+            wx.showToast({
+              title: '获取信息失败',
+              icon: 'failure',
+              duration: 2000
+            })
+          }
+          that.$apply();
+        }
+      });
     };
   }
 </script>

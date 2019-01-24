@@ -62,16 +62,6 @@
               名片id:{{cardId}}
           </view>
 
-          <!--<button wx:if="{{cardId ==''&&anonymous}}" style="padding: 0rpx;vertical-align: middle;line-height: 60rpx;height: 60rpx;display: inline-block;background: #3388ff;"-->
-                  <!--open-type="getPhoneNumber"  bindgetphonenumber="getPhoneNumber" type="primary">-->
-            <!--选择名片-->
-          <!--</button>-->
-          <!--<button wx:elif="{{cardId !=''&&anonymous}}" style="padding: 0rpx;vertical-align: middle;line-height: 60rpx;height: 60rpx;display: inline-block;background: #3388ff;"-->
-                  <!--open-type="getPhoneNumber"  bindgetphonenumber="getPhoneNumber" type="primary">-->
-            <!--更换名片-->
-          <!--</button>-->
-          <!--<text>名片id:{{cardId}}</text>-->
-          <!--<button style="padding: 0rpx;vertical-align: middle;line-height: 60rpx;height: 60rpx;display: inline-block;background: #3388ff;" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" type="primary">选择名片</button>-->
         </view>
 
         <view style="">
@@ -82,12 +72,7 @@
         <image src="../images/upload1.png" style="width:60rpx;height: 60rpx;margin-left: 8%" @tap="upload()"></image>
     </view>
       <view>
-        <!--不匿名的发布-->
         <button style="width: 250rpx;color: #fff;background-color: #3388ff;margin-top: 30rpx;" @tap="confirmRelease()">确认发布</button>
-        <!--匿名发布，匿名发布的话因为没有选择名片所以没有授权手机号需要先授权手机号-->
-        <!--<button wx:else style="width: 250rpx;color:#fff;background-color: #3388ff" open-type="getPhoneNumber"  bindgetphonenumber="getPhoneNumber"-->
-        <!--&gt;确认发布2</button>-->
-
       </view>
 
 
@@ -102,11 +87,11 @@
                 <view style="margin: 20rpx auto;background-color: lightgray;border-radius: 10rpx;padding: 10rpx;">
                   <radio value="{{item.id}}" />
                   <view style="display: inline-block;vertical-align: middle;margin-left: 20rpx;">
-                    <view>名字：{{item.user}}</view>
+                    <view>名字：{{item.username}}</view>
                     <view>手机：{{item.mobile}}</view>
                     <view>微信：{{item.wechat}}</view>
-                    <view>Q Q：{{item.QQ}}</view>
-                    <view>邮箱：{{item.Email}}</view>
+                    <view>Q Q：{{item.qq_num}}</view>
+                    <view>邮箱：{{item.email}}</view>
                   </view>
                 </view>
 
@@ -123,7 +108,6 @@
 <script>
   import wepy from 'wepy';
   import field from './field';
-  // import Utils from '../js/utils'
   import Utils from '@/js/utils.js'
   export default class home extends wepy.component{
     data = {
@@ -136,73 +120,12 @@
       showCards:true,//显示选择名片的div，true是隐藏，false显示
       file_path:"",//图片路径
       cardList:[
-        {
-          id:123,
-          user:"田少腾",
-          mobile:"18812101090",
-          wechat:"",
-          QQ:"",
-          Email:"",
-        },
-        {
-          id:124,
-          user:"田少腾",
-          mobile:"18812101090",
-          wechat:"",
-          QQ:"",
-          Email:"",
-        },
-        {
-          id:125,
-          user:"田少腾",
-          mobile:"18812101090",
-          wechat:"",
-          QQ:"",
-          Email:"",
-        },
-        {
-          id:126,
-          user:"田少腾",
-          mobile:"18812101090",
-          wechat:"",
-          QQ:"",
-          Email:"",
-        },
-        {
-          id:127,
-          user:"田少腾",
-          mobile:"18812101090",
-          wechat:"",
-          QQ:"",
-          Email:"",
-        },
-        {
-          id:128,
-          user:"田少腾",
-          mobile:"18812101090",
-          wechat:"",
-          QQ:"",
-          Email:"",
-        },
-        {
-          id:129,
-          user:"田少腾",
-          mobile:"18812101090",
-          wechat:"",
-          QQ:"",
-          Email:"",
-        },
-        {
-          id:130,
-          user:"田少腾",
-          mobile:"18812101090",
-          wechat:"",
-          QQ:"",
-          Email:"",
-        },
       ],
     };
     onLoad(){
+      wx.setNavigationBarTitle({
+        title: ''
+      })
     };
     methods = {
       bindDesc(e){
@@ -214,11 +137,11 @@
       },
       switch1Change(e) {
         this.anonymous = e.detail.value;
-        // console.log(e.detail.value)
+
         //如果是匿名发布，清空cardId信息
         if(this.anonymous === false){
-          // console.log(this.cardId)
-          // console.log(e.detail.value)
+
+          this.showCards = true;
           this.cardId = '';
         }
         this.$apply();
@@ -244,26 +167,21 @@
           return;
         }
         else{
-          //已授权，但是要先请求到数据之后再显示名片框
           this.showCards = false;
           wepy.request({
             url:wepy.$instance.globalData.url+"/usercard/list",
             success(res){
-              let str = res.data.substr(1);
-              str = str.substr(0, str.length-1);
-              let data = JSON.parse(str);
-
-              if(data.code == 0 ){
+              let data = Utils.formatJson(res.data);
+            if(data.code == 0 ){
                   //todo
                 that.cardList = data.data;
               }else{
                 wx.showToast({
-                  title: '后去信息失败',
+                  title: '获取信息失败',
                   icon: 'failure',
                   duration: 2000
                 })
               }
-
               that.$apply();
             }
           });
@@ -292,13 +210,13 @@
             content: '请填写您的需求后发布',
             success(res) {
               if (res.confirm) {
-                return;
                 // console.log('用户点击确定')
               } else if (res.cancel) {
-                return;
+
               }
             }
           });
+          return;
         }
 
         //判断是否授权
@@ -360,7 +278,7 @@
             }else{
               wx.showToast({
                 title: '发布失败',
-                icon: 'failure',
+                icon: 'loading',
                 duration: 2000
               })
             }

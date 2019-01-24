@@ -43,11 +43,20 @@ export default class tabBarBottom extends wepy.component{
   methods = {
     change(idx,evt){
       //感觉+没有意义
+      this.active = +idx;
       switch (this.active){
         case 0:
+          wx.setNavigationBarTitle({
+            title: '首页'
+          });break;
         case 1:
+          wx.setNavigationBarTitle({
+            title: '需求'
+          });break;
         case 2:
-
+          wx.setNavigationBarTitle({
+            title: '机构'
+          });break;
         case 3:
           if(wepy.$instance.globalData.Authorization==false){
             wx.showModal({
@@ -69,7 +78,9 @@ export default class tabBarBottom extends wepy.component{
             return;
           }else{
             //todo
-
+            wx.setNavigationBarTitle({
+              title: ''
+            });break;
           }
           break;
       }
