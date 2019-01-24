@@ -25,112 +25,113 @@
       next:false,
     };
     onLoad() {
-      wepy.redirectTo({
-              url:"./card/addCard"
+      this.$parent.globalData.Authorization = true;
+      wx.navigateTo({
+        url: "/pages/main"
       })
 
     };
     methods = {
 
-      getPhoneNumber: function (e) {
-        //todo api.weixin.qq.com不在合法校验域名内 需要放到后台去处理
-        // if (e.detail.errMsg == 'getPhoneNumber:fail user deny') {
-        //   this.$parent.globalData.Authorization = false;
-        //   wepy.redirectTo({
-        //     url:"./main"
-        //   })
-        // } else {
-        //   this.$parent.globalData.Authorization = true;
-        //   wepy.redirectTo({
-        //     url:"./main"
-        //   })
-        // }
-        // console.log(this.$parent.globalData.url);
-        if(this.$parent.globalData.Authorization){
-          wepy.redirectTo({
-            url:"./main"
-          });
-          return;
-        }
-
-        let that = this;
-        if (e.detail.errMsg == "getPhoneNumber:fail user deny") {
-          this.$parent.globalData.Authorization = false;
-          wepy.redirectTo({
-            url:"./main"
-          })
-        }else{
-          //用户允许授权
-          // console.log("lv", e.detail.iv);
-          // console.log(e.detail.encryptedData);
-          wx.showLoading()
-          var self=this
-          //1. 调用登录接口获取临时登录code
-          wx.login({
-            success: res => {
-              if(res.code){
-                //2. 访问登录凭证校验接口获取session_key、openid
-                wx.request({
-                  url: "https://api.weixin.qq.com/sns/jscode2session",
-                  data: {
-                    'appid': "wx94ca3f87f7ae6d42",
-                    'secret': "9793bc4cf55b85f910cde3cf4f0a6fef",
-                    'js_code': res.code,
-                    'grant_type': "authorization_code"
-                  },
-                  method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-                  header: {
-                    'content-type': 'application/json'
-                  }, // 设置请求的 header
-                  success: function (data) {
-                    // console.log("data", data);
-                    if(data.statusCode==200){
-                      //3. 解密
-                      wx.request({
-                        url: 'https://zwcap.zhaowoce.com:4433/wxdata/index',
-                        data: {
-                          'encryptedData': e.detail.encryptedData,
-                          'iv': e.detail.iv,
-                          'session_key': data.data.session_key
-                        },
-                        method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-                        header: {
-                          'content-type': 'application/json'
-                        }, // 设置请求的 header
-                        success: function (data2) {
-                          wx.hideLoading()
-                          // console.log(data2)
-                          if (data2.statusCode == 200) {
-                            let str = data2.data.substr(1);
-                            str = str.substr(0, str.length-1);
-                            let re = JSON.parse(str);
-                            // console.log(re.code)
-                            // console.log(re.data.phoneNumber)
-                            if(re.code == 0){
-                              // that.$parent.globalData.phoneNumber=re.data.phoneNumber;
-                              that.$parent.globalData.Authorization = true;
-                              wepy.redirectTo({
-                                url:"./main"
-                              })
-                            }
-                          }
-                        },
-                        fail: function (err) {
-                          console.log(err);
-                        }
-                      })
-                    }
-                  },
-                  fail: function (err) {
-                    console.log(err);
-                  }
-                })
-              }
-
-            }
-          })
-        }
-      },
+      // getPhoneNumber: function (e) {
+      //   //todo api.weixin.qq.com不在合法校验域名内 需要放到后台去处理
+      //   // if (e.detail.errMsg == 'getPhoneNumber:fail user deny') {
+      //   //   this.$parent.globalData.Authorization = false;
+      //   //   wepy.redirectTo({
+      //   //     url:"./main"
+      //   //   })
+      //   // } else {
+      //   //   this.$parent.globalData.Authorization = true;
+      //   //   wepy.redirectTo({
+      //   //     url:"./main"
+      //   //   })
+      //   // }
+      //   // console.log(this.$parent.globalData.url);
+      //   if(this.$parent.globalData.Authorization){
+      //     wepy.redirectTo({
+      //       url:"./main"
+      //     });
+      //     return;
+      //   }
+      //
+      //   let that = this;
+      //   if (e.detail.errMsg == "getPhoneNumber:fail user deny") {
+      //     this.$parent.globalData.Authorization = false;
+      //     wepy.redirectTo({
+      //       url:"./main"
+      //     })
+      //   }else{
+      //     //用户允许授权
+      //     // console.log("lv", e.detail.iv);
+      //     // console.log(e.detail.encryptedData);
+      //     wx.showLoading()
+      //     var self=this
+      //     //1. 调用登录接口获取临时登录code
+      //     wx.login({
+      //       success: res => {
+      //         if(res.code){
+      //           //2. 访问登录凭证校验接口获取session_key、openid
+      //           wx.request({
+      //             url: "https://api.weixin.qq.com/sns/jscode2session",
+      //             data: {
+      //               'appid': "wx94ca3f87f7ae6d42",
+      //               'secret': "9793bc4cf55b85f910cde3cf4f0a6fef",
+      //               'js_code': res.code,
+      //               'grant_type': "authorization_code"
+      //             },
+      //             method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      //             header: {
+      //               'content-type': 'application/json'
+      //             }, // 设置请求的 header
+      //             success: function (data) {
+      //               // console.log("data", data);
+      //               if(data.statusCode==200){
+      //                 //3. 解密
+      //                 wx.request({
+      //                   url: 'https://zwcap.zhaowoce.com:4433/wxdata/index',
+      //                   data: {
+      //                     'encryptedData': e.detail.encryptedData,
+      //                     'iv': e.detail.iv,
+      //                     'session_key': data.data.session_key
+      //                   },
+      //                   method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      //                   header: {
+      //                     'content-type': 'application/json'
+      //                   }, // 设置请求的 header
+      //                   success: function (data2) {
+      //                     wx.hideLoading()
+      //                     // console.log(data2)
+      //                     if (data2.statusCode == 200) {
+      //                       let str = data2.data.substr(1);
+      //                       str = str.substr(0, str.length-1);
+      //                       let re = JSON.parse(str);
+      //                       // console.log(re.code)
+      //                       // console.log(re.data.phoneNumber)
+      //                       if(re.code == 0){
+      //                         // that.$parent.globalData.phoneNumber=re.data.phoneNumber;
+      //                         that.$parent.globalData.Authorization = true;
+      //                         wepy.redirectTo({
+      //                           url:"./main"
+      //                         })
+      //                       }
+      //                     }
+      //                   },
+      //                   fail: function (err) {
+      //                     console.log(err);
+      //                   }
+      //                 })
+      //               }
+      //             },
+      //             fail: function (err) {
+      //               console.log(err);
+      //             }
+      //           })
+      //         }
+      //
+      //       }
+      //     })
+      //   }
+      // },
     };
   }
 </script>
