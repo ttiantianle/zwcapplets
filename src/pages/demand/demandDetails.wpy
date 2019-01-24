@@ -220,6 +220,7 @@
               url: wepy.$instance.globalData.url + "/releaserequir/savereply",
               // method: "POST",
               data: {
+                from_type: 'xcx_shop',
                 card_id: _this.cardId,
                 require_id: _this.details.id,
                 shop_id: 1,

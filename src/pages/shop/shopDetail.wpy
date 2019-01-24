@@ -104,7 +104,7 @@
            <rich-text style="margin-top: 20rpx;padding: 10rpx;" class="synopsis" nodes={{shopDetail.introduction}}></rich-text>
            <!--<template is="wxParse" data="{{wxParseData:shopDetail.introduction}}"/>-->
          </view>
-        <view class="db shopDetailbtn" >机构相册 >></view>
+        <view class="db shopDetailbtn" @tap="shopPicture()">机构相册 >></view>
         <view class="db shopDetailbtn">仪器设备 >></view>
       </view>
     </view>
@@ -122,8 +122,10 @@
         };
         data = {
           shopDetail: [],
+          shopId: "",
         };
         onLoad(params) {
+          this.shopId = params.id
           wx.setNavigationBarTitle({
             title: '机构详情'
           });
@@ -147,6 +149,12 @@
           })
         };
 
-        methods = {};
+        methods = {
+          shopPicture(){
+            wx.navigateTo({
+              url: '/pages/shop/shopPicture?id=' + this.shopId
+            })
+          }
+        };
     }
 </script>
