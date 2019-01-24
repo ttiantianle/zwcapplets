@@ -11,20 +11,16 @@
         </swiper-item>
       </block>
     </swiper>
-    <view style="margin:40rpx 20rpx 0rpx 20rpx;">经济日报讯 记者姜天骄报道：1月21日13时42分
-      ，航天科技集团有限公司所属中国运载火箭技术研究院抓总研制的
-      长征十一号遥六火箭在酒泉卫星发射中心点火升空，成功将4颗卫星送入预定轨道，发射取得圆满成功。
-
-      此次发射的卫星包括两颗主星和两颗搭载小卫星，
-      其中两颗主星是来自吉林长光卫星技术有限公司的“吉林一号”光谱01/02星，
-      主要为林业系统和海洋领域提供遥感数据和产品服务；一颗小卫星来自长沙天仪研究院，
-      另一颗小卫星来自北京零重空间技术有限公司。
+    <view style="margin:40rpx 20rpx 0rpx 20rpx;">
+      <import src="../../wxParse/wxParse.wxml"/>
+      <template is="wxParse" data="{{wxParseData:article.nodes}}"/>
     </view>
   </view>
 </template>
 
 <script>
   import wepy from 'wepy';
+  var WxParse = require('../../wxParse/wxParse.js');
 
   export default class shopPicture extends wepy.page {
     config = {
@@ -40,7 +36,7 @@
     onLoad(params) {
       // this.shopId = params.id;
       let _this = this;
-      console.log(params);
+      // console.log(params);
       wx.setNavigationBarTitle({
         title: '机构相册'
       });
@@ -57,6 +53,8 @@
           let data = JSON.parse(str);
           _this.shopPicture = data.data;
           _this.shopPicture = _this.shopPicture.shop_picture;
+          var article = _this.shopPicture.shop_info.introduction;
+          WxParse.wxParse('article', 'html', article, _this,5);
           console.log( _this.shopPicture,data);
           _this.$apply();
         }

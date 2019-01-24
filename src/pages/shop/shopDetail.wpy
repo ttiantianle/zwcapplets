@@ -64,7 +64,7 @@
     box-shadow: 0 0 15rpx #DDDDDD;
     border-radius: 10rpx;
     background: #ffffff;
-    margin: 30rpx;
+    margin: 25rpx;
     padding: 15rpx;
   }
   .shopDetailbtn{
@@ -97,23 +97,26 @@
         </view>
       </view>
 
-      <view style="margin: 20rpx;">
+      <view class="box_show">
          <view style="text-align: center;font-size: 40rpx;font-weight: bold ;">公司简介</view>
-
-         <view>
-           <rich-text style="margin-top: 20rpx;padding: 10rpx;" class="synopsis" nodes={{shopDetail.introduction}}></rich-text>
-           <!--<template is="wxParse" data="{{wxParseData:shopDetail.introduction}}"/>-->
-         </view>
+          <import src="../../wxParse/wxParse.wxml"/>
+          <template is="wxParse" data="{{wxParseData:article.nodes}}"/>
+         <!--<view>-->
+           <!--<rich-text style="margin-top: 20rpx;padding: 10rpx;" class="synopsis" nodes={{shopDetail.introduction}}></rich-text>-->
+           <!--&lt;!&ndash;<template is="wxParse" data="{{wxParseData:shopDetail.introduction}}"/>&ndash;&gt;-->
+         <!--</view>-->
         <view class="db shopDetailbtn" @tap="shopPicture()">机构相册 >></view>
-        <view class="db shopDetailbtn">仪器设备 >></view>
+        <view class="db shopDetailbtn" @tap="shopDevice()">仪器设备 >></view>
       </view>
     </view>
 </template>
 
 <script>
     import wepy from 'wepy';
+    var WxParse = require('../../wxParse/wxParse.js');
 
     export default class shopDetail extends wepy.page {
+
         config = {
             navigationBarTitleText: "国标（北京）检验认证有限公司"
         };
@@ -125,12 +128,13 @@
           shopId: "",
         };
         onLoad(params) {
-          this.shopId = params.id
+
+          this.shopId = params.id;
           wx.setNavigationBarTitle({
             title: '机构详情'
           });
           let _this = this;
-          console.log(params);
+          // console.log(params);
           wepy.request({
             url: wepy.$instance.globalData.url + "/shop/detail",
             // method: "POST",
@@ -143,7 +147,9 @@
               str = str.substr(0, str.length-1);
               let data = JSON.parse(str);
               _this.shopDetail = data.data;
-              console.log( _this.shopDetail,data);
+              var article = _this.shopDetail.introduction;
+              WxParse.wxParse('article', 'html', article, _this,5);
+              // console.log( _this.shopDetail,data);
               _this.$apply();
             }
           })
@@ -153,6 +159,11 @@
           shopPicture(){
             wx.navigateTo({
               url: '/pages/shop/shopPicture?id=' + this.shopId
+            })
+          },
+          shopDevice(){
+            wx.navigateTo({
+              url: '/pages/shop/shopDevice?id=' + this.shopId
             })
           }
         };
