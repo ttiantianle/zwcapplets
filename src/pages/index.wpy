@@ -15,6 +15,7 @@
 
 <script>
   import wepy from 'wepy';
+
   export default class index extends wepy.page {
     config = {
       navigationBarTitleText: "授权"
@@ -29,32 +30,104 @@
     methods = {
 
       getPhoneNumber: function (e) {
-        console.log(e.detail.errMsg)
-        console.log(e.detail.iv)
-        console.log(e.detail.encryptedData)
-        if (e.detail.errMsg == 'getPhoneNumber:fail user deny') {
-          // console.log(this.$parent.globalData.Authorization);
+        // if (e.detail.errMsg == 'getPhoneNumber:fail user deny') {
+        //   this.$parent.globalData.Authorization = false;
+        //   wepy.redirectTo({
+        //     url:"./main"
+        //   })
+        // } else {
+        //   this.$parent.globalData.Authorization = true;
+        //   wepy.redirectTo({
+        //     url:"./main"
+        //   })
+        // }
+        // console.log(this.$parent.globalData.url);
+        let that = this;
+        if (e.detail.errMsg == "getPhoneNumber:fail user deny") {
           this.$parent.globalData.Authorization = false;
           wepy.redirectTo({
             url:"./main"
           })
-          // wx.showModal({
-          //   title: '提示', showCancel: false, content: '未授权', success: function (res) {
-          //
-          //   }
-          // })
-        } else {
-          this.$parent.globalData.Authorization = true;
-          wepy.redirectTo({
-            url:"./main"
+        }else{
+          //用户允许授权
+          console.log("lv", e.detail.iv);
+          console.log(e.detail.encryptedData);
+          wx.showLoading()
+          var self=this
+          //1. 调用登录接口获取临时登录code
+          wx.login({
+            success: res => {
+              if(res.code){
+                //2. 访问登录凭证校验接口获取session_key、openid
+                wx.request({
+                  url: "https://api.weixin.qq.com/sns/jscode2session",
+                  data: {
+                    'appid': "wx94ca3f87f7ae6d42",
+                    'secret': "9793bc4cf55b85f910cde3cf4f0a6fef",
+                    'js_code': res.code,
+                    'grant_type': "authorization_code"
+                  },
+                  method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+                  header: {
+                    'content-type': 'application/json'
+                  }, // 设置请求的 header
+                  success: function (data) {
+                    console.log(22222);
+                    console.log("data", data);
+                    console.log(33333);
+                    // console.log( e.detail.iv)
+                    if(data.statusCode==200){
+                      //3. 解密
+                      wx.request({
+                        //todo 换成自己的
+                        // url: that.$parent.globalData.url+'/wxdata/index',
+                        // url: 'http://www.xiaochengxu.com/demo.php',
+                        // url: 'http://www.zwcap.com/wxdata/index',
+                        url: 'https://zwcap.zhaowoce.com:4433/wxdata/index',
+                        // url: 'http://zwcap.zhaowoce.com:8090//wxdata/index',
+
+
+                        data: {
+                          'encryptedData': e.detail.encryptedData,
+                          'iv': e.detail.iv,
+                          'session_key': data.data.session_key
+                        },
+                        method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+                        header: {
+                          'content-type': 'application/json'
+                        }, // 设置请求的 header
+                        success: function (data2) {
+                          wx.hideLoading()
+                          console.log(44444)
+                          console.log(data2)
+                          console.log(55555)
+                          return;
+                          if (data2.statusCode == 200 && data2.data.phoneNumber) {
+                            self.setData({
+                              phone: data2.data.phoneNumber
+                            })
+                          }
+                        },
+                        fail: function (err) {
+                          console.log(err);
+                        }
+                      })
+                    }
+                  },
+                  fail: function (err) {
+                    console.log(err);
+                  }
+                })
+              }
+
+            }
           })
-          // wx.showModal({
-          //   title: '提示', showCancel: false, content: '同意授权', success: function (res) {
-          //
-          //   }
-          // })
         }
       },
     };
   }
 </script>
+<b>Fatal error</b>:
+require_once(): Failed opening required '/data/website/zwcap/lib/php-xcx/wxBizDataCrypt.php'
+(include_path='.:/usr/local/php/lib/php') in <b>/data/website/zwcap/app/controllers/WxdataController.php</b> on line <b>15</b><br />
+

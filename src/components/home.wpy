@@ -76,6 +76,7 @@
 
         <view style="">
            <textarea style="border: 2px solid #edece8;padding: 10rpx;margin: 20rpx auto;width: 80%;"
+                     bindinput="bindDesc"
                      placeholder="请输入您的需求" maxlength="300" />
         </view>
         <image src="../images/upload1.png" style="width:60rpx;height: 60rpx;margin-left: 8%" @tap="upload()"></image>
@@ -122,7 +123,8 @@
 <script>
   import wepy from 'wepy';
   import field from './field';
-  import Utils from '../js/utils'
+  // import Utils from '../js/utils'
+  import Utils from '@/js/utils.js'
   export default class home extends wepy.component{
     data = {
       currentField:3801,//记录当前所选择的的领域
@@ -132,6 +134,7 @@
       anonymous:false,//是否匿名回复,false匿名true不匿名
       // Permission:false,
       showCards:true,//显示选择名片的div，true是隐藏，false显示
+      file_path:"",//图片路径
       cardList:[
         {
           id:123,
@@ -202,7 +205,9 @@
     onLoad(){
     };
     methods = {
-      //定义一个索引数组与领域相对应
+      bindDesc(e){
+        this.desc = e.detail.value;
+      },
       radioChange(e) {
         this.cardId = e.detail.value;
         console.log('radio发生change事件，携带value值为：', e.detail.value)
@@ -219,20 +224,83 @@
         this.$apply();
       },
       selectCard(){
-        this.showCards = false;
+        let that = this;
+        if(!wepy.$instance.globalData.Authorization){
+          this.showCards = true;
+          wx.showModal({
+            title: '您还未授权',
+            content: '点击\'确定\'跳转授权页面',
+            success(res) {
+              if (res.confirm) {
+                wepy.navigateTo({
+                  url:"/pages/index",
+                });
+                // console.log('用户点击确定')
+              } else if (res.cancel) {
+                // console.log('用户点击取消')
+              }
+            }
+          });
+          return;
+        }
+        else{
+          //已授权，但是要先请求到数据之后再显示名片框
+          this.showCards = false;
+          wepy.request({
+            url:wepy.$instance.globalData.url+"/usercard/list",
+            success(res){
+              let str = res.data.substr(1);
+              str = str.substr(0, str.length-1);
+              let data = JSON.parse(str);
+
+              if(data.code == 0 ){
+                  //todo
+                that.cardList = data.data;
+              }else{
+                wx.showToast({
+                  title: '后去信息失败',
+                  icon: 'failure',
+                  duration: 2000
+                })
+              }
+
+              that.$apply();
+            }
+          });
+        }
+
       },
+
       //确认所选择的的名片
       determine(){
         this.showCards = true;
       },
+
       //添加名片
       addCards(){
         wepy.navigateTo({
           url:"/pages/card/addCard",
         })
       },
+
       confirmRelease(){
         let that = this;
+        //内容不能为空
+        if(this.desc==''){
+          wx.showModal({
+            title: '重要信息未填写',
+            content: '请填写您的需求后发布',
+            success(res) {
+              if (res.confirm) {
+                return;
+                // console.log('用户点击确定')
+              } else if (res.cancel) {
+                return;
+              }
+            }
+          });
+        }
+
         //判断是否授权
         if(wepy.$instance.globalData.Authorization==false){
           wx.showModal({
@@ -265,16 +333,45 @@
               } else if (res.cancel) {
                 // console.log('用户点击取消')
                 that.anonymous = false;
-                //todo 发布需求，匿名方式发布
+
               }
             }
           });
         }
+        wepy.request({
+          url:wepy.$instance.globalData.url+'/releaserequir/addrequir',
+          data:{
+            cat_name: Utils.get((that.currentField).toString()),  // 领域
+            file_path: Utils.get(that.file_path),  // 图片
+            text: Utils.get(that.desc),  // 内容
+            card_id: Utils.get(that.cardId),  // 名片ID
+          },
+          success(res){
+            let str = res.data.substr(1);
+            str = str.substr(0, str.length-1);
+            let data = JSON.parse(str);
 
-        //todo 发布需求
+            if(data.code == 0){
+              wx.showToast({
+                title: '发布成功',
+                icon: 'success',
+                duration: 2000
+              })
+            }else{
+              wx.showToast({
+                title: '发布失败',
+                icon: 'failure',
+                duration: 2000
+              })
+            }
+            that.$apply();
+          }
+
+        })
 
 
       }
+
     };
     components = {
       field: field

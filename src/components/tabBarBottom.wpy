@@ -69,7 +69,7 @@ export default class tabBarBottom extends wepy.component{
             return;
           }else{
             //todo
-            
+
           }
           break;
       }
