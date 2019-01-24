@@ -45,19 +45,31 @@
 
       <view class="body-view">
         <view>
-          <view style="display:inline-block;margin-left: 20rpx;font-size: 30rpx;margin-right: 20rpx;vertical-align: middle">名片</view>
+          <view style="display:inline-block;margin-left: 20rpx;font-size: 30rpx;margin-right: 20rpx;vertical-align: middle">
+            名片
+          </view>
 
-          <switch checked="{{status}}" bindchange="switch1Change" style="display: inline-block;vertical-align: middle"/>
-          <!--<image src="../images/11.png" style="width:40rpx;height: 40rpx;" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"></image>-->
+          <switch checked="{{status}}"
+                  bindchange="switch1Change"
+                  style="display: inline-block;vertical-align: middle"
+          />
+          <image wx:if="{{anonymous}}" src="../images/11.png"
+                 style="width:40rpx;height: 40rpx;vertical-align: middle"
+                 @tap="selectCard()">
+          </image>
+          <view  wx:if="{{cardId!=''}}"
+                   style="display:inline-block;margin-left: 20rpx;font-size: 30rpx;margin-right: 20rpx;vertical-align: middle">
+              名片id:{{cardId}}
+          </view>
 
-          <button wx:if="{{cardId ==''&&anonymous}}" style="padding: 0rpx;vertical-align: middle;line-height: 60rpx;height: 60rpx;display: inline-block;background: #3388ff;"
-                  open-type="getPhoneNumber"  bindgetphonenumber="getPhoneNumber" type="primary">
-            选择名片
-          </button>
-          <button wx:elif="{{cardId !=''&&anonymous}}" style="padding: 0rpx;vertical-align: middle;line-height: 60rpx;height: 60rpx;display: inline-block;background: #3388ff;"
-                  open-type="getPhoneNumber"  bindgetphonenumber="getPhoneNumber" type="primary">
-            更换名片
-          </button>
+          <!--<button wx:if="{{cardId ==''&&anonymous}}" style="padding: 0rpx;vertical-align: middle;line-height: 60rpx;height: 60rpx;display: inline-block;background: #3388ff;"-->
+                  <!--open-type="getPhoneNumber"  bindgetphonenumber="getPhoneNumber" type="primary">-->
+            <!--选择名片-->
+          <!--</button>-->
+          <!--<button wx:elif="{{cardId !=''&&anonymous}}" style="padding: 0rpx;vertical-align: middle;line-height: 60rpx;height: 60rpx;display: inline-block;background: #3388ff;"-->
+                  <!--open-type="getPhoneNumber"  bindgetphonenumber="getPhoneNumber" type="primary">-->
+            <!--更换名片-->
+          <!--</button>-->
           <!--<text>名片id:{{cardId}}</text>-->
           <!--<button style="padding: 0rpx;vertical-align: middle;line-height: 60rpx;height: 60rpx;display: inline-block;background: #3388ff;" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" type="primary">选择名片</button>-->
         </view>
@@ -70,10 +82,10 @@
     </view>
       <view>
         <!--不匿名的发布-->
-        <button wx:if="{{anonymous}}" style="width: 250rpx;color: #fff;background-color: #3388ff">确认发布1</button>
+        <button style="width: 250rpx;color: #fff;background-color: #3388ff;margin-top: 30rpx;" @tap="confirmRelease()">确认发布</button>
         <!--匿名发布，匿名发布的话因为没有选择名片所以没有授权手机号需要先授权手机号-->
-        <button wx:else style="width: 250rpx;color:#fff;background-color: #3388ff" open-type="getPhoneNumber"  bindgetphonenumber="getPhoneNumber"
-        >确认发布2</button>
+        <!--<button wx:else style="width: 250rpx;color:#fff;background-color: #3388ff" open-type="getPhoneNumber"  bindgetphonenumber="getPhoneNumber"-->
+        <!--&gt;确认发布2</button>-->
 
       </view>
 
@@ -81,7 +93,8 @@
       <view hidden="{{showCards}}" style="z-index:9999;background-color: #fff;width:65%;height:90%;position: fixed;top: 0;right:0;">
         <scroll-view scroll-y="true" style="height: 100%;">
           <view style="margin: 20rpx;">
-            <text style="color: deepskyblue">点击添加名片</text><text style="float: right;color: deepskyblue">确定</text>
+            <text style="color: deepskyblue" @tap="addCards()">点击添加名片</text>
+            <text style="float: right;color: deepskyblue" @tap="determine()">确定</text>
             <radio-group class="radio-group" bindchange="radioChange">
               <view wx:if="{{cardList.length == 0}}">您还没有添加名片,请添加名片后发布需求</view>
               <label wx:for="{{cardList}}" wx:key="index" class="radio">
@@ -120,109 +133,148 @@
       // Permission:false,
       showCards:true,//显示选择名片的div，true是隐藏，false显示
       cardList:[
-        // {
-        //   id:123,
-        //   user:"田少腾",
-        //   mobile:"18812101090",
-        //   wechat:"",
-        //   QQ:"",
-        //   Email:"",
-        // },
-        // {
-        //   id:124,
-        //   user:"田少腾",
-        //   mobile:"18812101090",
-        //   wechat:"",
-        //   QQ:"",
-        //   Email:"",
-        // },
-        // {
-        //   id:125,
-        //   user:"田少腾",
-        //   mobile:"18812101090",
-        //   wechat:"",
-        //   QQ:"",
-        //   Email:"",
-        // },
-        // {
-        //   id:126,
-        //   user:"田少腾",
-        //   mobile:"18812101090",
-        //   wechat:"",
-        //   QQ:"",
-        //   Email:"",
-        // },
-        // {
-        //   id:127,
-        //   user:"田少腾",
-        //   mobile:"18812101090",
-        //   wechat:"",
-        //   QQ:"",
-        //   Email:"",
-        // },
-        // {
-        //   id:128,
-        //   user:"田少腾",
-        //   mobile:"18812101090",
-        //   wechat:"",
-        //   QQ:"",
-        //   Email:"",
-        // },
-        // {
-        //   id:129,
-        //   user:"田少腾",
-        //   mobile:"18812101090",
-        //   wechat:"",
-        //   QQ:"",
-        //   Email:"",
-        // },
-        // {
-        //   id:130,
-        //   user:"田少腾",
-        //   mobile:"18812101090",
-        //   wechat:"",
-        //   QQ:"",
-        //   Email:"",
-        // },
+        {
+          id:123,
+          user:"田少腾",
+          mobile:"18812101090",
+          wechat:"",
+          QQ:"",
+          Email:"",
+        },
+        {
+          id:124,
+          user:"田少腾",
+          mobile:"18812101090",
+          wechat:"",
+          QQ:"",
+          Email:"",
+        },
+        {
+          id:125,
+          user:"田少腾",
+          mobile:"18812101090",
+          wechat:"",
+          QQ:"",
+          Email:"",
+        },
+        {
+          id:126,
+          user:"田少腾",
+          mobile:"18812101090",
+          wechat:"",
+          QQ:"",
+          Email:"",
+        },
+        {
+          id:127,
+          user:"田少腾",
+          mobile:"18812101090",
+          wechat:"",
+          QQ:"",
+          Email:"",
+        },
+        {
+          id:128,
+          user:"田少腾",
+          mobile:"18812101090",
+          wechat:"",
+          QQ:"",
+          Email:"",
+        },
+        {
+          id:129,
+          user:"田少腾",
+          mobile:"18812101090",
+          wechat:"",
+          QQ:"",
+          Email:"",
+        },
+        {
+          id:130,
+          user:"田少腾",
+          mobile:"18812101090",
+          wechat:"",
+          QQ:"",
+          Email:"",
+        },
       ],
     };
     onLoad(){
-      // console.log()
-      // this.status = wepy.$instance.globalData.Authorization;
     };
     methods = {
       //定义一个索引数组与领域相对应
       radioChange(e) {
+        this.cardId = e.detail.value;
         console.log('radio发生change事件，携带value值为：', e.detail.value)
       },
       switch1Change(e) {
         this.anonymous = e.detail.value;
-        // wepy.$instance.globalData.Authorization = this.status;
-        // console.log('switch1 发生 change 事件，携带值为', e.detail.value);
-        // console.log(wepy.$instance.globalData.Authorization)
-      },
-      getPhoneNumber: function (e) {
-        console.log(e.detail.errMsg)
-        console.log(e.detail.iv)
-        console.log(e.detail.encryptedData)
-
-        if (e.detail.errMsg == 'getPhoneNumber:fail user deny') {
-          wepy.$instance.globalData.Authorization = false;
-          wepy.showModal({
-            title: '提示', showCancel: false, content: '您未授权,将不能继续发布需求', success: function (res) {
-              console.log(wepy.$instance.globalData.Authorization)
-            }
-          })
-        } else {
-          wepy.$instance.globalData.Authorization = true;
-          wepy.showModal({
-            title: '提示', showCancel: false, content: '您已授权，请选择您要使用的名片', success: function (res) {
-              console.log(wepy.$instance.globalData.Authorization);
-
-            }
-          })
+        // console.log(e.detail.value)
+        //如果是匿名发布，清空cardId信息
+        if(this.anonymous === false){
+          // console.log(this.cardId)
+          // console.log(e.detail.value)
+          this.cardId = '';
         }
+        this.$apply();
       },
+      selectCard(){
+        this.showCards = false;
+      },
+      //确认所选择的的名片
+      determine(){
+        this.showCards = true;
+      },
+      //添加名片
+      addCards(){
+        wepy.navigateTo({
+          url:"/pages/card/addCard",
+        })
+      },
+      confirmRelease(){
+        let that = this;
+        //判断是否授权
+        if(wepy.$instance.globalData.Authorization==false){
+          wx.showModal({
+            title: '您还未授权',
+            content: '点击\'确定\'跳转授权页面',
+            success(res) {
+              if (res.confirm) {
+                wepy.navigateTo({
+                  url:"/pages/index",
+                });
+
+                // console.log('用户点击确定')
+              } else if (res.cancel) {
+                // console.log('用户点击取消')
+              }
+            }
+          });
+          return;
+        }
+        //选择不是匿名方式回复的时候，是否选择了联系方式
+        if(this.anonymous && this.cardId==''){
+          wx.showModal({
+            title: '您还未选择名片',
+            content: '点击\'确定\'选择名片，点击\'取消\'将以匿名方式发布',
+            success(res) {
+              if (res.confirm) {
+                // console.log('用户点击确定')
+                that.showCards = false;
+                return ;
+              } else if (res.cancel) {
+                // console.log('用户点击取消')
+                that.anonymous = false;
+                //todo 发布需求，匿名方式发布
+              }
+            }
+          });
+        }
+
+        //todo 发布需求
+
+
+      }
     };
     components = {
       field: field

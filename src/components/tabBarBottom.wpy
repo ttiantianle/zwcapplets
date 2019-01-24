@@ -43,25 +43,38 @@ export default class tabBarBottom extends wepy.component{
   methods = {
     change(idx,evt){
       //感觉+没有意义
+      switch (this.active){
+        case 0:
+        case 1:
+        case 2:
+
+        case 3:
+          if(wepy.$instance.globalData.Authorization==false){
+            wx.showModal({
+              title: '您还未授权',
+              content: '点击\'确定\'跳转授权页面',
+              success(res) {
+                if (res.confirm) {
+                  wepy.navigateTo({
+                    url:"/pages/index",
+                  })
+                } else if (res.cancel) {
+                  // console.log('用户点击取消')
+                  // wepy.navigateTo({
+                  //   url:"/pages/main",
+                  // })
+                }
+              }
+            });
+            return;
+          }else{
+            //todo
+            
+          }
+          break;
+      }
+
       this.active = +idx;
-
-      // switch (this.active){
-      //   case 0: wx.redirectTo({
-      //     url: '/pages/shop/shopDevice'
-      //   });break;
-      //   case 1: wx.redirectTo({
-      //     url: '/pages/demand/demand'
-      //   });break;
-      //   case 2:
-      //     // wx.redirectTo({
-      //     // url: '/pages/shop/shop'
-      //   // });break;
-
-      //   case 3: wx.redirectTo({
-      //     url: '/pages/me/me'
-      //   });break;
-      // }
-
     }
   };
 
