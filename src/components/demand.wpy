@@ -109,9 +109,9 @@
       let _this = this;
       _this.datasa();
       let url = wepy.$instance.globalData.url;
-      wx.setNavigationBarTitle({
-        title: '需求列表'
-      });
+      // wx.setNavigationBarTitle({
+      //   title: '需求列表'
+      // });
       // let _this = this;
       wepy.request({
         url: url + "/releaserequir/fieldlist",

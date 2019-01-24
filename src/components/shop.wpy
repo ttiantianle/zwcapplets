@@ -105,9 +105,9 @@
     };
     onLoad(){
       this.datas();
-      wx.setNavigationBarTitle({
-        title: '机构列表'
-      })
+      // wx.setNavigationBarTitle({
+      //   title: '机构列表'
+      // })
     };
     methods = {
       shopDetails(id){

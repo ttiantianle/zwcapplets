@@ -17,6 +17,12 @@ export default {//加密
   decrypt(string) { //解密
     var data = CryptoJS.AES.decrypt(string, key, {iv: iv, padding: CryptoJS.pad.Pkcs7}).toString(CryptoJS.enc.Utf8);
     return data;
+  },
+  formatJson(string){
+    let str = string.substr(1);
+    str = str.substr(0, str.length-1);
+    let data = JSON.parse(str);
+    return data;
   }
 
 }

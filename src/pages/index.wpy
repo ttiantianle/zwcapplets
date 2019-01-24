@@ -25,11 +25,15 @@
       next:false,
     };
     onLoad() {
+      wepy.redirectTo({
+              url:"./card/addCard"
+      })
 
     };
     methods = {
 
       getPhoneNumber: function (e) {
+        //todo api.weixin.qq.com不在合法校验域名内 需要放到后台去处理
         // if (e.detail.errMsg == 'getPhoneNumber:fail user deny') {
         //   this.$parent.globalData.Authorization = false;
         //   wepy.redirectTo({
@@ -42,6 +46,13 @@
         //   })
         // }
         // console.log(this.$parent.globalData.url);
+        if(this.$parent.globalData.Authorization){
+          wepy.redirectTo({
+            url:"./main"
+          });
+          return;
+        }
+
         let that = this;
         if (e.detail.errMsg == "getPhoneNumber:fail user deny") {
           this.$parent.globalData.Authorization = false;
