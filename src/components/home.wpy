@@ -70,36 +70,43 @@
                      placeholder="请输入您的需求" maxlength="300" />
         </view>
         <image src="../images/upload1.png" style="width:60rpx;height: 60rpx;margin-left: 8%" @tap="upload()"></image>
+
+
     </view>
       <view>
         <button style="width: 250rpx;color: #fff;background-color: #3388ff;margin-top: 30rpx;" @tap="confirmRelease()">确认发布</button>
       </view>
 
-
-      <view hidden="{{showCards}}" style="z-index:9999;background-color: #fff;width:65%;height:90%;position: fixed;top: 0;right:0;">
-        <scroll-view scroll-y="true" style="height: 100%;">
-          <view style="margin: 20rpx;">
-            <text style="color: deepskyblue" @tap="addCards()">点击添加名片</text>
-            <text style="float: right;color: deepskyblue" @tap="determine()">确定</text>
-            <radio-group class="radio-group" bindchange="radioChange">
-              <view wx:if="{{cardList.length == 0}}">您还没有添加名片,请添加名片后发布需求</view>
-              <label wx:for="{{cardList}}" wx:key="index" class="radio">
-                <view style="margin: 20rpx auto;background-color: lightgray;border-radius: 10rpx;padding: 10rpx;">
-                  <radio value="{{item.id}}" />
-                  <view style="display: inline-block;vertical-align: middle;margin-left: 20rpx;">
-                    <view>名字：{{item.username}}</view>
-                    <view>手机：{{item.mobile}}</view>
-                    <view>微信：{{item.wechat}}</view>
-                    <view>Q Q：{{item.qq_num}}</view>
-                    <view>邮箱：{{item.email}}</view>
+      <view hidden="{{showCards}}" style="z-index:9999;width:100%;height:90%;position: fixed;top: 0;right:0;">
+        <view style="width: 35%;height: 90%;display: inline-block" @tap="closeShow()"></view>
+        <view  style="background-color: #fff;width:65%;height:90%;display: inline-block">
+          <scroll-view scroll-y="true" style="height: 100%;">
+            <view style="margin: 20rpx;">
+              <text style="color: deepskyblue" @tap="addCards()">点击添加名片</text>
+              <text style="float: right;color: deepskyblue" @tap="determine()">确定</text>
+              <radio-group class="radio-group" bindchange="radioChange">
+                <view wx:if="{{cardList.length == 0}}">您还没有添加名片,请添加名片后发布需求</view>
+                <label wx:for="{{cardList}}" wx:key="index" class="radio">
+                  <view style="margin: 20rpx auto;background-color: lightgray;border-radius: 10rpx;padding: 10rpx;">
+                    <radio value="{{item.id}}" />
+                    <view style="display: inline-block;vertical-align: middle;margin-left: 20rpx;">
+                      <view>名字：{{item.username}}</view>
+                      <view>手机：{{item.mobile}}</view>
+                      <view>微信：{{item.wechat}}</view>
+                      <view>Q Q：{{item.qq_num}}</view>
+                      <view>邮箱：{{item.email}}</view>
+                    </view>
                   </view>
-                </view>
 
-              </label>
-            </radio-group>
-          </view>
-        </scroll-view>
+                </label>
+              </radio-group>
+            </view>
+          </scroll-view>
+        </view>
       </view>
+
+
+
 
     </view>
   </view>
@@ -118,11 +125,12 @@
       anonymous:false,//是否匿名回复,false匿名true不匿名
       // Permission:false,
       showCards:true,//显示选择名片的div，true是隐藏，false显示
-      file_path:"",//图片路径
+      filePath:"",//图片路径
       cardList:[
       ],
     };
     onLoad(){
+      this.showCards=true;
       wx.setNavigationBarTitle({
         title: ''
       })
@@ -130,6 +138,9 @@
     methods = {
       bindDesc(e){
         this.desc = e.detail.value;
+      },
+      closeShow(){
+        this.showCards=true;
       },
       radioChange(e) {
         this.cardId = e.detail.value;
@@ -176,11 +187,11 @@
                   //todo
                 that.cardList = data.data;
               }else{
-                wx.showToast({
-                  title: '获取信息失败',
-                  icon: 'failure',
-                  duration: 2000
-                })
+                // wx.showToast({
+                //   title: '获取信息失败',
+                //   icon: 'failure',
+                //   duration: 2000
+                // })
               }
               that.$apply();
             }
@@ -260,14 +271,15 @@
           url:wepy.$instance.globalData.url+'/releaserequir/addrequir',
           data:{
             cat_name: Utils.get((that.currentField).toString()),  // 领域
-            file_path: Utils.get(that.file_path),  // 图片
+            file_path: Utils.get(that.filePath),  // 图片
             text: Utils.get(that.desc),  // 内容
             card_id: Utils.get(that.cardId),  // 名片ID
           },
           success(res){
-            let str = res.data.substr(1);
-            str = str.substr(0, str.length-1);
-            let data = JSON.parse(str);
+            let data = Utils.formatJson(res.data);
+            // let str = res.data.substr(1);
+            // str = str.substr(0, str.length-1);
+            // let data = JSON.parse(str);
 
             if(data.code == 0){
               wx.showToast({
@@ -278,7 +290,7 @@
             }else{
               wx.showToast({
                 title: '发布失败',
-                icon: 'loading',
+                icon: 'cancel',
                 duration: 2000
               })
             }
@@ -286,10 +298,49 @@
           }
 
         })
-
-
+      },
+      upload(page, path) {
+        wx.showToast({
+          icon: "loading",
+          title: "正在上传"
+        }),
+          wx.uploadFile({
+            url: constant.SERVER_URL + "/FileUploadServlet",
+            filePath: path[0],
+            name: 'file',
+            header: {"Content-Type": "multipart/form-data"},
+            formData: {
+              //和服务器约定的token, 一般也可以放在header中
+              'session_token': wx.getStorageSync('session_token')
+            },
+            success: function (res) {
+              console.log(res);
+              if (res.statusCode != 200) {
+                wx.showModal({
+                  title: '提示',
+                  content: '上传失败',
+                  showCancel: false
+                })
+                return;
+              }
+              var data = res.data
+              page.setData({  //上传成功修改显示头像
+                src: path[0]
+              })
+            },
+            fail: function (e) {
+              console.log(e);
+              wx.showModal({
+                title: '提示',
+                content: '上传失败',
+                showCancel: false
+              })
+            },
+            complete: function () {
+              wx.hideToast();  //隐藏Toast
+            }
+          })
       }
-
     };
     components = {
       field: field

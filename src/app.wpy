@@ -74,7 +74,8 @@ export default class extends wepy.app {
       url: "https://zwcap.zhaowoce.com:4433",
       img: "https://img.zhaowoce.com/",
       Authorization:false,
-      // phoneNumber:"",
+      phoneNumber:"",
+      shopId:"",
     };
     constructor () {
       super();

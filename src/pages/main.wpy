@@ -42,12 +42,7 @@
     };
 
     data = {
-      imgUrls:[
-        'https://img.pc841.com/2018/0815/20180815101229911.jpg',
-        'https://img.pc841.com/2018/0815/20180815101229911.jpg',
-        'https://img.pc841.com/2018/0815/20180815101229911.jpg',
-        'https://img.pc841.com/2018/0815/20180815101229911.jpg',
-      ],
+      imgUrls:[],
       currentTab:0,
     };
     onLoad(){
