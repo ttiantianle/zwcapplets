@@ -1,0 +1,190 @@
+<style scoped>
+  .df{
+    display: flex;
+  }
+  .dl{
+    display: inline-block;
+  }
+  .db{
+    display: block;
+  }
+  .m30{
+    margin: 30rpx;
+  }
+  .mlr20{
+    margin-left:20rpx ;
+    margin-right:20rpx ;
+  }
+  .mr20{
+
+    margin-right:20rpx ;
+  }
+  .ml20{
+    margin-left:20rpx ;
+  }
+  .f8{
+    flex: 8;
+  }
+  .f1{
+    flex: 1;
+  }
+  .f4{
+    flex: 4;
+  }
+  image{
+    width: 100%;
+    height: 150rpx;
+  }
+  .h50{
+    height: 50rpx;
+  }
+  .l50{
+    line-height: 50rpx;
+  }
+  .borderGray{
+    border: 1rpx solid gray;
+  }
+  .p10{
+    padding: 10rpx;
+  }
+  .pl15{
+    padding-left: 15rpx;
+  }
+  .fw600{
+    font-weight: bold;
+    font-size: 28rpx;
+  }
+  .lh40{
+    line-height: 40rpx;
+  }
+  .itemShop{
+    font-size: 26rpx;
+  }
+  .box_show{
+    box-shadow: 0 0 15rpx #DDDDDD;
+    border-radius: 10rpx;
+    background: #ffffff;
+    margin: 25rpx;
+    padding: 15rpx;
+  }
+
+</style>
+<template>
+  <view>
+    <view class="df m30">
+      <input type="text" bindinput="bindKeyInput" class="h50 borderGray f8 dl mr20"/>
+      <button type="primary" size="mini" class="f1" @tap="search">搜索</button>
+    </view>
+    <repeat>
+      <view class="itemShop df box_show" wx:for="{{ shopList }}" wx:key="index" @tap="shopDetails({{item.shop_id}})">
+        <view class="f4">
+          <image src="https://img.zhaowoce.com/{{item.shop_avatar}}"></image>
+          {{wepy.$instance.globalData.img}}
+        </view>
+        <view class="f8 pl15">
+          <view class="lh40"><text class="fw600">{{ item.shop_name }}</text></view>
+          <view class="lh40">所在地：{{ item.province_name_receive}}</view>
+          <view class="lh40">主营领域：<text wx:for="{{ item.field_name }}"  wx:for-item="items" wx:key="items"> {{ items.cat_name}}  </text></view>
+          <view class="lh40">资质：<text wx:for="{{ item.cnas }}"  wx:for-item="items" wx:key="items"> {{items}} </text></view>
+        </view>
+      </view>
+    </repeat>
+    <view>
+      <tabBarBottom :active.sync="{{currentTab}}"></tabBarBottom>
+    </view>
+  </view>
+</template>
+
+
+<script>
+  import wepy from 'wepy';
+  import Utils from '@/js/utils.js'
+  import tabBarBottom from '@/components/tabBarBottom';
+    export default class shopList extends wepy.page {
+        config = {
+          navigationBarTitleText: "机构",
+          enablePullDownRefresh: true,
+        };
+        data = {
+          key:"",
+          shopList: [],
+          currentTab:2,
+          currentPage:0,
+          totalRows:0,
+
+        };
+
+      onLoad(){
+        this.datas();
+        // wx.setNavigationBarTitle({
+        //   title: '机构列表'
+        // })
+      };
+      onReachBottom() {
+        wx.showLoading();
+        this.datas();
+        setTimeout(function () {
+          wx.hideLoading()
+        }, 2000);
+
+      };
+      methods = {
+        bindKeyInput(e){
+          this.key = e.detail.value;
+        },
+        shopDetails(id){
+          wx.navigateTo({
+            url: '/pages/shop/shopDetail?id='+id
+          })
+        },
+        search(){
+          this.shopList = [];
+          this.currentPage = 0;
+          this.datas();
+          // let that = this;
+          // console.log(that.key)
+          // wepy.request({
+          //   url:wepy.$instance.globalData.url+"/shop/list",
+          //   data:{
+          //     search:that.key
+          //   },
+          //   success(res){
+          //     console.log(res)
+          //     let dat = Utils.formatJson(res.data);
+          //     that.shopList = dat.data.data;
+          //     that.totalRows = parseInt(dat.data.page.totalRows);
+          //     that.currentPage = parseInt(dat.data.page.curpage) ;
+          //     that.$apply();
+          //   }
+          // })
+        }
+      };
+      datas(){
+        let _this = this;
+        wepy.request({
+          url: wepy.$instance.globalData.url + "/shop/list",
+          // method: "POST",
+          data: {
+            page: (_this.currentPage+1).toString()
+          },
+          success(res){
+            // console.log(res.data);
+            let str = res.data.substr(1);
+            str = str.substr(0, str.length-1);
+            let data = JSON.parse(str);
+            _this.shopList =_this.shopList.concat(data.data.data);
+
+            _this.totalRows = parseInt(data.data.page.totalRows);
+            _this.currentPage = parseInt(data.data.page.curpage) ;
+
+            // console.log( _this.shopList,);
+            _this.$apply();
+          }
+        })
+      }
+      //引入组件
+      components = {
+        tabBarBottom:tabBarBottom
+      }
+    }
+</script>

@@ -72,8 +72,8 @@
 <template>
   <view>
     <view class="df m30">
-      <input type="text" value="{{msg}}" class="h50 borderGray f8 dl mr20"/>
-      <button type="primary" size="mini" class="f1">搜索</button>
+      <input type="text" bindinput="bindKeyInput" class="h50 borderGray f8 dl mr20"/>
+      <button type="primary" size="mini" class="f1" @tap="search">搜索</button>
     </view>
     <repeat>
       <view class="itemShop df box_show" wx:for="{{ shopList }}" wx:key="index" @tap="shopDetails({{item.shop_id}})">
@@ -94,13 +94,15 @@
 
 <script>
   import wepy from 'wepy';
+  import Utils from '@/js/utils.js'
   export default class shop extends wepy.component{
     props = {
-      msg:{
-        twoWay:true
-      }
+      // msg:{
+      //   twoWay:true
+      // }
     };
     data = {
+      key:"",
       shopList: "",
     };
     onLoad(){
@@ -110,11 +112,30 @@
       // })
     };
     methods = {
+      bindKeyInput(e){
+        this.key = e.detail.value;
+      },
       shopDetails(id){
         wx.navigateTo({
           url: '/pages/shop/shopDetail?id='+id
         })
       },
+      search(){
+        let that = this;
+        console.log(that.key)
+        wepy.request({
+          url:wepy.$instance.globalData.url+"/shop/list",
+          data:{
+            search:that.key
+          },
+          success(res){
+            console.log(res)
+            let dat = Utils.formatJson(res.data);
+            that.shopList = dat.data.data;
+            that.$apply();
+          }
+        })
+      }
     };
     datas(){
       let _this = this;

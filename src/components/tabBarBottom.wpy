@@ -46,17 +46,23 @@ export default class tabBarBottom extends wepy.component{
       this.active = +idx;
       switch (this.active){
         case 0:
+          wx.redirectTo({
+            url:"/pages/main",
+          });
           wx.setNavigationBarTitle({
             title: '首页'
           });break;
         case 1:
+          wx.redirectTo({
+            url:"/pages/main?tabId=1",
+          });
           wx.setNavigationBarTitle({
             title: '需求'
           });break;
         case 2:
-          wx.setNavigationBarTitle({
-            title: '机构'
-          });break;
+         wx.redirectTo({
+          url:"/pages/shop/shopList",
+         });break;
         case 3:
           if(wepy.$instance.globalData.Authorization==false){
             wx.showModal({

@@ -27,11 +27,12 @@ export default class extends wepy.app {
 
       'pages/main',//主页面 首页
 
-      'pages/card/addCard',//添加名片
+      'pages/card/addCard',     //添加名片
 
-      'pages/shop/shopDetail',//机构详情
+      'pages/shop/shopList',   //机构列表
+      'pages/shop/shopDetail', //机构详情
       'pages/shop/shopPicture',//机构相册
-      'pages/shop/shopDevice',//仪器设备
+      'pages/shop/shopDevice', //仪器设备
 
       // 'pages/demand/demand',
       // 'pages/shop/shop',

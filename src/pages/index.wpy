@@ -32,7 +32,7 @@
 
       getPhoneNumber: function (e) {
         let that = this;
-        //todo api.weixin.qq.com不在合法校验域名内 需要放到后台去处理
+
         if(this.$parent.globalData.Authorization){
           wepy.redirectTo({
             url:"./main"
