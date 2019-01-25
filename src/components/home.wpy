@@ -137,7 +137,7 @@
       wx.setNavigationBarTitle({
         title: ''
       })
-      console.log(wepy.$instance.globalData.userId)
+      // console.log(wepy.$instance.globalData.userId)
     };
     methods = {
       bindDesc(e){
@@ -148,7 +148,7 @@
       },
       radioChange(e) {
         this.cardId = e.detail.value;
-        console.log('radio发生change事件，携带value值为：', e.detail.value)
+        // console.log('radio发生change事件，携带value值为：', e.detail.value)
       },
       switch1Change(e) {
         this.anonymous = e.detail.value;

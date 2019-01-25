@@ -73,7 +73,7 @@
   <view>
     <view class="df m30">
       <input type="text" bindinput="bindKeyInput" class="h50 borderGray f8 dl mr20"/>
-      <button type="primary" size="mini" class="f1" @tap="search">搜索</button>
+      <button type="primary" size="mini" class="f1" @tap="search()">搜索</button>
     </view>
     <repeat>
       <view class="itemShop df box_show" wx:for="{{ shopList }}" wx:key="index" @tap="shopDetails({{item.shop_id}})">

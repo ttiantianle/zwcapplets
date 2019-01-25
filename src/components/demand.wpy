@@ -59,18 +59,25 @@
     font-size: 30rpx;
     height: 70rpx;
     line-height: 70rpx;
+
   }
   .content{
-    width: 480rpx;
+    width: 500rpx;
     height: 70rpx;
     line-height: 70rpx;
     border: 1px solid #489DFF;
+    float: left;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-left: 10rpx;
+    margin-left: 10rpx;
   }
 </style>
 <template>
   <view class="demand_box">
     <view class="demand">
-      <input type="text" class="content"><button class="search ">搜 索</button>
+      <input type="text" class="content" bindinput="bindKeyInput" wx:value="{{inputData}}"><button class="search" @tap="search()">搜 索</button>
     </view>
     <view class="field demand">
       <view class="text {{ items == '' ? 'active': ''}}" @tap="fieldItem('')">全部</view>
@@ -109,6 +116,7 @@
       demandList:"",
       length: false,
       page: 1,
+      inputData: "",
     };
     onLoad(){
 
@@ -143,6 +151,13 @@
           url: '/pages/demand/demandDetails?id='+id
         })
       },
+      bindKeyInput(e){
+        this.inputData = e.detail.value;
+      },
+      search(){
+        // console.log(this.inputData);
+        this.datasa();
+      }
     };
     datasa(){  // 需求列表
       let _this = this;
@@ -153,6 +168,7 @@
           from_type: "xcx_user",
           re_type: "1",
           field_id: _this.items,
+          search: _this.inputData
         },
         success(res){
           // console.log(res.data);

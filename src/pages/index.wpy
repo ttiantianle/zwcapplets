@@ -51,8 +51,8 @@
           //用户允许授权
           // console.log("lv", e.detail.iv);
           // console.log(e.detail.encryptedData);
-          wx.showLoading()
-          var self=this
+          wx.showLoading();
+          var self=this;
           //1. 调用登录接口获取临时登录code
           wx.login({
             success(res) {
