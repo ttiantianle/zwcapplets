@@ -43,7 +43,7 @@
 
     data = {
       imgUrls:[],
-      currentTab:0,
+      currentTab:3,
     };
     onLoad(){
       // if(this.currentTab==5){

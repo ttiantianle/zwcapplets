@@ -59,16 +59,23 @@
     width: 100%;
     height: 100%;
     position: fixed;
-    top: -100%;
+    bottom: -100%;
     left: 0;
-    /*opacity: 0;*/
-    background: rgba(0,0,0,.5);
-    z-index: 5;
-    transition: 300s;
-
+    background: rgba(0,0,0,.4);
+    z-index: 6;
+    transition: .5s;
   }
   .actives{
-    top: 0!important;
+    bottom: 0!important;
+    /*display: block;*/
+  }
+  .cardContent{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 500rpx;
+    background: #ffffff;
   }
 </style>
 <template>
@@ -112,14 +119,16 @@
           <view wx:if="{{item.reply_list!=''}}">
             <view style="margin: 10rpx 0;font-weight: bold;">回复列表</view>
             <repeat for="{{item.reply_list}}" item="itemCard">
-              <view>{{itemCard.shop_name}} 回复了您 <text class="ml20 card" @tap="lookCard()">查看名片</text></view>
+              <view>{{itemCard.shop_name}} 回复了您 <text class="ml20 card" @tap="lookCard()"> 查看名片</text></view>
             </repeat>
           </view>
 
         </view>
       </repeat>
-      <view class="card-wrapper {{ activess ? actives : ''}}">
+      <view class="card-wrapper {{activess ? 'actives' : ''}}">
+        <view class="cardContent">
 
+        </view>
       </view>
 
     </view>
@@ -242,7 +251,7 @@
       ],
       selectId:0,
       currentTab:3,
-      activess: false,
+      activess: true,
       // userInfo:{
       //   nickName:""
       // },
@@ -258,12 +267,12 @@
           from_type: 'xcx_user',
         },
         success(res){
-          console.log(res.data);
+          // console.log(res.data);
           let str = res.data.substr(1);
           str = str.substr(0, str.length-1);
           let data = JSON.parse(str);
           _this.requireList = data.data.data;
-          console.log(_this.requireList,data);
+          // console.log(_this.requireList,data);
           _this.$apply()
         }
       })
@@ -277,8 +286,7 @@
         // console.log(evt);
       },
       lookCard(){
-        console.log(111111);
-        this.activess = true
+        this.activess = true;
       },
     };
     components ={

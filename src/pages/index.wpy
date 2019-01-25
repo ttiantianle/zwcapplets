@@ -26,13 +26,15 @@
     };
     onLoad() {
 
-
+      wx.navigateTo({
+        url: '/pages/main'
+      })
     };
     methods = {
 
       getPhoneNumber: function (e) {
         let that = this;
-        //todo api.weixin.qq.com不在合法校验域名内 需要放到后台去处理
+
         if(this.$parent.globalData.Authorization){
           wepy.redirectTo({
             url:"./main"
@@ -63,9 +65,9 @@
                     'encryptedData': e.detail.encryptedData,
                   },
                   success(re){
-                    console.log(re);
+                    // console.log(re);
                     let dat = Utils.formatJson(re.data);
-                    console.log(dat);
+                    // console.log(dat);
                     if(dat.code == 0){
                       that.$parent.globalData.Authorization = true;
                       that.$parent.globalData.phoneNumber = dat.data.mobile;

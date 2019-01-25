@@ -178,7 +178,7 @@
               str = str.substr(0, str.length-1);
               let data = JSON.parse(str);
               _this.cardList = data.data;
-              console.log( _this.cardList, data);
+              // console.log( _this.cardList, data);
               if(_this.cardList.length>0){
                 _this.cardId = _this.cardList[0].id;
               }
@@ -215,7 +215,7 @@
           confirm(){
             let _this = this;
             // this.details.id
-            console.log(this.details.id);
+            // console.log(this.details.id);
             wepy.request({
               url: wepy.$instance.globalData.url + "/releaserequir/savereply",
               // method: "POST",
@@ -240,7 +240,7 @@
                     duration: 2000
                   })
                 }
-                console.log( data );
+                // console.log( data );
                 _this.$apply();
               }
             });
@@ -260,7 +260,7 @@
               let data = JSON.parse(str);
               _this.details = data.data.require;
               _this.reply = data.data.reply;
-              console.log( _this.details,data.data,);
+              // console.log( _this.details,data.data,);
               _this.$apply();
             }
           });
