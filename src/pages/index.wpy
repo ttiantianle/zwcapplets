@@ -26,7 +26,9 @@
     };
     onLoad() {
 
-
+      // wx.navigateTo({
+      //   url: '/pages/main'
+      // })
     };
     methods = {
 
@@ -63,13 +65,14 @@
                     'encryptedData': e.detail.encryptedData,
                   },
                   success(re){
-                    console.log(re);
+                    // console.log(re);
                     let dat = Utils.formatJson(re.data);
-                    console.log(dat);
+                    // console.log(dat);
                     if(dat.code == 0){
                       that.$parent.globalData.Authorization = true;
                       that.$parent.globalData.phoneNumber = dat.data.mobile;
                       that.$parent.globalData.shopId = dat.data.shop_id;
+                      that.$parent.globalData.userId = dat.data.user_id;
 
                       wepy.redirectTo({
                         url:"./main"

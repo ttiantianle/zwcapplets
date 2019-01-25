@@ -145,7 +145,7 @@
               _this.shopDetail = data.data;
               var article = _this.shopDetail.introduction;
               WxParse.wxParse('article', 'html', article, _this,5);
-              console.log( _this.shopDetail,);
+              // console.log( _this.shopDetail,);
               _this.$apply();
             }
           })

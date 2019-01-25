@@ -19,7 +19,7 @@
 <script>
 import wepy from 'wepy'
 import 'wepy-async-function'
-import "/page/wxParse/wxParse.wxss";
+// import "/pages/wxParse/wxParse.wxss";
 export default class extends wepy.app {
   config = {
     pages: [
@@ -74,10 +74,11 @@ export default class extends wepy.app {
       // userInfo: null,
       url: "https://zwcap.zhaowoce.com:4433",
       img: "https://img.zhaowoce.com/",
-      uploadUrl:"http://zwcap.zhaowoce.com:8090/shop/uploadimg?id=",
       Authorization:false,
+      uploadUrl:"http://zwcap.zhaowoce.com:8090/shop/uploadimg?id=",
       phoneNumber:"",
       shopId:"",
+      userId: "",
     };
     constructor () {
       super();

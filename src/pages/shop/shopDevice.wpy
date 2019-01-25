@@ -75,7 +75,7 @@
               let data = JSON.parse(str);
               _this.device = data.data;
 
-              console.log( _this.device,data);
+              // console.log( _this.device,data);
               _this.$apply();
             }
           })
