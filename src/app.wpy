@@ -43,7 +43,7 @@ export default class extends wepy.app {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#000',
       navigationBarTitleText: 'WeChat',
-      navigationBarTextStyle: '#fff',
+      navigationBarTextStyle: 'white',
     },
     // tabBar: {    //
     //   color: '#AEADAD',
@@ -73,6 +73,7 @@ export default class extends wepy.app {
       // userInfo: null,
       url: "https://zwcap.zhaowoce.com:4433",
       img: "https://img.zhaowoce.com/",
+      uploadUrl:"http://zwcap.zhaowoce.com:8090/shop/uploadimg?id=",
       Authorization:false,
       phoneNumber:"",
       shopId:"",

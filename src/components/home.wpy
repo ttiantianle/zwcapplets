@@ -70,7 +70,10 @@
                      placeholder="请输入您的需求" maxlength="300" />
         </view>
         <image src="../images/upload1.png" style="width:60rpx;height: 60rpx;margin-left: 8%" @tap="upload()"></image>
-
+        <image wx:if="{{filePath}}"
+               src="{{'https://img.zhaowoce.com'+filePath}}"
+               style="display: block;margin-left: 10%;">
+        </image>
 
     </view>
       <view>
@@ -300,46 +303,39 @@
         })
       },
       upload(page, path) {
-        wx.showToast({
-          icon: "loading",
-          title: "正在上传"
-        }),
-          wx.uploadFile({
-            url: constant.SERVER_URL + "/FileUploadServlet",
-            filePath: path[0],
-            name: 'file',
-            header: {"Content-Type": "multipart/form-data"},
-            formData: {
-              //和服务器约定的token, 一般也可以放在header中
-              'session_token': wx.getStorageSync('session_token')
-            },
-            success: function (res) {
-              console.log(res);
-              if (res.statusCode != 200) {
-                wx.showModal({
-                  title: '提示',
-                  content: '上传失败',
-                  showCancel: false
+        let that = this;
+        wx.chooseImage({
+          success(res) {
+            const tempFilePaths = res.tempFilePaths
+            wx.uploadFile({
+              url: 'http://zwcap.zhaowoce.com:8090/shop/uploadimg', // 仅为示例，非真实的接口地址
+              filePath: tempFilePaths[0],
+              name: 'file',
+              formData: {
+                user: 'test'
+              },
+              success(res) {
+                console.log(res)
+                if(res.statusCode == 200 && res.data){
+                  that.filePath = res.data;
+                  // that.$apply();
+                }else{
+                  wx.showToast({
+                    title:"上传失败",
+                    icon:"cancel",
+                  })
+                }
+                // console.log(res);
+              },
+              fail(){
+                wx.showToast({
+                  title:"上传失败",
+                  icon:"cancel",
                 })
-                return;
               }
-              var data = res.data
-              page.setData({  //上传成功修改显示头像
-                src: path[0]
-              })
-            },
-            fail: function (e) {
-              console.log(e);
-              wx.showModal({
-                title: '提示',
-                content: '上传失败',
-                showCancel: false
-              })
-            },
-            complete: function () {
-              wx.hideToast();  //隐藏Toast
-            }
-          })
+            })
+          }
+        })
       }
     };
     components = {
