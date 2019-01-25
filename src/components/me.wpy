@@ -2,6 +2,9 @@
   .m20{
     margin: 20rpx;
   }
+  .p30{
+    padding: 30rpx;
+  }
   .mt20{
     margin-top: 20rpx;
   }
@@ -13,6 +16,9 @@
   }
   .mr{
     margin-right: 20rpx;
+  }
+  .lh50{
+    line-height: 60rpx;
   }
   .fr{
     float: right;
@@ -26,20 +32,20 @@
   }
   .tabTitle,.tabTitle_active{
     display:inline-block;
-    width:33.3%;
+    width:50%;
     text-align: center
   }
-  /*.tabTitle_active{*/
-    /*color: #1296db;*/
-  /*}*/
+  .tabTitle_active{
+    color: #1296db;
+  }
   /*使用 button::after{ border: none; } 来去除边框*/
-  /*.free-btn-bordernone{*/
-    /*background: none !important;*/
-    /*color: #000 !important;*/
-  /*}*/
-  /*.free-btn-bordernone::after{*/
-    /*border: none;*/
-  /*}*/
+  .free-btn-bordernone{
+    background: none !important;
+    color: #000 !important;
+  }
+  .free-btn-bordernone::after{
+    border: none;
+  }
   .portrait{
     display: inline-block;
     vertical-align: top;
@@ -63,7 +69,7 @@
     left: 0;
     background: rgba(0,0,0,.4);
     z-index: 6;
-    transition: .5s;
+    transition: .4s;
   }
   .actives{
     bottom: 0!important;
@@ -74,16 +80,21 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 500rpx;
+    height: 400rpx;
     background: #ffffff;
+  }
+  .name{
+    display: inline-block;
+    width: 150rpx;
+    text-align: right;
   }
 </style>
 <template>
-  <view>
+  <view style="padding-top: 2rpx">
     <view class="m20">
       <view class="tabTitle{{selectId == 0 ? '_active':''}}" @tap="select(0)" >我发布的</view>
       <view class="tabTitle{{selectId == 1 ? '_active':''}}" @tap="select(1)">我回复的</view>
-      <view class="tabTitle{{selectId == 2 ? '_active':''}}" @tap="select(2)">我的委托单</view>
+      <!--<view class="tabTitle{{selectId == 2 ? '_active':''}}" @tap="select(2)">我的委托单</view>-->
     </view>
     <!--我发布的-->
     <view hidden="{{selectId != 0}}">
@@ -106,7 +117,7 @@
               @tap="conversion()">
           {{ item.cat_name }}
         </view>
-        <view class="m20">
+        <view class="m20" style="padding-bottom: 10rpx;">
           <view class="mb20">{{item.text}}</view>
           <view class="mb20">
             审核状态：
@@ -119,15 +130,21 @@
           <view wx:if="{{item.reply_list!=''}}">
             <view style="margin: 10rpx 0;font-weight: bold;">回复列表</view>
             <repeat for="{{item.reply_list}}" item="itemCard">
-              <view>{{itemCard.shop_name}} 回复了您 <text class="ml20 card" @tap="lookCard()"> 查看名片</text></view>
+              <view class="lh50">{{itemCard.shop_name}} 回复了您 <text class="ml20 card" @tap="lookCard({{ itemCard }})"> 查看名片</text></view>
             </repeat>
           </view>
 
         </view>
       </repeat>
-      <view class="card-wrapper {{activess ? 'actives' : ''}}">
-        <view class="cardContent">
-
+      <view class="card-wrapper {{activess ? 'actives' : ''}}" @tap="closeCard()">
+        <!--catchtap="stopClose"-->
+        <view class="cardContent p30" catchtap="stopClose()">
+          <view class="lh50"><text class="name">称呼：</text><text>{{ cardItem.username }}</text></view>
+          <view class="lh50"><text class="name">手机号：</text><text>{{ cardItem.mobile }}</text></view>
+          <view class="lh50"><text class="name">微信号：</text><text>{{ cardItem.wechat }}</text></view>
+          <view class="lh50"><text class="name">QQ 号：</text><text>{{ cardItem.qq_num }}</text></view>
+          <view class="lh50"><text class="name">邮 箱：</text><text>{{ cardItem.email }}</text></view>
+          <view class="lh50"><text class="name">机构名称：</text><text>{{ cardItem.shop_name }}</text></view>
         </view>
       </view>
 
@@ -139,15 +156,18 @@
         <view>
           <view style="height: 60rpx;background-color: #fff;padding-left: 30rpx;line-height: 60rpx;border-bottom: gray 1rpx solid;"
                 @tap="conversion()">
-            {{item.field}}
+            {{item.cat_name}}
           </view>
-          <repeat  for="{{item.reply}}" item="list">
-            <view style="margin: 20rpx;">
-              <view>{{list.title}}:{{list.content}}</view>
-              <view style="margin-bottom:10rpx ;">我的回复：{{list.meReply}}</view>
-            </view>
+          <view class="m20" style="padding-bottom: 10rpx;">
+            <view class="mb20">{{item.text}}</view>
+          <!--<repeat  for="{{item.reply}}" item="list">-->
+            <!--<view style="margin: 20rpx;">-->
+              <!--<view>{{list.title}}:{{list.content}}</view>-->
+              <!--<view style="margin-bottom:10rpx ;">我的回复：{{list.meReply}}</view>-->
+            <!--</view>-->
 
-          </repeat>
+          <!--</repeat>-->
+          </view>
         </view>
 
 
@@ -155,13 +175,13 @@
     </view>
 
     <view hidden="{{selectId != 2}}">
-      <repeat for="{{infoList}}">
+      <repeat for="{{orderList}}">
         <view class="item">
-          <view><text>检测单位：{{item.shop_name}}</text></view>
-          <view><text>检测内容：{{item.content}}</text></view>
-          <view><text>检测价格：{{item.price}}</text></view>
-          <view>
-            <text>检测时间：{{item.time}}</text>
+          <view class="lh50"><text>检测单位：{{item.shop_name}}</text></view>
+          <view class="lh50"><text>服务名称：{{item.order_name}}</text></view>
+          <view class="lh50"><text>检测价格：{{item.money_paid}}</text></view>
+          <view class="lh50">
+            <text>检测时间：{{item.end_pay_time}}</text>
             <text style="color:#1296db;" class="fr" @tap="viewDetail()">查看详细内容</text>
           </view>
         </view>
@@ -248,10 +268,13 @@
 
           ]
         },
-      ],
+      ],  // 我回复的
+      shop_name: "",  // 回复机构名称
+      orderList: [],  // 委托单
       selectId:0,
       currentTab:3,
-      activess: true,
+      activess: false,
+      cardItem: [],
       // userInfo:{
       //   nickName:""
       // },
@@ -259,12 +282,15 @@
     };
     onLoad(){
       let url = wepy.$instance.globalData.url;
+      let userId = wepy.$instance.globalData.userId;
+
       let _this = this;
-      wepy.request({
+      wepy.request({  // 我发布的
         url: url + "/releaserequir/releaselist",
         data: {
           re_type: "2",
           from_type: 'xcx_user',
+          user_id: userId
         },
         success(res){
           // console.log(res.data);
@@ -273,9 +299,45 @@
           let data = JSON.parse(str);
           _this.requireList = data.data.data;
           // console.log(_this.requireList,data);
-          _this.$apply()
+          _this.$apply();
         }
-      })
+      });
+      wepy.request({  // 我回复的
+        url: url + "/releaserequir/releaselist",
+        data: {
+          re_type: "3",
+          from_type: 'xcx_shop',
+          shop_id: wepy.$instance.globalData.shopId
+        },
+        success(res){
+          // console.log(res.data);
+          let reply = Utils.formatJson(res.data);
+          // console.log(reply);
+          // let data = JSON.parse(str);
+          _this.replyList = reply.data.data;
+          // console.log(_this.replyList,);
+          _this.$apply();
+        }
+      });
+      wepy.request({  // 我的订单
+        url: url + "/userorder/orderlist",
+        data: {
+          re_type: "3",
+          from_type: 'xcx_shop',
+          shop_id: ""
+        },
+        success(res){
+          // console.log(res.data);
+          let reply = Utils.formatJson(res.data);
+          // console.log(reply);
+          // let str = res.data.substr(1);
+          // str = str.substr(0, str.length-1);
+          // let data = JSON.parse(str);
+          _this.orderList = reply.data;
+          // console.log(_this.orderList);
+          _this.$apply();
+        }
+      });
     }
 
     methods = {
@@ -285,9 +347,18 @@
       conversion(evt){
         // console.log(evt);
       },
-      lookCard(){
+      lookCard(data){
         this.activess = true;
+        this.shop_name = data.shop_name;
+        this.cardItem = data.card[0];
+        // console.log(data);
       },
+      closeCard(){
+        this.activess = false;
+      },
+      stopClose(){
+
+      }
     };
     components ={
       // tabBarBottom:tabBarBottom,

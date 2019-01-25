@@ -145,7 +145,6 @@
         // method: "POST",
         data: {
           from_type: "xcx_user",
-          user_id: "3804",
           re_type: "1",
           field_id: _this.items,
         },

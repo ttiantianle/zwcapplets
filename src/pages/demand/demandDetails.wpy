@@ -171,7 +171,6 @@
             // method: "POST",
             data: {
               from_type: 'xcx_shop',
-              shop_id: 1
             },
             success(res){
               let str = res.data.substr(1);
@@ -183,7 +182,6 @@
                 _this.cardId = _this.cardList[0].id;
               }
               _this.$apply();
-              // console.log( _this.cardId)
             }
           });
           wx.showShareMenu({
