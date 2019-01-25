@@ -211,37 +211,46 @@
             this.cardId = id;
           },
           confirm(){
+
             let _this = this;
-            // this.details.id
-            // console.log(this.details.id);
-            wepy.request({
-              url: wepy.$instance.globalData.url + "/releaserequir/savereply",
-              // method: "POST",
-              data: {
-                from_type: 'xcx_shop',
-                card_id: _this.cardId,
-                require_id: _this.details.id,
-                shop_id: 1,
-              },
-              success(res){
-                let str = res.data.substr(1);
-                str = str.substr(0, str.length-1);
-                let data = JSON.parse(str);
-                if(data.code == 0){
-                  _this.datas(_this.details.id);
-                  _this.cart = false;
-                }else if(data.code == 2){
-                  _this.cart = false;
-                  wx.showToast({
-                    title: '您所在机构已回复此需求',
-                    icon: 'none',
-                    duration: 2000
-                  })
+            if( wepy.$instance.globalData.shopId > 0){
+              wepy.request({
+                url: wepy.$instance.globalData.url + "/releaserequir/savereply",
+                // method: "POST",
+                data: {
+                  from_type: 'xcx_shop',
+                  card_id: _this.cardId,
+                  require_id: _this.details.id,
+                  shop_id: wepy.$instance.globalData.shopId,
+                  user_id: wepy.$instance.globalData.userId,
+                },
+                success(res){
+                  let str = res.data.substr(1);
+                  str = str.substr(0, str.length-1);
+                  let data = JSON.parse(str);
+                  if(data.code == 0){
+                    _this.datas(_this.details.id);
+                    _this.cart = false;
+                  }else if(data.code == 2){
+                    _this.cart = false;
+                    wx.showToast({
+                      title: '您所在机构已回复此需求',
+                      icon: 'none',
+                      duration: 2000
+                    })
+                  }
+                  // console.log( data );
+                  _this.$apply();
                 }
-                // console.log( data );
-                _this.$apply();
-              }
-            });
+              });
+            }else{
+              wx.showToast({
+                title: '您需要完成机构资质审核,才可回复,请到“找我测”官网进行入驻',
+                icon: 'none',
+                duration: 3000
+              })
+            }
+
           }
         };
         datas(id){

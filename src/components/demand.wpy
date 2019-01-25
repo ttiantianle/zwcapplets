@@ -52,9 +52,26 @@
     background: #ffffff;
     font-weight: 600;
   }
+  .search{
+    width: 140rpx;
+    background: #489DFF;
+    color: #ffffff;
+    font-size: 30rpx;
+    height: 70rpx;
+    line-height: 70rpx;
+  }
+  .content{
+    width: 480rpx;
+    height: 70rpx;
+    line-height: 70rpx;
+    border: 1px solid #489DFF;
+  }
 </style>
 <template>
   <view class="demand_box">
+    <view class="demand">
+      <input type="text" class="content"><button class="search ">搜 索</button>
+    </view>
     <view class="field demand">
       <view class="text {{ items == '' ? 'active': ''}}" @tap="fieldItem('')">全部</view>
       <!--<repeat class="text" for="{{ territory }}" key="index" item="item">aaa-->
@@ -94,17 +111,6 @@
       page: 1,
     };
     onLoad(){
-      // 公共方法
-      // let meth = common;
-      // let _this = this;
-      // _this.$apply();
-      // meth.common("/releaserequir/fieldlist", this.territory,_this,{});
-      //   // console.log(this.territory,1256,meth.common);
-      // setTimeout(function(){
-      //   console.log(_this.territory,2223);
-      // },300);
-      // // console.log(this.datat,26564);
-      // this.$apply();
 
       let _this = this;
       _this.datasa();

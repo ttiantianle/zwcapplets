@@ -137,6 +137,7 @@
       wx.setNavigationBarTitle({
         title: ''
       })
+      console.log(wepy.$instance.globalData.userId)
     };
     methods = {
       bindDesc(e){
@@ -271,6 +272,7 @@
                     card_id: Utils.get(that.cardId),  // 名片ID
                     user_id: Utils.get(wepy.$instance.globalData.userId),
                     form_type: Utils.get("xcx_user"),
+                    shop_id: Utils.get(wepy.$instance.globalData.shopId),
                   },
                   success(res){
                     let data = Utils.formatJson(res.data);
@@ -312,7 +314,8 @@
               text: Utils.get(that.desc),  // 内容
               card_id: Utils.get(that.cardId),  // 名片ID
               user_id: Utils.get(wepy.$instance.globalData.userId),
-              form_type: Utils.get("xcx_user"),
+              from_type: Utils.get("xcx_user"),
+              shop_id: Utils.get(wepy.$instance.globalData.shopId),
             },
             success(res){
               let data = Utils.formatJson(res.data);
