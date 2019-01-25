@@ -29,7 +29,7 @@ export default class extends wepy.app {
 
       'pages/card/addCard',     //添加名片
 
-      'pages/shop/shopList',   //机构列表
+      // 'pages/shop/shopList',   //机构列表
       'pages/shop/shopDetail', //机构详情
       'pages/shop/shopPicture',//机构相册
       'pages/shop/shopDevice', //仪器设备
@@ -87,7 +87,19 @@ export default class extends wepy.app {
     }
 
     onLaunch() {
+      let that = this;
       this.testAsync();
+      wx.checkSession({
+        success: function(){
+          that.globalData.Authorization = true;
+          that.redirectTo({
+            url:"/pages/main"
+          })
+          //session_key 未过期，并且在本生命周期一直有效
+        },
+        fail: function(){
+        }
+      })
         // wx.login({
         //   success: function (res) {
         //     if (res.code) {

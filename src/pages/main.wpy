@@ -12,7 +12,7 @@
       <demand></demand>
     </view>
     <view  hidden="{{currentTab != 2}}">
-      <!--<shop></shop>-->
+      <shop></shop>
     </view>
     <view  hidden="{{currentTab != 3}}">
       <me></me>

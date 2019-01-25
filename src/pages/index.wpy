@@ -26,9 +26,6 @@
     };
     onLoad() {
 
-      // wx.navigateTo({
-      //   url: '/pages/main'
-      // })
     };
     methods = {
 
