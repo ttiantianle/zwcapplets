@@ -283,7 +283,7 @@
     onLoad(){
       let url = wepy.$instance.globalData.url;
       let userId = wepy.$instance.globalData.userId;
-
+      console.log(userId,wepy.$instance.globalData.shopId);
       let _this = this;
       wepy.request({  // 我发布的
         url: url + "/releaserequir/releaselist",
@@ -310,7 +310,7 @@
           shop_id: wepy.$instance.globalData.shopId
         },
         success(res){
-          // console.log(res.data);
+          console.log(res.data);
           let reply = Utils.formatJson(res.data);
           // console.log(reply);
           // let data = JSON.parse(str);
