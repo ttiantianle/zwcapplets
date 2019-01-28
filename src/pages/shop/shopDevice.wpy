@@ -21,7 +21,7 @@
   <view>
     <view wx:if="{{device!=''}}" class="device">
       <swiper style="height:800rpx;"
-              autoplay=true interval=4000 duration=800 circular=true >
+              autoplay="true" interval="4000" duration="800" circular="true" >
         <view wx:for="{{device}}" wx:key="index">
           <swiper-item>
             <view style="float:left;width: 100%;background-color: rgba(0,0,0,0.5);text-align: center;color: #fff;">{{index+1}}/{{device.length}}</view>
