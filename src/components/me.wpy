@@ -174,19 +174,49 @@
       </repeat>
     </view>
 
-    <view hidden="{{selectId != 2}}">
-      <repeat for="{{orderList}}">
-        <view class="item">
-          <view class="lh50"><text>检测单位：{{item.shop_name}}</text></view>
-          <view class="lh50"><text>服务名称：{{item.order_name}}</text></view>
-          <view class="lh50"><text>检测价格：{{item.money_paid}}</text></view>
-          <view class="lh50">
-            <text>检测时间：{{item.end_pay_time}}</text>
-            <text style="color:#1296db;" class="fr" @tap="viewDetail()">查看详细内容</text>
+    <view hidden="{{selectId != 2}}" >
+      <!--<web-view src="https://www.zhaowoce.com/c_orderlist/m_show_contract/order_sn/P114523500580464.html"></web-view>-->
+      <view>
+        <text style="margin:20rpx;" @tap="is_sign(0)">未签署</text>
+        <text  style="margin:20rpx;" @tap="is_sign(1)">已签署</text>
+      </view>
+      <!--未签署-->
+      <view wx:if="{{is_sign == 0}}">
+        <repeat for="{{orderList}}">
+          <view class="item">
+            <view class="lh50" ><text>订单号：{{item.order_sn}}</text></view>
+            <view class="lh50">
+              <text wx:if="{{item.fback_id == '0'}}">订单类型：询价订单</text>
+              <text wx:else>订单类型：普通订单</text>
+            </view>
+            <view class="lh50"><text>委托单位名称：{{item.consig_com}}</text></view>
+            <view class="lh50">
+              <!--<text>用户签约时间：{{item.end_pay_time}}</text>-->
+              <!--<text style="color:#1296db;" class="fr" @tap="viewDetail()">查看详细内容</text>-->
+            </view>
           </view>
-        </view>
-      </repeat>
+        </repeat>
+      </view>
+      <!--已签署-->
+      <view wx:else>
+        <repeat for="{{orderList1}}">
+          <view class="item">
+            <view class="lh50" ><text>订单号：{{item.order_sn}}</text></view>
+            <view class="lh50">
+              <text wx:if="{{item.fback_id == '0'}}">订单类型：询价订单</text>
+              <text wx:else>订单类型：普通订单</text>
+            </view>
+            <view class="lh50"><text>委托单位名称：{{item.consig_com}}</text></view>
+            <view class="lh50">
+              <!--<text>用户签约时间：{{item.end_pay_time}}</text>-->
+              <!--<text style="color:#1296db;" class="fr" @tap="viewDetail()">查看详细内容</text>-->
+            </view>
+          </view>
+        </repeat>
+      </view>
     </view>
+
+
   </view>
 </template>
 
@@ -202,75 +232,11 @@
       requireNum:5,
       replyNum:10,
       requireList:[],  // 需求列表
-      infoList:[
-        {
-          shop_name:'金码头',
-          content:'检测内容测试',
-          time:'2019-01-05',
-          price:'100'
-        },
-        {
-          shop_name:'ttl',
-          content:'检测内容测试',
-          time:'2019-01-05',
-          price:'66.66'
-        }
-      ],
-      replyList:[
-        {
-          field:"食品",
-          reply:[
-            {
-              title:'岩棉检测，项目',
-              content:"密度导热系统 渣球含量 纤维平均直径 热荷重收缩 湿度 有机物含量 没有指定的标准，需要资质报告，" +
-              "CMA和CNAS都可以又能做的吗",
-              meReply:"金码头检测机构能做，详细查看"
-            }, {
-              title:'岩棉检测，项目',
-              content:"：密度导热系统 渣球含量 纤维平均直径 热荷重收缩 湿度 有机物含量 没有指定的标准，需要资质报告，" +
-              "CMA和CNAS都可以又能做的吗",
-              meReply:"金码头检测机构能做，详细查看"
-            },
-
-          ]
-        },
-        {
-          field:"材料",
-          reply:[
-            {
-              title:'岩棉检测，项目',
-              content:"：密度导热系统 渣球含量 纤维平均直径 热荷重收缩 湿度 有机物含量 没有指定的标准，需要资质报告，" +
-              "CMA和CNAS都可以又能做的吗",
-              meReply:"金码头检测机构能做，详细查看"
-            }, {
-              title:'岩棉检测，项目',
-              content:"：密度导热系统 渣球含量 纤维平均直径 热荷重收缩 湿度 有机物含量 没有指定的标准，需要资质报告，" +
-              "CMA和CNAS都可以又能做的吗",
-              meReply:"金码头检测机构能做，详细查看"
-            },
-
-          ]
-        },
-        {
-          field:"电气",
-          reply:[
-            {
-              title:'岩棉检测，项目',
-              content:"：密度导热系统 渣球含量 纤维平均直径 热荷重收缩 湿度 有机物含量 没有指定的标准，需要资质报告，" +
-              "CMA和CNAS都可以又能做的吗",
-              meReply:"金码头检测机构能做，详细查看"
-            }, {
-              title:'岩棉检测，项目',
-              content:"：密度导热系统 渣球含量 纤维平均直径 热荷重收缩 湿度 有机物含量 没有指定的标准，需要资质报告，" +
-              "CMA和CNAS都可以又能做的吗",
-              meReply:"金码头检测机构能做，详细查看"
-            },
-
-          ]
-        },
-      ],  // 我回复的
+      infoList:[],
+      replyList:[],  // 我回复的
       shop_name: "",  // 回复机构名称
       orderList: [],  // 委托单
+      orderList1: [],  // 委托单
       selectId:0,
       currentTab:3,
       activess: false,
@@ -279,6 +245,7 @@
       //   nickName:""
       // },
       this_setdata:"",
+      is_sign:0,
     };
     onLoad(){
       let url = wepy.$instance.globalData.url;
@@ -298,6 +265,7 @@
           str = str.substr(0, str.length-1);
           let data = JSON.parse(str);
           _this.requireList = data.data.data;
+          // _this.requireNum = _this.requireList.length;
           // console.log(_this.requireList,data);
           _this.$apply();
         }
@@ -315,29 +283,58 @@
           // console.log(reply);
           // let data = JSON.parse(str);
           _this.replyList = reply.data.data;
+          // _this.replyNum = _this.replyList.length;
           // console.log(_this.replyList,);
           _this.$apply();
         }
       });
-      wepy.request({  // 我的订单
-        url: url + "/userorder/orderlist",
-        data: {
-          re_type: "3",
-          from_type: 'xcx_shop',
-          shop_id: ""
+      // wepy.request({  // 我的订单
+      //   url: url + "/userorder/orderlist",
+      //   data: {
+      //     re_type: "3",
+      //     from_type: 'xcx_shop',
+      //     shop_id: ""
+      //   },
+      //   success(res){
+      //     // console.log(res.data);
+      //     let reply = Utils.formatJson(res.data);
+      //     // console.log(reply);
+      //     // let str = res.data.substr(1);
+      //     // str = str.substr(0, str.length-1);
+      //     // let data = JSON.parse(str);
+      //     _this.orderList = reply.data;
+      //     // console.log(_this.orderList);
+      //     _this.$apply();
+      //   }
+      // });
+      // 未签署
+      wepy.request({
+        url:url + "/order/contract",
+        data:{
+          sign:Utils.get('0'),
+          is_user:Utils.get('user'),
         },
         success(res){
-          // console.log(res.data);
-          let reply = Utils.formatJson(res.data);
-          // console.log(reply);
-          // let str = res.data.substr(1);
-          // str = str.substr(0, str.length-1);
-          // let data = JSON.parse(str);
-          _this.orderList = reply.data;
-          // console.log(_this.orderList);
-          _this.$apply();
+          console.log(11)
+          console.log(res)
+          let data = Utils.formatJson(res.data);
+          _this.orderList = data.data.data;
+          console.log(data)
         }
-      });
+      })
+      // 已签署
+      wepy.request({
+        url:url + "/order/contract",
+        data:{
+          sign:Utils.get('1'),
+          is_user:Utils.get('user'),
+        },
+        success(res){
+          let data = Utils.formatJson(res.data);
+          _this.orderList1 = data.data.data;
+          console.log(data)
+        }
+      })
     }
 
     methods = {
@@ -357,6 +354,10 @@
         this.activess = false;
       },
       stopClose(){
+
+      },
+      is_sign(idx){
+        this.is_sign = idx;
 
       }
     };

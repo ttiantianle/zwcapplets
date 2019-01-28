@@ -319,10 +319,6 @@
             },
             success(res){
               let data = Utils.formatJson(res.data);
-              // let str = res.data.substr(1);
-              // str = str.substr(0, str.length-1);
-              // let data = JSON.parse(str);
-
               if(data.code == 0){
                 wx.showToast({
                   title: '发布成功',
@@ -341,39 +337,7 @@
 
           })
         }
-        // wepy.request({
-        //   url:wepy.$instance.globalData.url+'/releaserequir/addrequir',
-        //   data:{
-        //     cat_name: Utils.get((that.currentField).toString()),  // 领域
-        //     file_path: Utils.get(that.filePath),  // 图片
-        //     text: Utils.get(that.desc),  // 内容
-        //     card_id: Utils.get(that.cardId),  // 名片ID
-        //     user_id: Utils.get(wepy.$instance.globalData.userId),
-        //     form_type: Utils.get("xcx_user"),
-        //   },
-        //   success(res){
-        //     let data = Utils.formatJson(res.data);
-        //     // let str = res.data.substr(1);
-        //     // str = str.substr(0, str.length-1);
-        //     // let data = JSON.parse(str);
-        //
-        //     if(data.code == 0){
-        //       wx.showToast({
-        //         title: '发布成功',
-        //         icon: 'success',
-        //         duration: 2000
-        //       })
-        //     }else{
-        //       wx.showToast({
-        //         title: '发布失败',
-        //         icon: 'cancel',
-        //         duration: 2000
-        //       })
-        //     }
-        //     that.$apply();
-        //   }
-        //
-        // })
+
       },
       upload(page, path) {
         let that = this;
@@ -391,7 +355,7 @@
                 console.log(res)
                 if(res.statusCode == 200 && res.data){
                   that.filePath = res.data;
-                  // that.$apply();
+                  that.$apply();
                 }else{
                   wx.showToast({
                     title:"上传失败",
