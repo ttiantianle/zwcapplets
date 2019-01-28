@@ -5,6 +5,7 @@
   }
   .demand_box{
     min-height: 100%;
+    padding-top: 2rpx;
   }
   .demand{
     padding: 24rpx 24rpx 0;
@@ -15,7 +16,7 @@
     text-align: center;
   }
   .active{
-    background: #489DFF;
+    background: #1296db;
     color: #ffffff;
     border-radius: 5rpx;
   }
@@ -54,7 +55,7 @@
   }
   .search{
     width: 140rpx;
-    background: #489DFF;
+    background: #1296db;
     color: #ffffff;
     font-size: 30rpx;
     height: 70rpx;
@@ -65,7 +66,7 @@
     width: 500rpx;
     height: 70rpx;
     line-height: 70rpx;
-    border: 1px solid #489DFF;
+    border: 1px solid #1296db;
     float: left;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
