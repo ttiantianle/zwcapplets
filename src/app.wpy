@@ -24,26 +24,17 @@ export default class extends wepy.app {
   config = {
     pages: [
       'pages/index',//授权页面
-
       'pages/main',//主页面 首页
-
       'pages/card/addCard',     //添加名片
-
-      // 'pages/shop/shopList',   //机构列表
       'pages/shop/shopDetail', //机构详情
       'pages/shop/shopPicture',//机构相册
       'pages/shop/shopDevice', //仪器设备
-
-      // 'pages/demand/demand',
-      // 'pages/shop/shop',
       'pages/demand/demandDetails',
-      // 'pages/me/me',
-
     ],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#000',
-      navigationBarTitleText: 'WeChat',
+      navigationBarTitleText: '',
       navigationBarTextStyle: 'white',
     },
     // tabBar: {    //
@@ -87,30 +78,6 @@ export default class extends wepy.app {
     }
 
     onLaunch() {
-      // let that = this;
-      // this.testAsync();
-      // wx.checkSession({
-      //   success: function(){
-      //     that.globalData.Authorization = true;
-      //     that.redirectTo({
-      //       url:"/pages/main"
-      //     })
-      //     //session_key 未过期，并且在本生命周期一直有效
-      //   },
-      //   fail: function(){
-      //   }
-      // })
-        // wx.login({
-        //   success: function (res) {
-        //     if (res.code) {
-        //       //发起网络请求
-        //
-        //       console.log(res.code)
-        //     } else {
-        //       console.log('获取用户登录态失败！' + res.errMsg)
-        //     }
-        //   }
-        // });
 
     }
 
@@ -139,27 +106,5 @@ export default class extends wepy.app {
         }
       })
     }
-  // postData: function (url, data) {
-  //   var that = this;
-  //   return new Promise(function (resolve, reject) {
-  //     wx.request({
-  //       url: that.globalData.baseURL + url,
-  //       data: data,
-  //       method: "GET",
-  //       header: {
-  //         "Content-Type": "application/json;charset=UTF-8",
-  //         "token": that.globalData.token
-  //       },
-  //       success: function (res) {
-  //         resolve(res.data);
-  //       },
-  //       fail: function (res) {
-  //         reject(res);
-  //       },
-  //     })
-  //
-  //
-  //   });
-  // }
   }
 </script>

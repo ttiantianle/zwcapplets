@@ -5,6 +5,12 @@
   .p30{
     padding: 30rpx;
   }
+  .p20{
+    padding: 20rpx;
+  }
+  .m30{
+    margin: 10rpx 30rpx 30rpx;
+  }
   .mt20{
     margin-top: 20rpx;
   }
@@ -33,10 +39,17 @@
   .tabTitle,.tabTitle_active{
     display:inline-block;
     width:50%;
-    text-align: center
+    text-align: center;
+    line-height: 80rpx;
+  }
+  .tabTitle_active text{
+    border-bottom: 3rpx solid #1296db;
+    padding: 0 10rpx;
+    display:inline-block;
   }
   .tabTitle_active{
     color: #1296db;
+    background: #ffffff;
   }
   /*使用 button::after{ border: none; } 来去除边框*/
   .free-btn-bordernone{
@@ -88,36 +101,69 @@
     width: 150rpx;
     text-align: right;
   }
+  .cat_name{
+    height: 60rpx;
+    background-color: #F1F4FD;
+    padding-left: 30rpx;
+    line-height: 60rpx;
+    border-bottom: gray 1rpx solid;
+  }
+  .box_show{
+    box-shadow: 0 0 15rpx #DDDDDD;
+    border-radius: 10rpx;
+    background: #ffffff;
+    margin-bottom: 30rpx;
+  }
+  .demandTitle{
+    background: #ffffff;
+  }
 </style>
 <template>
-  <view style="padding-top: 2rpx">
-    <view class="m20">
-      <view class="tabTitle{{selectId == 0 ? '_active':''}}" @tap="select(0)" >我发布的</view>
-      <view class="tabTitle{{selectId == 1 ? '_active':''}}" @tap="select(1)">我回复的</view>
+  <view>
+    <view class="userinfo" style="padding: 20rpx 20rpx 40rpx;background: #1296db;color: #ffffff;">
+      <view class="portrait">
+        <open-data type="userAvatarUrl"></open-data>
+      </view>
+      <view style="display: inline-block;padding-top:30rpx;height: 120rpx;margin-left:50rpx;">
+        <open-data type="userNickName"></open-data>
+        <view class="mt20">{{ mobile }}</view>
+      </view>
+      <!--<image mode="scaleToFill" style="width: 150rpx;height: 150rpx;border-radius: 200rpx;display: inline-block" class="userinfo-avatar" src="{{userInfo.avatarUrl}}"/>-->
+      <!--<view class="userinfo-nickname" style="margin-left:50rpx;vertical-align:top;display: inline-block;line-height: 150rpx;height: 150rpx;">{{userInfo.nickName}}，您好</view>-->
+      <text style="display: block;margin-top: 20rpx;">系统提示：您今天发布了{{requireNum}}个需求，得到{{replyNum}}个回复</text>
+    </view>
+    <view class="demandTitle">
+      <view class="tabTitle{{selectId == 0 ? '_active':''}}" @tap="select(0)" ><text>我发布的</text></view>
+      <view class="tabTitle{{selectId == 1 ? '_active':''}}" @tap="select(1)"><text>我回复的</text></view>
       <!--<view class="tabTitle{{selectId == 2 ? '_active':''}}" @tap="select(2)">我的委托单</view>-->
     </view>
+    <view style="padding: 25rpx;">
     <!--我发布的-->
     <view hidden="{{selectId != 0}}">
-      <view class="userinfo" style="margin: 20rpx 60rpx 20rpx 60rpx;">
-        <view class="portrait">
-          <open-data type="userAvatarUrl" style="">
-          </open-data>
-        </view>
-        <view style="display: inline-block;vertical-align:top;line-height: 150rpx;height: 150rpx;margin-left:50rpx;">
-          <open-data type="userNickName" style="">
-          </open-data>,您好!
-        </view>
-        <!--<image mode="scaleToFill" style="width: 150rpx;height: 150rpx;border-radius: 200rpx;display: inline-block" class="userinfo-avatar" src="{{userInfo.avatarUrl}}"/>-->
-        <!--<view class="userinfo-nickname" style="margin-left:50rpx;vertical-align:top;display: inline-block;line-height: 150rpx;height: 150rpx;">{{userInfo.nickName}}，您好</view>-->
-        <text style="display: block;margin-top: 20rpx;">系统提示：您累计发布了{{requireNum}}个需求，得到{{replyNum}}个回复</text>
-      </view>
 
-      <repeat for="{{requireList}}"  item="item">
-        <view style="height: 60rpx;background-color: #fff;padding-left: 30rpx;line-height: 60rpx;border-bottom: gray 1rpx solid;"
-              @tap="conversion()">
-          {{ item.cat_name }}
-        </view>
-        <view class="m20" style="padding-bottom: 10rpx;">
+      <view wx:for="{{requireList}}" class="box_show">
+        <view class="p20">
+          <view class="mb20">{{ item.cat_name }}</view>
+<!--<view class="userinfo" style="margin: 20rpx 60rpx 20rpx 60rpx;">-->
+        <!--<view class="portrait">-->
+          <!--<open-data type="userAvatarUrl" style="">-->
+          <!--</open-data>-->
+        <!--</view>-->
+        <!--<view style="display: inline-block;vertical-align:top;line-height: 150rpx;height: 150rpx;margin-left:50rpx;">-->
+          <!--<open-data type="userNickName" style="">-->
+          <!--</open-data>,您好!-->
+        <!--</view>-->
+        <!--&lt;!&ndash;<image mode="scaleToFill" style="width: 150rpx;height: 150rpx;border-radius: 200rpx;display: inline-block" class="userinfo-avatar" src="{{userInfo.avatarUrl}}"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<view class="userinfo-nickname" style="margin-left:50rpx;vertical-align:top;display: inline-block;line-height: 150rpx;height: 150rpx;">{{userInfo.nickName}}，您好</view>&ndash;&gt;-->
+        <!--<text style="display: block;margin-top: 20rpx;">系统提示：您累计发布了{{requireNum}}个需求，得到{{replyNum}}个回复</text>-->
+      <!--</view>-->
+
+      <!--<repeat for="{{requireList}}"  item="item">-->
+        <!--<view style="height: 60rpx;background-color: #fff;padding-left: 30rpx;line-height: 60rpx;border-bottom: gray 1rpx solid;"-->
+              <!--@tap="conversion()">-->
+          <!--{{ item.cat_name }}-->
+        <!--</view>-->
+        <!--<view class="m20" style="padding-bottom: 10rpx;">-->
           <view class="mb20">{{item.text}}</view>
           <view class="mb20">
             审核状态：
@@ -127,15 +173,14 @@
             <text class="red" wx:if="{{ item.status==3 }}">超时已失效</text>
             <text class="red" wx:if="{{ item.status==4 }}">已完成</text>
           </view>
-          <view wx:if="{{item.reply_list!=''}}">
+          <view wx:if="{{item.reply_list!=''}}" class="mb20">
             <view style="margin: 10rpx 0;font-weight: bold;">回复列表</view>
             <repeat for="{{item.reply_list}}" item="itemCard">
               <view class="lh50">{{itemCard.shop_name}} 回复了您 <text class="ml20 card" @tap="lookCard({{ itemCard }},1)"> 查看名片</text></view>
             </repeat>
           </view>
-
         </view>
-      </repeat>
+      </view>
 
 
     </view>
@@ -153,17 +198,17 @@
 
     <!--我回复的-->
     <view hidden="{{selectId != 1}}">
-      <repeat for="{{replyList}}">
-        <view>
-          <view style="height: 60rpx;background-color: #fff;padding-left: 30rpx;line-height: 60rpx;border-bottom: gray 1rpx solid;" @tap="conversion()">{{item.cat_name}}</view>
-          <view class="m20" style="padding-bottom: 10rpx;">
+      <!--<repeat for="{{replyList}}">-->
+        <view wx:for="{{replyList}}" wx:key="index" class="box_show p20">
+          <view class="mb20">{{item.cat_name}}</view>
+          <view class="mb20">
             <view class="mb20">
               <text>{{item.text}} </text>
               <text wx:if="{{ item.card_id > 0 }}" class="ml20 card" @tap="lookCard({{ item.card_id }},2)"> 查看联系方式</text>
             </view>
           </view>
         </view>
-      </repeat>
+      <!--</repeat>-->
     </view>
 
     <view hidden="{{selectId != 2}}" >
@@ -207,8 +252,7 @@
         </repeat>
       </view>
     </view>
-
-
+    </view>
   </view>
 </template>
 
@@ -231,6 +275,7 @@
       orderList1: [],  // 委托单
       selectId:0,
       currentTab:3,
+      mobile: "",
       activess: false,
       cardItem: [],
       // userInfo:{
@@ -240,6 +285,9 @@
       is_sign:0,
     };
     onLoad(){
+      this.mobile = wepy.$instance.globalData.phoneNumber;
+      // console.log(this.mobile);
+
       let url = wepy.$instance.globalData.url;
       let userId = wepy.$instance.globalData.userId;
       // console.log(userId,wepy.$instance.globalData.shopId);

@@ -34,6 +34,8 @@
   image{
     width: 100%;
     height: 150rpx;
+    padding:40rpx 30rpx 30rpx;
+    box-sizing:border-box;
   }
   .h50{
     height: 50rpx;
@@ -42,7 +44,7 @@
     line-height: 50rpx;
   }
   .borderGray{
-    border: 1rpx solid gray;
+    /*border: 1rpx solid gray;*/
   }
   .p10{
     padding: 10rpx;
@@ -67,13 +69,31 @@
     margin: 25rpx;
     padding: 15rpx;
   }
-
+  .search{
+    background: #1296db;
+    color: #ffffff;
+    width: 140rpx;
+    font-size: 30rpx;
+    height: 70rpx;
+    line-height: 70rpx;
+  }
+  .borderGray{
+    width: 500rpx;
+    height: 70rpx;
+    line-height: 70rpx;
+    border: 1px solid #1296db;
+    float: left;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-left: 10rpx;
+    margin-left: 10rpx;
+  }
 </style>
 <template>
-  <view>
-    <view class="df m30">
-      <input type="text" bindinput="bindKeyInput" class="h50 borderGray f8 dl mr20"/>
-      <button type="primary" size="mini" class="f1" @tap="search()">搜索</button>
+  <view style="padding-top: 2rpx;">
+    <view class="df m30" style="padding: 24rpx 24rpx 0;">
+      <input type="text" bindinput="bindKeyInput" class="borderGray"/><button class="search" @tap="search()">搜 索</button>
     </view>
     <repeat>
       <view class="itemShop df box_show" wx:for="{{ shopList }}" wx:key="index" @tap="shopDetails({{item.shop_id}})">
