@@ -135,7 +135,7 @@
     onLoad(){
       this.showCards=true;
       wx.setNavigationBarTitle({
-        title: ''
+        title: '首页'
       })
       // console.log(wepy.$instance.globalData.userId)
     };

@@ -25,7 +25,23 @@
       next:false,
     };
     onLoad() {
+      // console.log(Date.parse(new Date()))
+//       console.log(Date.parse(new Date())+2592000000);
+// return ;
+//       console.log(wx.getStorageSync('is_show'));
+//       console.log((wx.getStorageSync('is_show') > Date.parse(new Date())))
 
+      if(wx.getStorageSync('is_show') > Date.parse(new Date())){
+        this.$parent.globalData.phoneNumber = wx.getStorageSync('mobile');
+        this.$parent.globalData.shopId = wx.getStorageSync('shop_id');
+        this.$parent.globalData.userId = wx.getStorageSync('user_id');
+        this.$parent.globalData.Authorization = true;
+        wx.redirectTo({
+          url:"./main"
+        })
+      }else{
+
+      }
     };
     methods = {
 
@@ -38,7 +54,6 @@
           });
           return;
         }
-
         if (e.detail.errMsg == "getPhoneNumber:fail user deny") {
           this.$parent.globalData.Authorization = false;
           wepy.redirectTo({
@@ -46,8 +61,6 @@
           })
         }else{
           //用户允许授权
-          // console.log("lv", e.detail.iv);
-          // console.log(e.detail.encryptedData);
           wx.showLoading();
           var self=this;
           //1. 调用登录接口获取临时登录code
@@ -66,6 +79,22 @@
                     let dat = Utils.formatJson(re.data);
                     // console.log(dat);
                     if(dat.code == 0){
+                      wx.setStorage({
+                        key:"is_show",
+                        data:Date.parse(new Date())+2592000000,
+                      });
+                      wx.setStorage({
+                        key:"mobile",
+                        data: dat.data.mobile,
+                      });
+                      wx.setStorage({
+                        key:"shop_id",
+                        data:dat.data.shop_id,
+                      });
+                      wx.setStorage({
+                        key:"user_id",
+                        data:dat.data.user_id,
+                      });
                       that.$parent.globalData.Authorization = true;
                       that.$parent.globalData.phoneNumber = dat.data.mobile;
                       that.$parent.globalData.shopId = dat.data.shop_id;
