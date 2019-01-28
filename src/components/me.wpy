@@ -140,9 +140,30 @@
     <view style="padding: 25rpx;">
     <!--我发布的-->
     <view hidden="{{selectId != 0}}">
+
       <view wx:for="{{requireList}}" class="box_show">
         <view class="p20">
           <view class="mb20">{{ item.cat_name }}</view>
+<!--<view class="userinfo" style="margin: 20rpx 60rpx 20rpx 60rpx;">-->
+        <!--<view class="portrait">-->
+          <!--<open-data type="userAvatarUrl" style="">-->
+          <!--</open-data>-->
+        <!--</view>-->
+        <!--<view style="display: inline-block;vertical-align:top;line-height: 150rpx;height: 150rpx;margin-left:50rpx;">-->
+          <!--<open-data type="userNickName" style="">-->
+          <!--</open-data>,您好!-->
+        <!--</view>-->
+        <!--&lt;!&ndash;<image mode="scaleToFill" style="width: 150rpx;height: 150rpx;border-radius: 200rpx;display: inline-block" class="userinfo-avatar" src="{{userInfo.avatarUrl}}"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<view class="userinfo-nickname" style="margin-left:50rpx;vertical-align:top;display: inline-block;line-height: 150rpx;height: 150rpx;">{{userInfo.nickName}}，您好</view>&ndash;&gt;-->
+        <!--<text style="display: block;margin-top: 20rpx;">系统提示：您累计发布了{{requireNum}}个需求，得到{{replyNum}}个回复</text>-->
+      <!--</view>-->
+
+      <!--<repeat for="{{requireList}}"  item="item">-->
+        <!--<view style="height: 60rpx;background-color: #fff;padding-left: 30rpx;line-height: 60rpx;border-bottom: gray 1rpx solid;"-->
+              <!--@tap="conversion()">-->
+          <!--{{ item.cat_name }}-->
+        <!--</view>-->
+        <!--<view class="m20" style="padding-bottom: 10rpx;">-->
           <view class="mb20">{{item.text}}</view>
           <view class="mb20">
             审核状态：
@@ -283,6 +304,9 @@
           let str = res.data.substr(1);
           str = str.substr(0, str.length-1);
           let data = JSON.parse(str);
+          // console.log(data)
+          _this.requireNum = data.data.total.total_requir;
+          _this.replyNum = data.data.total.total_reply;
           _this.requireList = data.data.data;
           // _this.requireNum = _this.requireList.length;
           // console.log(_this.requireList);

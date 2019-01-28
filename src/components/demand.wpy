@@ -93,7 +93,7 @@
       <view wx:for="{{ demandList }}" class="p1020 box_show {{ item.status==4 ? 'complete': ''}}" wx:key="index" @tap="demandDetails({{ item.id }})">
         <view class="lh40 filelist">检测领域：<text>{{ item.cat_name }}</text> <text class="fr">{{ item.create_time }}</text></view>
         <view class="lh40 filelist">详细描述：<text>{{ item.text }}</text></view>
-        <image wx:if="{{item.status==4}}" src="../../images/complete.png"></image>
+        <image wx:if="{{item.status==4}}" src="/images/complete.png"></image>
       </view>
       <view class="p1020 available" wx:if="{{length }}">暂无此类需求</view>
     </view>
