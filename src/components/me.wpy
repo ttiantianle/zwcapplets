@@ -109,7 +109,7 @@
         </view>
         <!--<image mode="scaleToFill" style="width: 150rpx;height: 150rpx;border-radius: 200rpx;display: inline-block" class="userinfo-avatar" src="{{userInfo.avatarUrl}}"/>-->
         <!--<view class="userinfo-nickname" style="margin-left:50rpx;vertical-align:top;display: inline-block;line-height: 150rpx;height: 150rpx;">{{userInfo.nickName}}，您好</view>-->
-        <text style="display: block;margin-top: 20rpx;">系统提示：您今天发布了{{requireNum}}个需求，得到{{replyNum}}个回复</text>
+        <text style="display: block;margin-top: 20rpx;">系统提示：您累计发布了{{requireNum}}个需求，得到{{replyNum}}个回复</text>
       </view>
 
       <repeat for="{{requireList}}"  item="item">
@@ -256,6 +256,9 @@
           let str = res.data.substr(1);
           str = str.substr(0, str.length-1);
           let data = JSON.parse(str);
+          // console.log(data)
+          _this.requireNum = data.data.total.total_requir;
+          _this.replyNum = data.data.total.total_reply;
           _this.requireList = data.data.data;
           // _this.requireNum = _this.requireList.length;
           // console.log(_this.requireList);
