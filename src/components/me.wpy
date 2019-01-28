@@ -130,49 +130,39 @@
           <view wx:if="{{item.reply_list!=''}}">
             <view style="margin: 10rpx 0;font-weight: bold;">回复列表</view>
             <repeat for="{{item.reply_list}}" item="itemCard">
-              <view class="lh50">{{itemCard.shop_name}} 回复了您 <text class="ml20 card" @tap="lookCard({{ itemCard }})"> 查看名片</text></view>
+              <view class="lh50">{{itemCard.shop_name}} 回复了您 <text class="ml20 card" @tap="lookCard({{ itemCard }},1)"> 查看名片</text></view>
             </repeat>
           </view>
 
         </view>
       </repeat>
-      <view class="card-wrapper {{activess ? 'actives' : ''}}" @tap="closeCard()">
-        <!--catchtap="stopClose"-->
-        <view class="cardContent p30" catchtap="stopClose()">
-          <view class="lh50"><text class="name">称呼：</text><text>{{ cardItem.username }}</text></view>
-          <view class="lh50"><text class="name">手机号：</text><text>{{ cardItem.mobile }}</text></view>
-          <view class="lh50"><text class="name">微信号：</text><text>{{ cardItem.wechat }}</text></view>
-          <view class="lh50"><text class="name">QQ 号：</text><text>{{ cardItem.qq_num }}</text></view>
-          <view class="lh50"><text class="name">邮 箱：</text><text>{{ cardItem.email }}</text></view>
-          <view class="lh50"><text class="name">机构名称：</text><text>{{ cardItem.shop_name }}</text></view>
-        </view>
-      </view>
 
+
+    </view>
+    <view class="card-wrapper {{activess ? 'actives' : ''}}" @tap="closeCard()">
+      <!--catchtap="stopClose"-->
+      <view class="cardContent p30" catchtap="stopClose()">
+        <view class="lh50"><text class="name">称呼：</text><text>{{ cardItem.username }}</text></view>
+        <view class="lh50"><text class="name">手机号：</text><text>{{ cardItem.mobile }}</text></view>
+        <view class="lh50"><text class="name">微信号：</text><text>{{ cardItem.wechat }}</text></view>
+        <view class="lh50"><text class="name">QQ 号：</text><text>{{ cardItem.qq_num }}</text></view>
+        <view class="lh50"><text class="name">邮 箱：</text><text>{{ cardItem.email }}</text></view>
+        <view class="lh50"><text class="name">机构名称：</text><text>{{ cardItem.shop_name }}</text></view>
+      </view>
     </view>
 
     <!--我回复的-->
     <view hidden="{{selectId != 1}}">
       <repeat for="{{replyList}}">
         <view>
-          <view style="height: 60rpx;background-color: #fff;padding-left: 30rpx;line-height: 60rpx;border-bottom: gray 1rpx solid;"
-                @tap="conversion()">
-            {{item.cat_name}}
-          </view>
+          <view style="height: 60rpx;background-color: #fff;padding-left: 30rpx;line-height: 60rpx;border-bottom: gray 1rpx solid;" @tap="conversion()">{{item.cat_name}}</view>
           <view class="m20" style="padding-bottom: 10rpx;">
             <view class="mb20">
-              {{item.text}}
+              <text>{{item.text}} </text>
+              <text wx:if="{{ item.card_id > 0 }}" class="ml20 card" @tap="lookCard({{ item.card_id }},2)"> 查看联系方式</text>
             </view>
-          <!--<repeat  for="{{item.reply}}" item="list">-->
-            <!--<view style="margin: 20rpx;">-->
-              <!--<view>{{list.title}}:{{list.content}}</view>-->
-              <!--<view style="margin-bottom:10rpx ;">我的回复：{{list.meReply}}</view>-->
-            <!--</view>-->
-
-          <!--</repeat>-->
           </view>
         </view>
-
-
       </repeat>
     </view>
 
@@ -268,7 +258,7 @@
           let data = JSON.parse(str);
           _this.requireList = data.data.data;
           // _this.requireNum = _this.requireList.length;
-          // console.log(_this.requireList,data);
+          // console.log(_this.requireList);
           _this.$apply();
         }
       });
@@ -280,16 +270,26 @@
           shop_id: wepy.$instance.globalData.shopId
         },
         success(res){
-          // console.log(res.data);
           let reply = Utils.formatJson(res.data);
           // console.log(reply);
-          // let data = JSON.parse(str);
           _this.replyList = reply.data.data;
-          // _this.replyNum = _this.replyList.length;
-          // console.log(_this.replyList,);
           _this.$apply();
         }
       });
+      // wepy.request({  // 我回复的
+      //   url: url + "/usercard/getcard",
+      //   data: {
+      //     re_type: "3",
+      //     from_type: 'xcx_shop',
+      //     shop_id: wepy.$instance.globalData.shopId
+      //   },
+      //   success(res){
+      //     let reply = Utils.formatJson(res.data);
+      //     _this.replyList = reply.data.data;
+      //     _this.$apply();
+      //   }
+      // });
+
       // wepy.request({  // 我的订单
       //   url: url + "/userorder/orderlist",
       //   data: {
@@ -310,32 +310,32 @@
       //   }
       // });
       // 未签署
-      wepy.request({
-        url:url + "/order/contract",
-        data:{
-          sign:Utils.get('0'),
-          is_user:Utils.get('user'),
-        },
-        success(res){
-
-          let data = Utils.formatJson(res.data);
-          _this.orderList = data.data.data;
-          // console.log(data)
-        }
-      })
-      // 已签署
-      wepy.request({
-        url:url + "/order/contract",
-        data:{
-          sign:Utils.get('1'),
-          is_user:Utils.get('user'),
-        },
-        success(res){
-          let data = Utils.formatJson(res.data);
-          _this.orderList1 = data.data.data;
-          // console.log(data)
-        }
-      })
+      // wepy.request({
+      //   url:url + "/order/contract",
+      //   data:{
+      //     sign:Utils.get('0'),
+      //     is_user:Utils.get('user'),
+      //   },
+      //   success(res){
+      //
+      //     let data = Utils.formatJson(res.data);
+      //     _this.orderList = data.data.data;
+      //     // console.log(data)
+      //   }
+      // })
+      // // 已签署
+      // wepy.request({
+      //   url:url + "/order/contract",
+      //   data:{
+      //     sign:Utils.get('1'),
+      //     is_user:Utils.get('user'),
+      //   },
+      //   success(res){
+      //     let data = Utils.formatJson(res.data);
+      //     _this.orderList1 = data.data.data;
+      //     // console.log(data)
+      //   }
+      // })
     }
 
     methods = {
@@ -345,10 +345,32 @@
       conversion(evt){
         // console.log(evt);
       },
-      lookCard(data){
+      lookCard(data,num){
+        // console.log(data);
         this.activess = true;
-        this.shop_name = data.shop_name;
-        this.cardItem = data.card[0];
+        let url = wepy.$instance.globalData.url;
+        let _this = this;
+        if(num == 1){
+          this.shop_name = data.shop_name;
+          this.cardItem = data.card[0];
+        }else if(num == 2){
+          // _this.cardItem = "";
+          wepy.request({
+            url:url + "/usercard/getcard",
+            data:{
+              id: Utils.get( data ),
+            },
+            success(res){
+              let data = Utils.formatJson(res.data);
+              _this.cardItem = data.data[0];
+              // console.log(data.data.mobile);
+              // _this.orderList1 = data.data.data;
+              _this.$apply();
+              // console.log(_this.cardItem)
+            }
+          })
+
+        }
         // console.log(data);
       },
       closeCard(){

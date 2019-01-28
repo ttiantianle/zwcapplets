@@ -176,7 +176,7 @@
               shop_id:Utils.get(_this.$parent.globalData.shopId)
             },
             success(res){
-              console.log(res);
+              // console.log(res);
               let str = res.data.substr(1);
               str = str.substr(0, str.length-1);
               let data = JSON.parse(str);
@@ -205,7 +205,18 @@
             })
           },
           replyCart(){
-            this.cart = true
+            let _this = this;
+            // console.log(wepy.$instance.globalData.shopId);
+            if(wepy.$instance.globalData.shopId > 0 ){
+              this.cart = true;
+            }else{
+              wx.showToast({
+                title: '您需要完成机构资质审核,才可回复,请到“找我测”官网进行入驻',
+                icon: 'none',
+                duration: 5000
+              })
+            }
+
           },
           cancel(){
             this.cart = false;
