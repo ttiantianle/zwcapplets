@@ -164,7 +164,13 @@
           },
           success(res){
             // console.log(that.$parent.globalData.userId);
-            let data = Utils.formatJson(res.data);
+            // let data = Utils.formatJson(res.data);
+            that.username = "";
+            that.wechat = '';
+            that.mobile = '';
+            that.QQ = '';
+            that.email = '';
+
             that.datas();
             wx.showToast({
               title: '添加成功',
@@ -200,10 +206,9 @@
         },
         success(res){
           let data = Utils.formatJson(res.data);
-          console.log(data);
+          // console.log(data);
           if(data.code == 0 ){
             //todo
-
             that.cardList = data.data;
           }else{
           }
