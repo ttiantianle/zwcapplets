@@ -113,6 +113,7 @@
     <view class="mb25">
       <button class="reply" @tap="replyCart">立即回复</button><button class="share" open-type="share">分享需求</button>
     </view>
+
     <view class="p20 box_show replyList" wx:if="{{reply.length != 0 }}">
       <view class="lh40 filelist">回复列表</view>
       <view class="p30">
@@ -127,6 +128,7 @@
         <text class="fl" @tap="cancel()">取消</text><text class="fr" @tap="confirm()">确定</text>
       </view>
       <view wx:if="{{this.cardList.length>0}}">暂无名片</view>
+
       <picker-view
         indicator-style="height: 40rpx;"
         style="width: 100%; height: 250rpx;"
@@ -149,7 +151,7 @@
 
 <script>
     import wepy from 'wepy';
-
+    import Utils from '@/js/utils.js'
     export default class demandDetails extends wepy.page {
         config = {
 
@@ -170,12 +172,15 @@
             url: wepy.$instance.globalData.url + "/usercard/list",
             // method: "POST",
             data: {
-              from_type: 'xcx_shop',
+              from_type: Utils.get('xcx_shop'),
+              shop_id:Utils.get(_this.$parent.globalData.shopId)
             },
             success(res){
+              console.log(res);
               let str = res.data.substr(1);
               str = str.substr(0, str.length-1);
               let data = JSON.parse(str);
+
               _this.cardList = data.data;
               // console.log( _this.cardList, data);
               if(_this.cardList.length>0){

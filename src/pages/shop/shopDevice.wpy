@@ -60,7 +60,7 @@
             title: '机构设备'
           });
           let _this = this;
-          console.log(params);
+          // console.log(params);
           wepy.request({
             url: wepy.$instance.globalData.url + "/equipment/list",
             // method: "POST",

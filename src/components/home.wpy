@@ -66,8 +66,8 @@
 
         <view style="">
            <textarea style="border: 2px solid #edece8;padding: 10rpx;margin: 20rpx auto;width: 80%;"
-                     bindinput="bindDesc"
-                     placeholder="请输入您的需求" maxlength="300" />
+                     bindinput="bindKeyInput"
+                     placeholder="请输入您的需求" maxlength="300" value="{{desc}}" />
         </view>
         <image src="../images/upload1.png" style="width:60rpx;height: 60rpx;margin-left: 8%" @tap="upload()"></image>
         <image wx:if="{{filePath}}"
@@ -139,8 +139,9 @@
       })
       // console.log(wepy.$instance.globalData.userId)
     };
+
     methods = {
-      bindDesc(e){
+      bindKeyInput(e){
         this.desc = e.detail.value;
       },
       closeShow(){
@@ -184,7 +185,11 @@
         else{
           this.showCards = false;
           wepy.request({
-            url:wepy.$instance.globalData.url+"/usercard/list",
+            url:wepy.$instance.globalData.url+"/usercard/userlist",
+            data:{
+              from_type:"xcx_user",
+              user_id:wepy.$instance.globalData.userId,
+            },
             success(res){
               let data = Utils.formatJson(res.data);
             if(data.code == 0 ){
@@ -293,6 +298,15 @@
                         duration: 2000
                       })
                     }
+                    that.currentField = 3801;
+                    that.desc="";//发布的需求内容
+                    // status:false,
+                    that.cardId="";//所选择的的名片的id
+                    that.anonymous=false;//是否匿名回复,false匿名true不匿名
+                    // Permission:false,
+                    that.showCards=true;//显示选择名片的div，true是隐藏，false显示
+                    that.filePath="";//图片路径
+                    that.cardList=[];
                     that.$apply();
                   }
 
@@ -331,7 +345,16 @@
                   icon: 'cancel',
                   duration: 2000
                 })
-              }
+              };
+              that.currentField = 3801;
+              that.desc="";//发布的需求内容
+              that.cardId="";//所选择的的名片的id
+              that.anonymous=false;//是否匿名回复,false匿名true不匿名
+              // Permission:false,
+              that.showCards=true;//显示选择名片的div，true是隐藏，false显示
+              that.filePath="";//图片路径
+              that.cardList=[];
+              // console.log(that.desc,'000')
               that.$apply();
             }
 
@@ -345,17 +368,20 @@
           success(res) {
             const tempFilePaths = res.tempFilePaths
             wx.uploadFile({
-              url: 'http://zwcap.zhaowoce.com:8090/shop/uploadimg', // 仅为示例，非真实的接口地址
+              url: 'https://zwcap.zhaowoce.com:4433/shop/uploadimg', // 仅为示例，非真实的接口地址
               filePath: tempFilePaths[0],
               name: 'file',
               formData: {
                 user: 'test'
               },
               success(res) {
-                console.log(res)
+
                 if(res.statusCode == 200 && res.data){
                   that.filePath = res.data;
                   that.$apply();
+
+
+
                 }else{
                   wx.showToast({
                     title:"上传失败",

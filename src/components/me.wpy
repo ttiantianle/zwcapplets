@@ -159,7 +159,9 @@
             {{item.cat_name}}
           </view>
           <view class="m20" style="padding-bottom: 10rpx;">
-            <view class="mb20">{{item.text}}</view>
+            <view class="mb20">
+              {{item.text}}
+            </view>
           <!--<repeat  for="{{item.reply}}" item="list">-->
             <!--<view style="margin: 20rpx;">-->
               <!--<view>{{list.title}}:{{list.content}}</view>-->
@@ -250,7 +252,7 @@
     onLoad(){
       let url = wepy.$instance.globalData.url;
       let userId = wepy.$instance.globalData.userId;
-      console.log(userId,wepy.$instance.globalData.shopId);
+      // console.log(userId,wepy.$instance.globalData.shopId);
       let _this = this;
       wepy.request({  // 我发布的
         url: url + "/releaserequir/releaselist",
@@ -278,7 +280,7 @@
           shop_id: wepy.$instance.globalData.shopId
         },
         success(res){
-          console.log(res.data);
+          // console.log(res.data);
           let reply = Utils.formatJson(res.data);
           // console.log(reply);
           // let data = JSON.parse(str);
@@ -315,11 +317,10 @@
           is_user:Utils.get('user'),
         },
         success(res){
-          console.log(11)
-          console.log(res)
+
           let data = Utils.formatJson(res.data);
           _this.orderList = data.data.data;
-          console.log(data)
+          // console.log(data)
         }
       })
       // 已签署
@@ -332,7 +333,7 @@
         success(res){
           let data = Utils.formatJson(res.data);
           _this.orderList1 = data.data.data;
-          console.log(data)
+          // console.log(data)
         }
       })
     }

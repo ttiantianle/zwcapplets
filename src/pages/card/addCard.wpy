@@ -152,18 +152,25 @@
 
         //todo 发起请求
         wepy.request({
-          url:this.$parent.globalData.url+"/usercard/addshop",
+          url:this.$parent.globalData.url+"/usercard/adduser",
           data:{
-            username: Utils.get(that.name),  // 称呼
-            wechat: Utils.get(that.wechat),  // 微信
-            mobile: Utils.get(that.mobile),  // 手机号
-            qq_num: Utils.get(that.QQ),     // qq
-            email: Utils.get(that.email),  // 邮箱
+            username: that.name,  // 称呼
+            wechat: that.wechat,  // 微信
+            mobile: that.mobile,  // 手机号
+            qq_num: that.QQ,     // qq
+            email: that.email,  // 邮箱
+            from_type:"xcx_user",
+            user_id:that.$parent.globalData.userId,
           },
           success(res){
+            // console.log(that.$parent.globalData.userId);
             let data = Utils.formatJson(res.data);
-            // console.log(data);
             that.datas();
+            wx.showToast({
+              title: '添加成功',
+              icon: 'success',
+              duration: 2000
+            })
           }
         });
 
@@ -186,12 +193,17 @@
     datas(){
       let that = this;
       wepy.request({
-        url:wepy.$instance.globalData.url+"/usercard/list",
+        url:wepy.$instance.globalData.url+"/usercard/userlist",
+        data:{
+          from_type:"xcx_user",
+          user_id:that.$parent.globalData.userId,
+        },
         success(res){
           let data = Utils.formatJson(res.data);
-          // console.log(data);
+          console.log(data);
           if(data.code == 0 ){
             //todo
+
             that.cardList = data.data;
           }else{
           }
