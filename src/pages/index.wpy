@@ -94,7 +94,7 @@
                   style="display: inline-block;vertical-align: middle"
           />
           <image wx:if="{{anonymous}}" src="../images/11.png"
-                 style="width:40rpx;height: 40rpx;vertical-align: middle"
+                 style="margin-left:20rpx;width:40rpx;height: 40rpx;vertical-align: middle"
                  @tap="selectCard()">
           </image>
           <view  wx:if="{{cardId!=''}}"
@@ -131,7 +131,7 @@
         <view  style="position:absolute;top: 0;right:0;background-color: #fff;width:65%;height:100%;display: inline-block">
           <scroll-view scroll-y="true" style="height: 100%;">
             <view style="margin: 20rpx;">
-              <button class="search" style="display: inline-block" @tap="addCards()">添加名片</button>
+              <button class="search" style="display: inline-block;width: 200rpx;" @tap="addCards()">添加名片</button>
               <button class="search" style="float: right;" @tap="determine()">确定</button>
 
               <radio-group class="radio-group" bindchange="radioChange">

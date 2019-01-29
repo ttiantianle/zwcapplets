@@ -2,21 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dab6f251-696c-4844-b0d9-cf0fc645a761" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/app.wpy" afterPath="$PROJECT_DIR$/src/app.wpy" />
-      <change beforePath="$PROJECT_DIR$/src/components/counter.wpy" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/components/demand.wpy" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/components/field.wpy" afterPath="$PROJECT_DIR$/src/components/field.wpy" />
-      <change beforePath="$PROJECT_DIR$/src/components/group.wpy" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/components/groupitem.wpy" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/components/home.wpy" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/components/list.wpy" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/components/me.wpy" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/components/panel.wpy" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/components/shop.wpy" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/components/tabBarBottom.wpy" afterPath="" />
       <change beforePath="$PROJECT_DIR$/src/pages/index.wpy" afterPath="$PROJECT_DIR$/src/pages/index.wpy" />
-      <change beforePath="$PROJECT_DIR$/src/pages/shop/shopList.wpy" afterPath="" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -33,9 +19,10 @@
       <file leaf-file-name="index.wpy" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/pages/index.wpy">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="470">
-              <caret line="117" column="133" lean-forward="false" selection-start-line="117" selection-start-column="133" selection-end-line="117" selection-end-column="133" />
+            <state relative-caret-position="428">
+              <caret line="103" column="55" lean-forward="true" selection-start-line="103" selection-start-column="55" selection-end-line="103" selection-end-column="55" />
               <folding>
+                <element signature="n#style#0;n#image#0;n#view#0;n#view#0;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#view#1;n#view#0;n#view#0;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#view#2;n#view#0;n#view#0;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#textarea#0;n#view#1;n#view#0;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
@@ -66,7 +53,7 @@
                 <element signature="n#style#0;n#button#1;n#view#0;n#view#0;n#scroll-view#0;n#view#3;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#view#5;n#view#0;n#view#0;n#scroll-view#0;n#view#3;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#view#0;n#repeat#0;n#view#0;n#scroll-view#0;n#view#3;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="e#8084#8108#0" expanded="true" />
+                <element signature="e#8117#8141#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -353,12 +340,12 @@
       <workItem from="1548378260597" duration="17124000" />
       <workItem from="1548410549731" duration="2351000" />
       <workItem from="1548637242152" duration="24723000" />
-      <workItem from="1548723706142" duration="22822000" />
+      <workItem from="1548723706142" duration="23260000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="227518000" />
+    <option name="totallyTimeSpent" value="227956000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -754,9 +741,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/index.wpy">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="470">
-          <caret line="117" column="133" lean-forward="false" selection-start-line="117" selection-start-column="133" selection-end-line="117" selection-end-column="133" />
+        <state relative-caret-position="428">
+          <caret line="103" column="55" lean-forward="true" selection-start-line="103" selection-start-column="55" selection-end-line="103" selection-end-column="55" />
           <folding>
+            <element signature="n#style#0;n#image#0;n#view#0;n#view#0;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#view#1;n#view#0;n#view#0;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#view#2;n#view#0;n#view#0;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#textarea#0;n#view#1;n#view#0;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
@@ -787,7 +775,7 @@
             <element signature="n#style#0;n#button#1;n#view#0;n#view#0;n#scroll-view#0;n#view#3;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#view#5;n#view#0;n#view#0;n#scroll-view#0;n#view#3;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#view#0;n#repeat#0;n#view#0;n#scroll-view#0;n#view#3;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#8084#8108#0" expanded="true" />
+            <element signature="e#8117#8141#0" expanded="true" />
           </folding>
         </state>
       </provider>
