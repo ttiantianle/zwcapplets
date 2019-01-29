@@ -106,6 +106,12 @@
           <view class="lh40">所在地：{{ item.province_name_receive}}</view>
           <view class="lh40">主营领域：<text wx:for="{{ item.field_name }}"  wx:for-item="items" wx:key="items"> {{ items.cat_name}}  </text></view>
           <view class="lh40">资质：<text wx:for="{{ item.cnas }}"  wx:for-item="items" wx:key="items"> {{items}} </text></view>
+          <block wx:if="{{updateLoadShow}}">
+            <updateLoad wx:loading="updateLoadShow"></updateLoad>
+          </block>
+          <!--<view wx:if="{{updateLoadShow}}">-->
+            <!--<updateLoad>加载中...</updateLoad>-->
+          <!--</view>-->
         </view>
       </view>
     </repeat>
@@ -122,9 +128,20 @@
     data = {
       key:"",
       shopList: "",
+      updateLoadShow: false,
+      pagtotal: "",  // 数据总数量
+      pageNum: 1,
+      // onReachBottomDistance: 20,
     };
     onLoad(){
       this.datas();
+      // wepy.getSystemInfo({
+      //   success: (res) => {
+      //     this.height = res.windowHeight;
+      //     // this.pageSize = Math.round(res.windowHeight / 103) + 1;
+      //     this.$apply()
+      //   }
+      // });
     };
     methods = {
       bindKeyInput(e){
@@ -152,21 +169,55 @@
         })
       }
     };
+    onReachBottom() {
+      // 上拉加载更多loading
+
+      this.updateLoadShow = true;
+      let _length = this.shopList.length;
+      // 列表长度与列表总数对比
+      if (_length === this.pagtotal) {
+        setTimeout(() => {
+          this.updateLoadShow = false;
+          this.$apply()
+        }, 1000)
+      } else {
+        wx.showLoading({
+          title: '加载中',
+          icon: 'loading',
+        });
+        // 当前页码加一
+        this.pageNum++;
+        // 更新数据
+        this.datas();
+        this.$apply()
+      }
+    }
     datas(){
       let _this = this;
       wepy.request({
         url: _this.$parent.globalData.url + "/shop/list",
         // method: "POST",
         data: {
-
+          page: _this.pageNum
         },
         success(res){
           // console.log(res.data);
           let str = res.data.substr(1);
           str = str.substr(0, str.length-1);
           let data = JSON.parse(str);
-          _this.shopList = data.data.data;
-          // console.log( _this.shopList,);
+          if (_this.pageNum == 1) {
+            _this.shopList = data.data.data;
+            _this.pagtotal = data.data.page.total_rows
+          } else {
+            _this.shopList = _this.shopList.concat(data.data.data)
+          }
+          wx.showToast({ //期间为了显示效果可以添加一个过度的弹出框提示“加载中”
+            title: '',
+            icon: 'success',
+            duration: 300
+          });
+          _this.updateLoadShow = false;
+          // console.log( data);
           _this.$apply();
         }
       })

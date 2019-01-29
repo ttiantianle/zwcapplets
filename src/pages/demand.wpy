@@ -74,6 +74,9 @@
     padding-left: 10rpx;
     margin-left: 10rpx;
   }
+  .dsb{
+    display: inline-block;
+  }
 </style>
 <template>
   <view class="demand_box">
@@ -85,7 +88,7 @@
       <!--<repeat class="text" for="{{ territory }}" key="index" item="item">aaa-->
       <!--<view>{{ item}}</view>-->
       <!--</repeat>-->
-      <view class="text" wx:for="{{ territory }}" wx:key="index">
+      <view class="dsb" wx:for="{{ territory }}" wx:key="index">
         <view class="text {{ items == item.cat_id ? 'active': ''}}" @tap="fieldItem({{ item.cat_id }})">{{ item.cat_name}}</view>
       </view>
     </view>
@@ -114,9 +117,19 @@
       length: false,
       page: 1,
       inputData: "",
+      updateLoadShow: false,
+      pagtotal: "",  // 数据总数量
+      pageNum: 1,
+      onReachBottomDistance: 20,
     };
     onLoad(){
-
+      wepy.getSystemInfo({
+        success: (res) => {
+          // this.height = res.windowHeight;
+          // this.pageSize = Math.round(res.windowHeight / 103) + 1;
+          this.$apply()
+        }
+      });
       let _this = this;
       _this.datasa();
       let url = this.$parent.globalData.url;
@@ -156,6 +169,28 @@
         this.datasa();
       }
     };
+    onReachBottom() {
+      // 上拉加载更多loading
+      this.updateLoadShow = true;
+      let _length = this.demandList.length;
+      // 列表长度与列表总数对比
+      if (_length === this.pagtotal) {
+        setTimeout(() => {
+          this.updateLoadShow = false;
+          this.$apply()
+        }, 1000)
+      } else {
+        wx.showLoading({
+          title: '加载中',
+          icon: 'loading',
+        });
+        // 当前页码加一
+        this.pageNum++;
+        // 更新数据
+        this.datasa();
+        this.$apply()
+      }
+    }
     datasa(){  // 需求列表
       let _this = this;
       wepy.request({
@@ -165,20 +200,31 @@
           from_type: "xcx_user",
           re_type: "1",
           field_id: _this.items,
-          search: _this.inputData
+          search: _this.inputData,
+          page: _this.pageNum,
         },
         success(res){
           // console.log(res.data);
           let str = res.data.substr(1);
           str = str.substr(0, str.length-1);
           let data = JSON.parse(str);
-          _this.demandList = data.data.data;
+          if (_this.pageNum == 1) {
+            _this.demandList = data.data.data;
+            _this.pagtotal = data.data.page.total_rows
+          } else {
+            _this.demandList = _this.demandList.concat(data.data.data)
+          }
           if(data.data.data.length ==0){
             _this.length = true;
           }else{
             _this.length = false;
           }
-          // console.log( _this.demandList,);
+          wx.showToast({ //期间为了显示效果可以添加一个过度的弹出框提示“加载中”
+            title: '',
+            icon: 'success',
+            duration: 100
+          });
+          // console.log( _this.demandList);
           _this.$apply();
         }
       })
