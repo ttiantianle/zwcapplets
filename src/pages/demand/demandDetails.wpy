@@ -333,22 +333,25 @@
               },
               success(res){
                 // console.log(that.$parent.globalData.userId);
-                console.log(res)
-                // let data = Utils.formatJson(res.data);
-                // console.log(data);
-                that.username = "";
-                that.wechat = '';
-                that.mobile = '';
-                that.qqNnum = '';
-                that.email = '';
+                // console.log(res)
+                let data = Utils.formatJson(res.data);
+                if(data.code == 0){
+                  that.username = "";
+                  that.wechat = '';
+                  that.mobile = '';
+                  that.qqNnum = '';
+                  that.email = '';
 
-                that.cardLists();
-                that.showCard = false;
-                wx.showToast({
-                  title: '添加成功',
-                  icon: 'success',
-                  duration: 2000
-                })
+                  that.cardLists();
+                  that.showCard = false;
+                  wx.showToast({
+                    title: '添加成功',
+                    icon: 'success',
+                    duration: 2000
+                  })
+                }
+                // console.log(data);
+
               }
             });
 
@@ -392,7 +395,6 @@
             this.cardId = id;
           },
           confirm(){
-
             let _this = this;
             if( wepy.$instance.globalData.shopId > 0){
               wepy.request({
@@ -443,12 +445,10 @@
               id: id,
             },
             success(res){
-              let str = res.data.substr(1);
-              str = str.substr(0, str.length-1);
-              let data = JSON.parse(str);
-              _this.details = data.data.require;
-              _this.reply = data.data.reply;
-              // console.log( _this.details,data.data,);
+              let str = Utils.formatJson(res.data);
+              _this.details = str.data.require;
+              _this.reply = str.data.reply;
+              // console.log( _this.details,str.data,);
               _this.$apply();
             }
           });

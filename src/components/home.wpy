@@ -446,7 +446,7 @@
         let that = this;
         wx.chooseImage({
           success(res) {
-            const tempFilePaths = res.tempFilePaths
+            const tempFilePaths = res.tempFilePaths;
             wx.uploadFile({
               url: 'https://zwcap.zhaowoce.com:4433/shop/uploadimg', // 仅为示例，非真实的接口地址
               filePath: tempFilePaths[0],
