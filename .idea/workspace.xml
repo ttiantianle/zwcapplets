@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="dab6f251-696c-4844-b0d9-cf0fc645a761" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/src/components/home.wpy" afterPath="$PROJECT_DIR$/src/components/home.wpy" />
-      <change beforePath="$PROJECT_DIR$/src/components/tabBarBottom.wpy" afterPath="$PROJECT_DIR$/src/components/tabBarBottom.wpy" />
-      <change beforePath="$PROJECT_DIR$/src/pages/index.wpy" afterPath="$PROJECT_DIR$/src/pages/index.wpy" />
-      <change beforePath="$PROJECT_DIR$/src/pages/main.wpy" afterPath="$PROJECT_DIR$/src/pages/main.wpy" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -22,8 +19,8 @@
       <file leaf-file-name="home.wpy" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/home.wpy">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="571" column="52" lean-forward="true" selection-start-line="571" selection-start-column="52" selection-end-line="571" selection-end-column="52" />
+            <state relative-caret-position="54">
+              <caret line="152" column="131" lean-forward="false" selection-start-line="152" selection-start-column="131" selection-end-line="152" selection-end-column="131" />
               <folding>
                 <element signature="n#style#0;n#textarea#0;n#view#1;n#view#0;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#view#0;n#view#1;n#view#0;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
@@ -34,7 +31,6 @@
                 <element signature="n#style#0;n#scroll-view#0;n#view#1;n#view#2;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#view#0;n#scroll-view#0;n#view#1;n#view#2;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#view#0;n#label#0;n#radio-group#0;n#view#0;n#scroll-view#0;n#view#1;n#view#2;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#view#3;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#scroll-view#0;n#view#3;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#view#0;n#view#0;n#scroll-view#0;n#view#3;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#view#0;n#view#0;n#view#0;n#view#0;n#scroll-view#0;n#view#3;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
@@ -69,7 +65,7 @@
         <entry file="file://$PROJECT_DIR$/src/pages/index.wpy">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="525">
-              <caret line="77" column="5" lean-forward="true" selection-start-line="77" selection-start-column="5" selection-end-line="77" selection-end-column="5" />
+              <caret line="77" column="5" lean-forward="false" selection-start-line="77" selection-start-column="5" selection-end-line="77" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -222,8 +218,9 @@
   <component name="NodeModulesDirectoryManager">
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="7" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
     <option name="width" value="1616" />
     <option name="height" value="876" />
   </component>
@@ -369,15 +366,15 @@
       <workItem from="1548378260597" duration="17124000" />
       <workItem from="1548410549731" duration="2351000" />
       <workItem from="1548637242152" duration="24723000" />
-      <workItem from="1548723706142" duration="10359000" />
+      <workItem from="1548723706142" duration="10529000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="215055000" />
+    <option name="totallyTimeSpent" value="215225000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="7" y="0" width="1616" height="876" extended-state="0" />
+    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.11913815" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -688,7 +685,7 @@
         <state relative-caret-position="308">
           <caret line="80" column="108" lean-forward="false" selection-start-line="80" selection-start-column="108" selection-end-line="80" selection-end-column="108" />
           <folding>
-            <element signature="e#2606#2630#0" expanded="true" />
+            <element signature="e#2606#2630#0" expanded="false" />
             <marker date="1548670374275" expanded="true" signature="87:113" ph="{...}" />
           </folding>
         </state>
@@ -741,7 +738,7 @@
     <entry file="file://$PROJECT_DIR$/src/pages/index.wpy">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="525">
-          <caret line="77" column="5" lean-forward="true" selection-start-line="77" selection-start-column="5" selection-end-line="77" selection-end-column="5" />
+          <caret line="77" column="5" lean-forward="false" selection-start-line="77" selection-start-column="5" selection-end-line="77" selection-end-column="5" />
           <folding />
         </state>
       </provider>
@@ -772,8 +769,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/home.wpy">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="571" column="52" lean-forward="true" selection-start-line="571" selection-start-column="52" selection-end-line="571" selection-end-column="52" />
+        <state relative-caret-position="54">
+          <caret line="152" column="131" lean-forward="false" selection-start-line="152" selection-start-column="131" selection-end-line="152" selection-end-column="131" />
           <folding>
             <element signature="n#style#0;n#textarea#0;n#view#1;n#view#0;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#view#0;n#view#1;n#view#0;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
@@ -784,7 +781,6 @@
             <element signature="n#style#0;n#scroll-view#0;n#view#1;n#view#2;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#view#0;n#scroll-view#0;n#view#1;n#view#2;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#view#0;n#label#0;n#radio-group#0;n#view#0;n#scroll-view#0;n#view#1;n#view#2;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#view#3;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#scroll-view#0;n#view#3;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#view#0;n#view#0;n#scroll-view#0;n#view#3;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#view#0;n#view#0;n#view#0;n#view#0;n#scroll-view#0;n#view#3;n#view#1;n#view#0;n#template#0;n#!!top" expanded="true" />
