@@ -76,7 +76,7 @@
 <style scoped>
   .tab{
     background-color: #fff;
-    font-size: 24rpx;
+    font-size: 28rpx;
     padding-bottom: 20rpx;
   }
   .tab_item,.tab_item_active{
@@ -88,8 +88,8 @@
     color:#1296db;
   }
   .icon{
-    width: 60rpx;
-    height: 60rpx;
+    width: 64rpx;
+    height: 64rpx;
     display: block;
     margin:15rpx auto;
   }

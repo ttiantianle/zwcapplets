@@ -89,7 +89,7 @@
             名片
           </view>
 
-          <switch checked="{{status}}"
+          <switch checked="{{anonymous}}"
                   bindchange="switch1Change"
                   style="display: inline-block;vertical-align: middle"
           />
@@ -98,10 +98,13 @@
                  @tap="selectCard()">
           </image>
           <view  wx:if="{{cardId!=''}}"
-                 style="display:inline-block;margin-left: 20rpx;font-size: 30rpx;margin-right: 20rpx;vertical-align: middle">
-            名片id:{{cardId}}
+                 style="display:inline-block;margin-left: 20rpx;font-size: 24rpx;margin-right: 20rpx;vertical-align: middle">
+            已选名片
           </view>
-
+          <view  wx:elif="{{cardId =='' && anonymous}}"
+                 style="display:inline-block;margin-left: 20rpx;font-size: 24rpx;margin-right: 20rpx;vertical-align: middle">
+             点击选择名片
+          </view>
         </view>
 
         <view style="">
@@ -111,7 +114,8 @@
           <view wx:else style="height: 300rpx;"></view>
 
         </view>
-        <image src="../images/upload1.png" style="width:60rpx;height: 60rpx;margin-left: 8%" @tap="upload()"></image>
+        <image src="../images/upload1.png" style="display:inline-block;width:60rpx;height: 60rpx;margin-left: 8%" @tap="upload()"></image>
+        <view style="display: inline-block;height: 60rpx;line-height: 60rpx;vertical-align: top;font-size: 24rpx;padding-left: 10rpx;">上传图片，选填</view>
         <image wx:if="{{filePath}}"
                src="{{'https://img.zhaowoce.com'+filePath}}"
                style="display: block;margin-left: 10%;">
@@ -127,8 +131,9 @@
         <view  style="position:absolute;top: 0;right:0;background-color: #fff;width:65%;height:100%;display: inline-block">
           <scroll-view scroll-y="true" style="height: 100%;">
             <view style="margin: 20rpx;">
-              <text style="color: deepskyblue" @tap="addCards()">点击添加名片</text>
-              <text style="float: right;color: deepskyblue" @tap="determine()">确定</text>
+              <button class="search" style="display: inline-block" @tap="addCards()">添加名片</button>
+              <button class="search" style="float: right;" @tap="determine()">确定</button>
+
               <radio-group class="radio-group" bindchange="radioChange">
                 <view wx:if="{{cardList.length == 0}}">您还没有添加名片,请添加名片后发布需求</view>
                 <label wx:for="{{cardList}}" wx:key="index" class="radio">
@@ -202,8 +207,6 @@
         </scroll-view>
 
       </view>
-
-
 
     </view>
   </view>
@@ -571,7 +574,7 @@
             id: Utils.get(cardId)
           },
           success(){
-            console.log(11)//
+            // console.log(11)//
             wepy.request({
               url:that.$parent.globalData.url+"/usercard/alllist",
               data:{
@@ -592,7 +595,7 @@
 
           },
           fail(){
-            console.log('00')
+            // console.log('00')
           }
         });
       },
@@ -613,7 +616,7 @@
           if(data.code == 0 ){
             //todo
             that.cardList = data.data;
-            console.log(that.cardList)
+            // console.log(that.cardList)
           }else{
 
           }
