@@ -24,8 +24,7 @@
     data = {
       next:false,
     };
-    onLoad() {
-
+    onLoad(params) {
 
     };
     methods = {
@@ -36,7 +35,7 @@
         if(this.$parent.globalData.Authorization){
           wepy.redirectTo({
             url:"./index"
-          });
+          });0
           return;
         }
         if (e.detail.errMsg == "getPhoneNumber:fail user deny") {
@@ -84,10 +83,12 @@
                       that.$parent.globalData.phoneNumber = dat.data.mobile;
                       that.$parent.globalData.shopId = dat.data.shop_id;
                       that.$parent.globalData.userId = dat.data.user_id;
-
-                      wepy.redirectTo({
-                        url:"./index"
-                      })
+                      wx.navigateBack({
+                        delta: 1,
+                      });
+                      // wepy.redirectTo({
+                      //   url:"./index"
+                      // })
                     }else{
                       //授权失败 todo
                     }

@@ -4,7 +4,7 @@
     background: #F1F4FD;
   }
   .demand_box{
-    min-height: 100%;
+    height: 100%;
     padding-top: 2rpx;
   }
   .demand{
@@ -91,6 +91,11 @@
     </view>
     <view class="demand">
       <view wx:for="{{ demandList }}" class="p1020 box_show {{ item.status==4 ? 'complete': ''}}" wx:key="index" @tap="demandDetails({{ item.id }})">
+        <block wx:if="{{updateLoadShow}}">
+          <updateLoad>
+            加载中...
+          </updateLoad>
+        </block>
         <view class="lh40 filelist">检测领域：<text>{{ item.cat_name }}</text> <text class="fr">{{ item.create_time }}</text></view>
         <view class="lh40 filelist">详细描述：<text>{{ item.text }}</text></view>
         <image wx:if="{{item.status==4}}" src="/images/complete.png"></image>
@@ -109,7 +114,7 @@
 
     };
     props = {
-
+      updateLoadShow: true
     };
     data = {
       territory: [],
@@ -118,10 +123,25 @@
       length: false,
       page: 1,
       inputData: "",
+      height: "",
+      pageSize: "",
+      updateLoadShow: false,
+      pagtotal: "",  // 数据总数量
+      pageNum: 1,
+      onReachBottomDistance: 50,
     };
     onLoad(){
-
       let _this = this;
+      wepy.getSystemInfo({
+        success: (res) => {
+          // console.log(res);
+          this.height = res.windowHeight;
+          this.pageSize = Math.round(res.windowHeight / 103) + 1;
+          console.log(this.height);
+          this.$apply()
+        }
+      });
+
       _this.datasa();
       let url = wepy.$instance.globalData.url;
       // wx.setNavigationBarTitle({
@@ -160,6 +180,28 @@
         this.datasa();
       }
     };
+
+// 上拉加载
+    onReachBottom() {
+      console.log(2546,this.pagtotal);
+      // 上拉加载更多loading
+      this.updateLoadShow = true;
+      let _length = this.demandList.length;
+      // 列表长度与列表总数对比
+      if (_length === this.pagtotal) {
+        setTimeout(() => {
+          this.updateLoadShow = false;
+          this.$apply()
+        }, 1000)
+      } else {
+        // 当前页码加一
+        this.pageNum++;
+        // 更新数据
+        this.datasa();
+        this.$apply()
+      }
+    }
+
     datasa(){  // 需求列表
       let _this = this;
       wepy.request({
@@ -168,6 +210,7 @@
         data: {
           from_type: "xcx_user",
           re_type: "1",
+          page: _this.pageNum,
           field_id: _this.items,
           search: _this.inputData
         },
@@ -176,13 +219,24 @@
           let str = res.data.substr(1);
           str = str.substr(0, str.length-1);
           let data = JSON.parse(str);
-          _this.demandList = data.data.data;
+          if (_this.pageNum == 1) {
+            _this.demandList = data.data.data;
+            // this.recordList = data.list;
+            _this.pagtotal = data.data.page.total_rows
+            // console.log(1)
+          } else {
+            // this.recordList = this.recordList.concat(data.list)
+            _this.demandList = _this.demandList.concat(data.data.data)
+          }
+
           if(data.data.data.length ==0){
             _this.length = true;
           }else{
             _this.length = false;
           }
-          // console.log( _this.demandList,);
+          _this.loadingShow = false;
+          _this.updateLoadShow = false;
+          console.log( data.data.page.total_rows,_this.demandList);
           _this.$apply();
         }
       })
