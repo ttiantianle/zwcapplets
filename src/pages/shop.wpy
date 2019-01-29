@@ -1,0 +1,178 @@
+<style scoped>
+  .df{
+    display: flex;
+  }
+  .dl{
+    display: inline-block;
+  }
+  .db{
+    display: block;
+  }
+  .m30{
+    margin: 30rpx;
+  }
+  .mlr20{
+    margin-left:20rpx ;
+    margin-right:20rpx ;
+  }
+  .mr20{
+
+    margin-right:20rpx ;
+  }
+  .ml20{
+    margin-left:20rpx ;
+  }
+  .f8{
+    flex: 8;
+  }
+  .f1{
+    flex: 1;
+  }
+  .f4{
+    flex: 4;
+  }
+  image{
+    width: 100%;
+    height: 150rpx;
+    padding:40rpx 30rpx 30rpx;
+    box-sizing:border-box;
+  }
+  .h50{
+    height: 50rpx;
+  }
+  .l50{
+    line-height: 50rpx;
+  }
+  .borderGray{
+    /*border: 1rpx solid gray;*/
+  }
+  .p10{
+    padding: 10rpx;
+  }
+  .pl15{
+    padding-left: 15rpx;
+  }
+  .fw600{
+    font-weight: bold;
+    font-size: 28rpx;
+  }
+  .lh40{
+    line-height: 40rpx;
+  }
+  .itemShop{
+    font-size: 26rpx;
+  }
+  .box_show{
+    box-shadow: 0 0 15rpx #DDDDDD;
+    border-radius: 10rpx;
+    background: #ffffff;
+    margin: 25rpx;
+    padding: 15rpx;
+  }
+  .search{
+    background: #1296db;
+    color: #ffffff;
+    width: 140rpx;
+    font-size: 30rpx;
+    height: 70rpx;
+    line-height: 70rpx;
+  }
+  .borderGray{
+    width: 500rpx;
+    height: 70rpx;
+    line-height: 70rpx;
+    border: 1px solid #1296db;
+    float: left;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-left: 10rpx;
+    margin-left: 10rpx;
+  }
+</style>
+<template>
+  <view style="padding-top: 2rpx;">
+    <view class="df" style="padding: 24rpx 24rpx 0;">
+      <input type="text" bindinput="bindKeyInput" class="borderGray"/><button class="search" @tap="search()">搜 索</button>
+    </view>
+    <repeat>
+      <view class="itemShop df box_show" wx:for="{{ shopList }}" wx:key="index" @tap="shopDetails({{item.shop_id}})">
+        <view class="f4">
+          <image src="https://img.zhaowoce.com/{{item.shop_avatar}}"></image>
+          {{this.$parent.globalData.img}}
+        </view>
+        <view class="f8 pl15">
+          <view class="lh40"><text class="fw600">{{ item.shop_name }}</text></view>
+          <view class="lh40">所在地：{{ item.province_name_receive}}</view>
+          <view class="lh40">主营领域：<text wx:for="{{ item.field_name }}"  wx:for-item="items" wx:key="items"> {{ items.cat_name}}  </text></view>
+          <view class="lh40">资质：<text wx:for="{{ item.cnas }}"  wx:for-item="items" wx:key="items"> {{items}} </text></view>
+        </view>
+      </view>
+    </repeat>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  import Utils from '@/js/utils.js'
+  export default class shop extends wepy.page{
+    config = {
+      navigationBarTitleText: "检测机构"
+    };
+    data = {
+      key:"",
+      shopList: "",
+    };
+    onLoad(){
+      this.datas();
+    };
+    methods = {
+      bindKeyInput(e){
+        this.key = e.detail.value;
+      },
+      shopDetails(id){
+        wx.navigateTo({
+          url: '/pages/shop/shopDetail?id='+id
+        })
+      },
+      search(){
+        let that = this;
+        // console.log(that.key)
+        wepy.request({
+          url:that.$parent.globalData.url+"/shop/list",
+          data:{
+            search:that.key
+          },
+          success(res){
+            console.log(res)
+            let dat = Utils.formatJson(res.data);
+            that.shopList = dat.data.data;
+            that.$apply();
+          }
+        })
+      }
+    };
+    datas(){
+      let _this = this;
+      wepy.request({
+        url: _this.$parent.globalData.url + "/shop/list",
+        // method: "POST",
+        data: {
+
+        },
+        success(res){
+          // console.log(res.data);
+          let str = res.data.substr(1);
+          str = str.substr(0, str.length-1);
+          let data = JSON.parse(str);
+          _this.shopList = data.data.data;
+          // console.log( _this.shopList,);
+          _this.$apply();
+        }
+      })
+    }
+
+  }
+</script>
+
+

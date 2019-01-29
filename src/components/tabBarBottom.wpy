@@ -81,7 +81,9 @@ export default class tabBarBottom extends wepy.component{
                     url:"/pages/main",
                   })
                 } else if (res.cancel) {
-
+                  wepy.redirectTo({
+                    url:"/pages/index",
+                  })
                 }
               }
             });
