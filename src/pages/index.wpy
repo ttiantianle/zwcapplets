@@ -1,118 +1,93 @@
-<style>
-
-</style>
 <template>
   <view>
-    <image src="/images/login.jpg" style="width: 100%">
-    </image>
-    <view style="margin:20rpx 30rpx 0rpx;color:gray;">授权之后，您可以体验当前小程序的所有功能。</view>
-    <!--<button open-type="getUserInfo"></button>-->
-    <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" type="primary" style="margin: 30rpx">
-     微信手机授权
-    </button>
+
+    <!--<view>-->
+    <!--<text bindtap="demands()">需求</text>-->
+    <!--</view>-->
+
+    <view  hidden="{{currentTab != 0}}">
+      <home></home>
+    </view>
+    <view  hidden="{{currentTab != 1}}">
+      <demand></demand>
+    </view>
+    <view  hidden="{{currentTab != 2}}">
+      <shop></shop>
+    </view>
+    <view  hidden="{{currentTab != 3}}">
+      <me></me>
+    </view>
+    <!--<view  hidden="{{currentTab != 5}}">-->
+    <!--<navigator url='/pages/login/login'>点击跳转</navigator>-->
+    <!--</view>-->
+    <view>
+      <tabBarBottom :active.sync="currentTab"></tabBarBottom>
+    </view>
+
   </view>
 </template>
 
 <script>
   import wepy from 'wepy';
-  import Utils from "@/js/utils.js"
-  export default class index extends wepy.page {
-    config = {
-      navigationBarTitleText: ""
-    };
-    props = {};
-    data = {
-      next:false,
-    };
-    onLoad() {
-      // console.log(Date.parse(new Date()))
-//       console.log(Date.parse(new Date())+2592000000);
-// return ;
-//       console.log(wx.getStorageSync('is_show'));
-//       console.log((wx.getStorageSync('is_show') > Date.parse(new Date())))
+  import tabBarBottom from '../components/tabBarBottom';
+  import home from  '../components/home';
+  import demand from  '../components/demand';
+  import shop from  '../components/shop';
+  import me from  '../components/me';
 
-      if(wx.getStorageSync('is_show') > Date.parse(new Date())){
+  // import inaver from '../inaver/inaver';
+  export default class main extends wepy.page {
+    config = {
+      navigationBarTitleText: '检测对接-找我测'
+    };
+
+    data = {
+      imgUrls:[],
+      currentTab:0,
+    };
+    onLoad(options){
+      if((wx.getStorageSync('is_show') > Date.parse(new Date()))){
+        // wx.removeStorageSync('mobile')
+        // wx.removeStorageSync('shop_id')
+        // wx.removeStorageSync('user_id')
         this.$parent.globalData.phoneNumber = wx.getStorageSync('mobile');
         this.$parent.globalData.shopId = wx.getStorageSync('shop_id');
         this.$parent.globalData.userId = wx.getStorageSync('user_id');
         this.$parent.globalData.Authorization = true;
-        wx.redirectTo({
-          url:"./main"
-        })
-      }else{
 
+      }else{
+        // wx.redirectTo({
+        //   url:"./main"
+        // })
       }
+      if(options.tabId){
+        this.currentTab = parseInt(options.tabId);
+      }
+      // if(this.currentTab==5){
+      //   wepy.navigateTo({
+      //     url:'/pages/login/login',  //跳转页面的路径，可带参数 ？隔开，不同参数用 & 分隔；相对路径，不需要.wxml后缀
+      //   })
+      // }
     };
     methods = {
-
-      getPhoneNumber: function (e) {
-        let that = this;
-
-        if(this.$parent.globalData.Authorization){
-          wepy.redirectTo({
-            url:"./main"
-          });
-          return;
-        }
-        if (e.detail.errMsg == "getPhoneNumber:fail user deny") {
-          this.$parent.globalData.Authorization = false;
-          wepy.redirectTo({
-            url:"./main"
-          })
-        }else{
-          //用户允许授权
-          wx.showLoading();
-          var self=this;
-          //1. 调用登录接口获取临时登录code
-          wx.login({
-            success(res) {
-              if(res.code){
-                wepy.request({
-                  url:that.$parent.globalData.url+"/wxdata/requir",
-                  data:{
-                    'js_code':res.code,
-                    'iv':e.detail.iv,
-                    'encryptedData': e.detail.encryptedData,
-                  },
-                  success(re){
-                    // console.log(re);
-                    let dat = Utils.formatJson(re.data);
-                    // console.log(dat);
-                    if(dat.code == 0){
-                      wx.setStorage({
-                        key:"is_show",
-                        data:Date.parse(new Date())+2592000000,
-                      });
-                      wx.setStorage({
-                        key:"mobile",
-                        data: dat.data.mobile,
-                      });
-                      wx.setStorage({
-                        key:"shop_id",
-                        data:dat.data.shop_id,
-                      });
-                      wx.setStorage({
-                        key:"user_id",
-                        data:dat.data.user_id,
-                      });
-                      that.$parent.globalData.Authorization = true;
-                      that.$parent.globalData.phoneNumber = dat.data.mobile;
-                      that.$parent.globalData.shopId = dat.data.shop_id;
-                      that.$parent.globalData.userId = dat.data.user_id;
-
-                      wepy.redirectTo({
-                        url:"./main"
-                      })
-                    }else{
-                      //授权失败 todo
-                    }
-                  }
-                });
-              }
-            }
-          })
-        }
-      },
+      demands(){
+        // console.log(1);
+        wx.navigateTo({
+          url: '/pages/demand/demand'
+        })
+      }
     };
+    //引入组件
+    components = {
+      tabBarBottom:tabBarBottom,
+      home:home,
+      demand:demand,
+      shop:shop,
+      me:me,
+    }
   }
 </script>
+
+<style>
+
+</style>
