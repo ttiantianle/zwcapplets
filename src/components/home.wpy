@@ -1,4 +1,25 @@
 <style>
+  .m20{
+    margin: 20rpx;
+  }
+  .bcWhite{
+    background-color: #fff;
+  }
+  .br10{
+    border-radius: 10rpx;
+  }
+  .df{
+    display: flex;
+  }
+  .di{
+    display: inline-block;
+  }
+  .bd{
+    border: 1px solid gray;
+  }
+  .h40{
+    height: 60rpx;
+  }
   .wx-switch-input{
     width:80rpx !important;
     height:40rpx !important;
@@ -42,6 +63,14 @@
     margin-top: 30rpx;
     margin-bottom: 20rpx;
   }
+  .search{
+    background: #1296db;
+    color: #ffffff;
+    width: 140rpx;
+    font-size: 30rpx;
+    height: 70rpx;
+    line-height: 70rpx;
+  }
 </style>
 <template>
   <view>
@@ -76,24 +105,26 @@
         </view>
 
         <view style="">
-           <textarea style="border: 2px solid #edece8;padding: 10rpx;margin: 20rpx auto;width: 80%;"
+           <textarea wx:if="{{(addCard && showCards)}}" style="z-index:1 !important;border: 2px solid #edece8;padding: 10rpx;margin: 20rpx auto;width: 80%;"
                      bindinput="bindKeyInput"
                      placeholder="请输入您的需求" maxlength="300" value="{{desc}}" />
+          <view wx:else style="height: 300rpx;"></view>
+
         </view>
         <image src="../images/upload1.png" style="width:60rpx;height: 60rpx;margin-left: 8%" @tap="upload()"></image>
         <image wx:if="{{filePath}}"
                src="{{'https://img.zhaowoce.com'+filePath}}"
                style="display: block;margin-left: 10%;">
         </image>
-
     </view>
       <view>
         <button class="release" @tap="confirmRelease()">确认发布</button>
       </view>
 
-      <view hidden="{{showCards}}" style="z-index:9999;width:100%;height:90%;position: fixed;top: 0;right:0;">
-        <view style="width: 35%;height: 90%;display: inline-block" @tap="closeShow()"></view>
-        <view  style="background-color: #fff;width:65%;height:90%;display: inline-block">
+      <!--选择名片-->
+      <view hidden="{{showCards}}" style="z-index:500;width:100%;height:100%;position: fixed;top: 0;right:0;">
+        <view style="position:absolute;top: 0;width: 35%;height: 100%;display: inline-block" @tap="closeShow()"></view>
+        <view  style="position:absolute;top: 0;right:0;background-color: #fff;width:65%;height:100%;display: inline-block">
           <scroll-view scroll-y="true" style="height: 100%;">
             <view style="margin: 20rpx;">
               <text style="color: deepskyblue" @tap="addCards()">点击添加名片</text>
@@ -111,7 +142,6 @@
                       <view>邮箱：{{item.email}}</view>
                     </view>
                   </view>
-
                 </label>
               </radio-group>
             </view>
@@ -119,6 +149,59 @@
         </view>
       </view>
 
+      <!--添加名片-->
+      <view hidden="{{addCard}}" style="z-index:1000;width:100%;height:100%;position: fixed;top: 0;background-color: rgba(0,0,0,0.5)">
+        <scroll-view scroll-y="true" style="height:100%;">
+          <view class="m20">
+            <view class="bcWhite br10" style="width: 90%;margin:20rpx auto;padding: 20rpx;">
+              <view class="h40 m20 df">
+                <view class="di" style="flex: 2;text-align: right;height: 60rpx;line-height: 60rpx;">称呼：</view>
+                <input value="{{name}}" class="di bd h40" style="flex:8;vertical-align: middle" bindinput="bindName" type="text" />
+                <view style="flex: 3"></view>
+              </view>
+              <view class="h40 m20 df">
+                <view class="di" style="flex: 2;text-align: right;height: 60rpx;line-height: 60rpx;">手机：</view>
+                <input value="{{mobile}}" class="di bd h40" style="flex:8" bindinput="bindPhone" type="number" />
+                <view style="flex: 3"></view>
+              </view>
+              <view class="h40 m20 df">
+                <view class="di" style="flex: 2;text-align: right;height: 60rpx;line-height: 60rpx;">微信：</view>
+                <input value="{{wechat}}" class="di bd h40" style="flex:8;" bindinput="bindWechat" type="text" />
+                <view style="flex: 3"></view>
+              </view>
+              <view class="h40 m20 df">
+                <view class="di" style="flex: 2;text-align: right;height: 60rpx;line-height: 60rpx;">QQ：</view>
+                <input value="{{QQ}}" class="di bd h40" style="flex:8" bindinput="bindQQ" type="number" />
+                <view style="flex: 3"></view>
+              </view>
+              <view class="h40 m20 df">
+                <view class="di" style="flex: 2;text-align: right;height: 60rpx;line-height: 60rpx;">邮箱：</view>
+                <input value="{{email}}" class="di bd h40" style="flex:8" bindinput="bindEmail" type="text" />
+                <view style="flex: 3"></view>
+              </view>
+
+              <button class="search" style="float: left" @tap="back()">返回</button>
+              <button class="search" style="float: right" @tap="newCard()">新建</button>
+              <view style="clear: both"></view>
+            </view>
+
+            <repeat wx:for="{{cardList}}" wx:for-index="index" wx:key="{{item.id}}">
+              <view class="bcWhite br10" style="width: 90%;margin:20rpx auto;padding: 20rpx;">
+                <view style="">
+                  <view>名字：{{item.username}}</view>
+                  <view>手机：{{item.mobile}}</view>
+                  <view>微信：{{item.wechat}}</view>
+                  <view>Q Q：{{item.qq_num}}</view>
+                  <view>邮箱：{{item.email}}</view>
+                  <button  class="search" style="float: right" @tap="deleteCard({{item.id}})">删除</button>
+                  <view style="clear: both"></view>
+                </view>
+              </view>
+            </repeat>
+          </view>
+        </scroll-view>
+
+      </view>
 
 
 
@@ -140,34 +223,43 @@
       // Permission:false,
       showCards:true,//显示选择名片的div，true是隐藏，false显示
       filePath:"",//图片路径
-      cardList:[
-      ],
+      cardList:[],
+      addCard:true,//添加名片
+      name:"",
+      mobile:"",
+      wechat:"",
+      QQ:"",
+      email:"",
     };
     onLoad(){
-      this.showCards=true;
       wx.setNavigationBarTitle({
-        title: '供需对接-找我测'
+        title: '检测对接-找我测'
       })
-      // console.log(wepy.$instance.globalData.userId)
+      this.datas();
     };
 
     methods = {
+      bindName(e){ this.name = e.detail.value;},
+      bindPhone(e){this.mobile = e.detail.value;},
+      bindWechat(e){this.wechat = e.detail.value;},
+      bindQQ(e){this.QQ = e.detail.value;},
+      bindEmail(e){this.email = e.detail.value;},
+
+      back(){
+        this.addCard = true;
+        },
       bindKeyInput(e){
         this.desc = e.detail.value;
       },
       closeShow(){
         this.showCards=true;
+        this.$apply();
       },
-      radioChange(e) {
-        this.cardId = e.detail.value;
-        // console.log('radio发生change事件，携带value值为：', e.detail.value)
-      },
+      radioChange(e) {this.cardId = e.detail.value;},
       switch1Change(e) {
         this.anonymous = e.detail.value;
-
         //如果是匿名发布，清空cardId信息
         if(this.anonymous === false){
-
           this.showCards = true;
           this.cardId = '';
         }
@@ -195,27 +287,7 @@
         }
         else{
           this.showCards = false;
-          wepy.request({
-            url:wepy.$instance.globalData.url+"/usercard/userlist",
-            data:{
-              from_type:"xcx_user",
-              user_id:wepy.$instance.globalData.userId,
-            },
-            success(res){
-              let data = Utils.formatJson(res.data);
-            if(data.code == 0 ){
-                  //todo
-                that.cardList = data.data;
-              }else{
-                // wx.showToast({
-                //   title: '获取信息失败',
-                //   icon: 'failure',
-                //   duration: 2000
-                // })
-              }
-              that.$apply();
-            }
-          });
+          that.datas();
         }
 
       },
@@ -227,9 +299,8 @@
 
       //添加名片
       addCards(){
-        wepy.navigateTo({
-          url:"/pages/card/addCard",
-        })
+        this.addCard = false;
+        this.$apply();
       },
 
       confirmRelease(){
@@ -292,9 +363,6 @@
                   },
                   success(res){
                     let data = Utils.formatJson(res.data);
-                    // let str = res.data.substr(1);
-                    // str = str.substr(0, str.length-1);
-                    // let data = JSON.parse(str);
 
                     if(data.code == 0){
                       wx.showToast({
@@ -373,6 +441,7 @@
         }
 
       },
+      // 上传图片
       upload(page, path) {
         let that = this;
         wx.chooseImage({
@@ -386,12 +455,9 @@
                 user: 'test'
               },
               success(res) {
-
                 if(res.statusCode == 200 && res.data){
                   that.filePath = res.data;
                   that.$apply();
-
-
 
                 }else{
                   wx.showToast({
@@ -410,7 +476,147 @@
             })
           }
         })
-      }
+      },
+      // 添加名片
+      newCard(){
+        let that = this;
+        let mobile = /^(0|86|17951)?(13[0-9]|15[012356789]|16[5]|17[012345678]|18[0-9]|14[579][0-9]|19[9])[0-9]{8}$/; // 手机号
+        let weChat = /^[a-zA-Z0-9]([-_a-zA-Z0-9]{5,19})+$/;  // 微信
+        let qq = /^[1-9][0-9]{4,11}$/; // qq号
+        let mailbox = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/;
+
+        if(this.name==''||this.mobile==''){
+          wx.showModal({
+            title: '添加名片',
+            content: '名字与手机号是必填信息',
+          })
+          return;
+        }
+        if(!mobile.test(this.mobile)){
+          wx.showModal({
+            title: '添加名片',
+            content: '请填写有效的手机号码',
+          })
+          return;
+        }
+        if(this.wechat !=''&& (!weChat.test(this.wechat))){
+          wx.showModal({
+            title: '添加名片',
+            content: '请填写有效的微信号',
+          })
+          return;
+        }
+        if(this.QQ !=''&& (!qq.test(this.QQ))){
+          wx.showModal({
+            title: '添加名片',
+            content: '请填写有效的QQ号',
+          })
+          return;
+        }
+        if(this.email !='' && (!mailbox.test(this.email))){
+          wx.showModal({
+            title: '添加名片',
+            content: '请填写有效的邮箱',
+          })
+          return;
+        }
+
+        wepy.request({
+          url:wepy.$instance.globalData.url+"/usercard/adduser",
+          data:{
+            username: that.name,  // 称呼
+            wechat: that.wechat,  // 微信
+            mobile: that.mobile,  // 手机号
+            qq_num: that.QQ,     // qq
+            email: that.email,  // 邮箱c
+            from_type:"xcx_user",
+            user_id:wepy.$instance.globalData.userId,
+          },
+          success(res){
+            // console.log(that.$parent.globalData.userId);
+            // let data = Utils.formatJson(res.data);
+            that.name = "";
+            that.wechat = '';
+            that.mobile = '';
+            that.QQ = '';
+            that.email = '';
+
+            that.datas();
+
+            wx.showToast({
+              title: '添加成功',
+              icon: 'success',
+              duration: 2000
+            })
+          }
+        });
+
+
+      },
+      deleteCard(cardId){
+        let that = this;
+        wepy.request({
+          url:wepy.$instance.globalData.url+"/usercard/delshop",
+          data:{
+            id: Utils.get(cardId)
+          },
+          success(){
+            console.log(11)//
+            wepy.request({
+              url:wepy.$instance.globalData.url+"/usercard/alllist",
+              data:{
+                shop_id:wepy.$instance.globalData.shopId,
+                user_id:wepy.$instance.globalData.userId,
+              },
+              success(r){
+                let data = Utils.formatJson(r.data);
+
+                if(data.code == 0 ){
+                  that.cardList = data.data;
+                }else{//数据为空
+                  that.cardList = [];
+                }
+                that.$apply();
+              }
+            })
+            // console.log(that.cardList)
+            // that.datas();
+            // wepy.request({
+            //
+            // })
+            // console.log(111)
+            // console.log(that.cardList)
+
+          },
+          fail(){
+            console.log('00')
+          }
+        });
+      },
+
+    };
+    //名片列表
+    datas(){
+      let that = this;
+
+        wepy.request({
+          url:wepy.$instance.globalData.url+"/usercard/alllist",
+          data:{
+            shop_id:wepy.$instance.globalData.shopId,
+            user_id:wepy.$instance.globalData.userId,
+          },
+          success(res){
+            let data = Utils.formatJson(res.data);
+            if(data.code == 0 ){
+                  //todo
+                that.cardList = data.data;
+                console.log(that.cardList)
+            }else{
+
+            }
+            that.$apply();
+          }
+        });
     };
     components = {
       field: field

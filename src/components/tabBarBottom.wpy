@@ -50,14 +50,14 @@ export default class tabBarBottom extends wepy.component{
           //   url:"/pages/main",
           // });
           wx.setNavigationBarTitle({
-            title: '供需对接-找我测'
+            title: '检测对接-找我测'
           });break;
         case 1:
           // wx.redirectTo({
           //   url:"/pages/main?tabId=1",
           // });
           wx.setNavigationBarTitle({
-            title: '供需对接'
+            title: '需求列表'
           });break;
         case 2:
          // wx.redirectTo({
@@ -69,7 +69,7 @@ export default class tabBarBottom extends wepy.component{
          break;
         case 3:
           wx.setNavigationBarTitle({
-            title: '我的供需对接'
+            title: '个人中心'
           });
           if(wepy.$instance.globalData.Authorization==false){
             wx.showModal({
