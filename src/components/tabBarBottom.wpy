@@ -78,13 +78,10 @@ export default class tabBarBottom extends wepy.component{
               success(res) {
                 if (res.confirm) {
                   wepy.navigateTo({
-                    url:"/pages/index",
+                    url:"/pages/main",
                   })
                 } else if (res.cancel) {
-                  // console.log('用户点击取消')
-                  // wepy.navigateTo({
-                  //   url:"/pages/main",
-                  // })
+
                 }
               }
             });

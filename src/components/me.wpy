@@ -130,7 +130,7 @@
       </view>
       <!--<image mode="scaleToFill" style="width: 150rpx;height: 150rpx;border-radius: 200rpx;display: inline-block" class="userinfo-avatar" src="{{userInfo.avatarUrl}}"/>-->
       <!--<view class="userinfo-nickname" style="margin-left:50rpx;vertical-align:top;display: inline-block;line-height: 150rpx;height: 150rpx;">{{userInfo.nickName}}，您好</view>-->
-      <text style="display: block;margin-top: 20rpx;">系统提示：您今天发布了{{requireNum}}个需求，得到{{replyNum}}个回复</text>
+      <text style="display: block;margin-top: 20rpx;">系统提示：您累计发布了{{requireNum}}个需求，得到{{replyNum}}个回复</text>
     </view>
     <view class="demandTitle">
       <view class="tabTitle{{selectId == 0 ? '_active':''}}" @tap="select(0)" ><text>我发布的</text></view>

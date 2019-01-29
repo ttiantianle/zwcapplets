@@ -275,7 +275,7 @@
             success(res) {
               if (res.confirm) {
                 wepy.navigateTo({
-                  url:"/pages/index",
+                  url:"/pages/main",
                 });
                 // console.log('用户点击确定')
               } else if (res.cancel) {
@@ -329,7 +329,7 @@
             success(res) {
               if (res.confirm) {
                 wepy.navigateTo({
-                  url:"/pages/index",
+                  url:"/pages/main",
                 });
 
                 // console.log('用户点击确定')
@@ -579,13 +579,6 @@
                 that.$apply();
               }
             })
-            // console.log(that.cardList)
-            // that.datas();
-            // wepy.request({
-            //
-            // })
-            // console.log(111)
-            // console.log(that.cardList)
 
           },
           fail(){

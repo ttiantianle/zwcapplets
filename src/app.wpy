@@ -23,8 +23,8 @@ import 'wepy-async-function'
 export default class extends wepy.app {
   config = {
     pages: [
-      'pages/index',//授权页面
-      'pages/main',//主页面 首页
+      'pages/index',//主页面 首页
+      'pages/main',//授权页面
       'pages/card/addCard',     //添加名片
       'pages/shop/shopDetail', //机构详情
       'pages/shop/shopPicture',//机构相册
