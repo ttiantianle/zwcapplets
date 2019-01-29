@@ -233,7 +233,7 @@
     };
     onLoad(){
       wx.setNavigationBarTitle({
-        title: '供需对接-找我测'
+        title: '检测对接-找我测'
       })
       this.datas();
     };
@@ -441,6 +441,7 @@
         }
 
       },
+      // 上传图片
       upload(page, path) {
         let that = this;
         wx.chooseImage({
@@ -476,6 +477,7 @@
           }
         })
       },
+      // 添加名片
       newCard(){
         let that = this;
         let mobile = /^(0|86|17951)?(13[0-9]|15[012356789]|16[5]|17[012345678]|18[0-9]|14[579][0-9]|19[9])[0-9]{8}$/; // 手机号
@@ -519,7 +521,6 @@
           return;
         }
 
-        //todo 发起请求
         wepy.request({
           url:wepy.$instance.globalData.url+"/usercard/adduser",
           data:{
@@ -560,12 +561,36 @@
             id: Utils.get(cardId)
           },
           success(){
+            console.log(11)//
+            wepy.request({
+              url:wepy.$instance.globalData.url+"/usercard/alllist",
+              data:{
+                shop_id:wepy.$instance.globalData.shopId,
+                user_id:wepy.$instance.globalData.userId,
+              },
+              success(r){
+                let data = Utils.formatJson(r.data);
+
+                if(data.code == 0 ){
+                  that.cardList = data.data;
+                }else{//数据为空
+                  that.cardList = [];
+                }
+                that.$apply();
+              }
+            })
             // console.log(that.cardList)
-            that.datas();
+            // that.datas();
+            // wepy.request({
+            //
+            // })
             // console.log(111)
             // console.log(that.cardList)
 
           },
+          fail(){
+            console.log('00')
+          }
         });
       },
 
@@ -582,10 +607,10 @@
           },
           success(res){
             let data = Utils.formatJson(res.data);
-          if(data.code == 0 ){
-                //todo
-              that.cardList = data.data;
-              console.log(that.cardList)
+            if(data.code == 0 ){
+                  //todo
+                that.cardList = data.data;
+                console.log(that.cardList)
             }else{
 
             }

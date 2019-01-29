@@ -38,7 +38,7 @@
   // import inaver from '../inaver/inaver';
   export default class main extends wepy.page {
     config = {
-      navigationBarTitleText: '供需对接-找我测'
+      navigationBarTitleText: '检测对接-找我测'
     };
 
     data = {

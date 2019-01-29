@@ -18,7 +18,7 @@
   import Utils from "@/js/utils.js"
   export default class index extends wepy.page {
     config = {
-      navigationBarTitleText: "授权"
+      navigationBarTitleText: ""
     };
     props = {};
     data = {
