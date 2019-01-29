@@ -228,7 +228,6 @@
         </view>
       </view>
     </view>
-
   </view>
 </template>
 
@@ -255,6 +254,7 @@
         };
 
         onLoad(option) {
+
           this.datas(option.id);
           this.cardLists();
           wx.showShareMenu({
@@ -356,16 +356,9 @@
             });
 
           },
-          addCard(){
-            this.showCard = true;
-            // this.cart = false;
-          },
-          closeCard(){
-            this.showCard = false;
-          },
-          stopClose(){
-
-          },
+          addCard(){ this.showCard = true; },
+          closeCard(){ this.showCard = false; },
+          stopClose(){ },
           imgPreview(file_path){  // 图片预览
             wx.previewImage({
               current: 'https://img.zhaowoce.com'+file_path, // 当前显示图片的http链接
@@ -373,6 +366,24 @@
             })
           },
           replyCart(){
+            if(wepy.$instance.globalData.Authorization==false){
+              wx.showModal({
+                title: '您还未授权',
+                content: '点击\'确定\'跳转授权页面',
+                success(res) {
+                  if (res.confirm) {
+                    wepy.navigateTo({
+                      url:"/pages/main",
+                    });
+
+                    // console.log('用户点击确定')
+                  } else if (res.cancel) {
+                    // console.log('用户点击取消')
+                  }
+                }
+              });
+              return false;
+            }
             let _this = this;
             // console.log(wepy.$instance.globalData.shopId);
             if(wepy.$instance.globalData.shopId > 0 ){

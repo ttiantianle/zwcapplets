@@ -23,12 +23,14 @@
     data = {
       next:false,
     };
+
     onLoad() {
 
     };
     methods = {
       getPhoneNumber: function (e) {
         let that = this;
+
         if (e.detail.errMsg == "getPhoneNumber:fail user deny") {
           this.$parent.globalData.Authorization = false;
           wepy.redirectTo({
@@ -76,10 +78,12 @@
                       that.$parent.globalData.shopId = dat.data.shop_id;
                       that.$parent.globalData.userId = dat.data.user_id;
 
-                      wepy.redirectTo({
-                        url:"./index"
+                      wx.navigateBack({
+                        delta: 1,
                       });
-
+                      // wepy.redirectTo({
+                      //   url:"./index"
+                      // })
                     }else{
                       //授权失败 todo
                     }

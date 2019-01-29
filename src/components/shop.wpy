@@ -142,14 +142,14 @@
       },
       search(){
         let that = this;
-        console.log(that.key)
+        // console.log(that.key)
         wepy.request({
           url:wepy.$instance.globalData.url+"/shop/list",
           data:{
             search:that.key
           },
           success(res){
-            console.log(res)
+            // console.log(res)
             let dat = Utils.formatJson(res.data);
             that.shopList = dat.data.data;
             that.$apply();
