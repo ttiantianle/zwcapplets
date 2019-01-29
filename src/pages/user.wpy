@@ -178,9 +178,11 @@
       </view>
 
       <!--我回复的-->
+
       <view hidden="{{selectId != 1}}">
         <!--<repeat for="{{replyList}}">-->
         <view wx:for="{{replyList}}" wx:key="index" class="box_show p20">
+          <view wx:if="{{ replyList == ''}}">您暂未回复</view>
           <view class="mb20">{{item.cat_name}}</view>
           <view class="mb20">
             <view class="mb20">
@@ -321,9 +323,14 @@
           shop_id: _this.$parent.globalData.shopId
         },
         success(res){
+
           let reply = Utils.formatJson(res.data);
           // console.log(reply);
-          _this.replyList = reply.data.data;
+          if(_this.$parent.globalData.shopId <= 0){
+            _this.replyList = ''
+          }else{
+            _this.replyList = reply.data.data;
+          }
           _this.$apply();
         }
       });

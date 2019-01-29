@@ -71,6 +71,10 @@
     height: 70rpx;
     line-height: 70rpx;
   }
+  .active{
+    right: 0!important;
+    transition:  .5s;
+  }
 </style>
 <template>
   <view>
@@ -107,8 +111,8 @@
           </view>
         </view>
 
-        <view style="">
-           <textarea wx:if="{{(addCard && showCards)}}" style="z-index:1 !important;border: 2px solid #edece8;padding: 10rpx;margin: 20rpx auto;width: 80%;"
+        <view style="height: 350rpx;margin: 20rpx 0;">
+           <textarea wx:if="{{(addCard && showCards)}}" style="z-index:1 !important;border: 2px solid #edece8;padding: 10rpx;margin: 0 auto;width: 80%;"
                      bindinput="bindKeyInput"
                      placeholder="请输入您的需求" maxlength="300" value="{{desc}}" />
           <view wx:else style="height: 300rpx;"></view>
@@ -126,14 +130,14 @@
       </view>
 
       <!--选择名片-->
-      <view hidden="{{showCards}}" style="z-index:500;width:100%;height:100%;position: fixed;top: 0;right:0;">
+      <view style="z-index:500;width:100%;height:100%;position: fixed;top: 0;right:-100%;background: rgba(0,0,0,.5);" class="{{!showCards ? 'active': ''}}">
         <view style="position:absolute;top: 0;width: 35%;height: 100%;display: inline-block" @tap="closeShow()"></view>
         <view  style="position:absolute;top: 0;right:0;background-color: #fff;width:65%;height:100%;display: inline-block">
           <scroll-view scroll-y="true" style="height: 100%;">
             <view style="margin: 20rpx;">
               <button class="search" style="display: inline-block;width: 200rpx;" @tap="addCards()">添加名片</button>
               <button class="search" style="float: right;" @tap="determine()">确定</button>
-
+              <view style="color: red;">*建议使用工作手机号作为名片联系手机号，以免业务联络打扰到您的正常生活</view>
               <radio-group class="radio-group" bindchange="radioChange">
                 <view wx:if="{{cardList.length == 0}}">您还没有添加名片,请添加名片后发布需求</view>
                 <label wx:for="{{cardList}}" wx:key="index" class="radio">

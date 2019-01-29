@@ -149,6 +149,9 @@
   .center{
     margin-left: 200rpx;
   }
+  text{
+    font-size: 28rpx;
+  }
 </style>
 
 <template>
