@@ -26,6 +26,10 @@
   .lh50{
     line-height: 50rpx;
   }
+  .lh60{
+    line-height: 60rpx;
+    height: 60rpx;
+  }
   .replyList image{
     width: 48rpx;
     height: 40rpx;
@@ -55,12 +59,8 @@
     display: inline-block;
     margin-left: 110rpx;
   }
-  .reply{
-    background: #3388FF;
-    color: #ffffff;
-  }
   .share{
-    color: #3388FF;
+    color: #1296db;
   }
   .animation-element{
     position: fixed;
@@ -71,6 +71,7 @@
     height: 400rpx;
     transition: 1s;
     font-size: 24rpx;
+    z-index: 1;
   }
   .actives{
     bottom: 0!important;
@@ -80,7 +81,7 @@
     border-bottom: 1px solid #eee;
   }
   .cancel text{
-    color: #3388FF;
+    color: #1296db;
     padding: 15rpx;
   }
   .cardList text{
@@ -100,6 +101,54 @@
     text-align: left;
     height: 100%;
   }
+  .df{
+    display: flex;
+  }
+  .f2{
+    flex: 2;
+    text-align: right;
+  }
+  .f6{
+    flex: 6;
+    margin-left: 20rpx;
+  }
+  .f3{
+    flex: 3;
+  }
+  .addCardBox{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    background: rgba(0,0,0,.5);
+    padding: 20rpx;
+    box-sizing: border-box;
+  }
+  .addCard{
+    background: #ffffff;
+    padding: 25rpx;
+    margin-top: 200rpx;
+    border-radius: 10rpx;
+    /*box-sizing: border-box;*/
+  }
+  .addCard .int{
+    border: 1px solid #dcdfe6;
+    padding-left: 10rpx;
+    font-size: 24rpx;
+  }
+  .createCard button, .reply{
+    background: #1296DB;
+    color: #ffffff;
+  }
+  .createCard{
+    text-align: right;
+    margin-right: 30rpx;
+  }
+  .center{
+    margin-left: 200rpx;
+  }
 </style>
 
 <template>
@@ -113,7 +162,6 @@
     <view class="mb25">
       <button class="reply" @tap="replyCart">立即回复</button><button class="share" open-type="share">分享需求</button>
     </view>
-
     <view class="p20 box_show replyList" wx:if="{{reply.length != 0 }}">
       <view class="lh40 filelist">回复列表</view>
       <view class="p30">
@@ -125,11 +173,12 @@
     </view>
     <view class="animation-element" :class="{ actives: cart }">
       <view class="cancel lh50">
-        <text class="fl" @tap="cancel()">取消</text><text class="fr" @tap="confirm()">确定</text>
+        <text class="fl" @tap="cancel()">取消</text><text class="fl center" @tap="addCard()">点击添加名片</text><text class="fr" @tap="confirm()">确定</text>
       </view>
-      <view wx:if="{{this.cardList.length>0}}">暂无名片</view>
+      <view class="p20" wx:if="{{cardList.length==0}}">暂无名片 <text style="color: #1296db;" @tap="addCard()">点击添加名片</text></view>
 
       <picker-view
+        wx:if="{{cardList.length > 0}}"
         indicator-style="height: 40rpx;"
         style="width: 100%; height: 250rpx;"
         value="{{value}}"
@@ -140,12 +189,46 @@
             <text class="username">{{ item.username}}</text>
             <text class="relation" style="line-height: 70rpx" wx:if="{{item.mobile!=''}}">手机号：{{ item.mobile }}</text>
             <text class="relation" style="line-height: 70rpx" wx:elif="{{item.wechat!=''}}">微信号：{{ item.wechat }}</text>
-            <text class="relation" style="line-height: 70rpx" wx:elif="{{item.qq_num!=''}}">Q Q号{{ item.qq_num }}</text>
-            <text class="relation" style="line-height: 70rpx" wx:else="{{item.mobile!=''}}">邮 箱：{{ item.email }}</text>
+            <text class="relation" style="line-height: 70rpx" wx:elif="{{item.qq_num!=''}}">Q Q号：{{ item.qq_num }}</text>
+            <text class="relation" style="line-height: 70rpx" wx:else="{{item.email!=''}}">邮 箱：{{ item.email }}</text>
           </view>
         </picker-view-column>
       </picker-view>
+
     </view>
+    <view class="addCardBox" wx:if="{{ showCard }}" @tap="closeCard()">
+      <view class="addCard" catchtap="stopClose()">
+        <view class="df lh60 mb25">
+          <view class="f2">称 呼：</view>
+          <input class="f6 int lh60" type="text" wx:value="{{ username }}" placeholder="必填" bindinput="cardName" />
+          <view class="f2"></view>
+        </view>
+        <view class="df lh60 mb25">
+          <view class="f2">手机号：</view>
+          <input class="f6 int lh60" type="text" wx:value="{{ mobile }}" placeholder="必填" bindinput="cardMobile" />
+          <view class="f2"></view>
+        </view>
+        <view class="df lh60 mb25">
+          <view class="f2">微信号：</view>
+          <input class="f6 int lh60" type="text" wx:value="{{ wechat }}" bindinput="cardWechat" />
+          <view class="f2"></view>
+        </view>
+        <view class="df lh60 mb25">
+          <view class="f2">Q Q号：</view>
+          <input class="f6 int lh60" type="text" wx:value="{{ qqNnum }}" bindinput="cardQNum" />
+          <view class="f2"></view>
+        </view>
+        <view class="df lh60 mb25">
+          <view class="f2">邮 箱：</view>
+          <input class="f6 int lh60" type="text" wx:value="{{ email }}" bindinput="cardEmail" />
+          <view class="f2"></view>
+        </view>
+        <view class="createCard">
+          <button @tap="createCard">创建名片</button>
+        </view>
+      </view>
+    </view>
+
   </view>
 </template>
 
@@ -163,32 +246,17 @@
           cardList: [],  // 名片列表
           value: "",
           cardId: "",  // 名片ID
+          username: "",  // 添加名片name
+          mobile: "",  // 手机号
+          wechat: "",  // 微信号
+          qqNnum: "",  // qq号
+          email: "",  // 邮箱
+          showCard: false,
         };
 
         onLoad(option) {
-          let _this = this;
           this.datas(option.id);
-          wepy.request({
-            url: wepy.$instance.globalData.url + "/usercard/list",
-            // method: "POST",
-            data: {
-              from_type: Utils.get('xcx_shop'),
-              shop_id:Utils.get(_this.$parent.globalData.shopId)
-            },
-            success(res){
-              // console.log(res);
-              let str = res.data.substr(1);
-              str = str.substr(0, str.length-1);
-              let data = JSON.parse(str);
-
-              _this.cardList = data.data;
-              // console.log( _this.cardList, data);
-              if(_this.cardList.length>0){
-                _this.cardId = _this.cardList[0].id;
-              }
-              _this.$apply();
-            }
-          });
+          this.cardLists();
           wx.showShareMenu({
             withShareTicket: true
           });
@@ -198,6 +266,103 @@
         };
 
         methods = {
+          cardName(e){ this.username = e.detail.value;console.log(this.username)},
+          cardMobile(e){ this.mobile = e.detail.value;},
+          cardWechat(e){ this.wechat = e.detail.value;},
+          cardQNum(e){ this.qqNnum = e.detail.value;},
+          cardEmail(e){ this.email = e.detail.value;},
+          createCard(){  // 创建名片
+            let that = this;
+            let mobile = /^(0|86|17951)?(13[0-9]|15[012356789]|16[5]|17[012345678]|18[0-9]|14[579][0-9]|19[9])[0-9]{8}$/; // 手机号
+            let weChat = /^[a-zA-Z0-9]([-_a-zA-Z0-9]{5,19})+$/;  // 微信
+            let qq = /^[1-9][0-9]{4,11}$/; // qq号
+            let mailbox = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/;
+
+            if(this.username==''){
+              wx.showModal({
+                title: '添加名片',
+                content: '名字为必填信息',
+              });
+              return;
+            }
+            if(this.mobile==''){
+              wx.showModal({
+                title: '添加名片',
+                content: '手机号为必填信息',
+              });
+              return;
+            }
+            if(!mobile.test(this.mobile)){
+              wx.showModal({
+                title: '添加名片',
+                content: '请填写有效的手机号码',
+              });
+              return;
+            }
+            if(this.wechat !=''&& (!weChat.test(this.wechat))){
+              wx.showModal({
+                title: '添加名片',
+                content: '请填写有效的微信号',
+              });
+              return;
+            }
+            if(this.qqNnum !=''&& (!qq.test(this.qqNnum))){
+              wx.showModal({
+                title: '添加名片',
+                content: '请填写有效的QQ号',
+              });
+              return;
+            }
+            if(this.email !='' && (!mailbox.test(this.email))){
+              wx.showModal({
+                title: '添加名片',
+                content: '请填写有效的邮箱',
+              });
+              return;
+            }
+            wepy.request({
+              url: that.$parent.globalData.url+"/usercard/addshop",
+              data:{
+                username: Utils.get(that.username),  // 称呼
+                wechat: Utils.get(that.wechat),  // 微信
+                mobile: Utils.get(that.mobile),  // 手机号
+                qq_num: Utils.get(that.qqNnum),     // qq
+                email: Utils.get(that.email),  // 邮箱
+                from_type: Utils.get("xcx_shop"),
+                shop_id: Utils.get(that.$parent.globalData.shopId),
+              },
+              success(res){
+                // console.log(that.$parent.globalData.userId);
+                console.log(res)
+                // let data = Utils.formatJson(res.data);
+                // console.log(data);
+                that.username = "";
+                that.wechat = '';
+                that.mobile = '';
+                that.qqNnum = '';
+                that.email = '';
+
+                that.cardLists();
+                that.showCard = false;
+                wx.showToast({
+                  title: '添加成功',
+                  icon: 'success',
+                  duration: 2000
+                })
+              }
+            });
+
+          },
+          addCard(){
+            this.showCard = true;
+            // this.cart = false;
+          },
+          closeCard(){
+            this.showCard = false;
+          },
+          stopClose(){
+
+          },
           imgPreview(file_path){  // 图片预览
             wx.previewImage({
               current: 'https://img.zhaowoce.com'+file_path, // 当前显示图片的http链接
@@ -284,6 +449,25 @@
               _this.details = data.data.require;
               _this.reply = data.data.reply;
               // console.log( _this.details,data.data,);
+              _this.$apply();
+            }
+          });
+        }
+        cardLists(){
+          let _this = this;
+          wepy.request({
+            url: wepy.$instance.globalData.url + "/usercard/alllist",
+            // method: "POST",
+            data: {
+              shop_id: _this.$parent.globalData.shopId,
+              user_id: _this.$parent.globalData.userId,
+            },
+            success(res){
+              let str = Utils.formatJson(res.data);
+              _this.cardList = str.data;
+              if(_this.cardList.length>0){
+                _this.cardId = _this.cardList[0].id;
+              }
               _this.$apply();
             }
           });

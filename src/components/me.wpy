@@ -141,29 +141,9 @@
     <!--我发布的-->
     <view hidden="{{selectId != 0}}">
 
-      <view wx:for="{{requireList}}" class="box_show">
+      <view wx:for="{{requireList}}" class="box_show" wx:key="index">
         <view class="p20">
           <view class="mb20">{{ item.cat_name }}</view>
-<!--<view class="userinfo" style="margin: 20rpx 60rpx 20rpx 60rpx;">-->
-        <!--<view class="portrait">-->
-          <!--<open-data type="userAvatarUrl" style="">-->
-          <!--</open-data>-->
-        <!--</view>-->
-        <!--<view style="display: inline-block;vertical-align:top;line-height: 150rpx;height: 150rpx;margin-left:50rpx;">-->
-          <!--<open-data type="userNickName" style="">-->
-          <!--</open-data>,您好!-->
-        <!--</view>-->
-        <!--&lt;!&ndash;<image mode="scaleToFill" style="width: 150rpx;height: 150rpx;border-radius: 200rpx;display: inline-block" class="userinfo-avatar" src="{{userInfo.avatarUrl}}"/>&ndash;&gt;-->
-        <!--&lt;!&ndash;<view class="userinfo-nickname" style="margin-left:50rpx;vertical-align:top;display: inline-block;line-height: 150rpx;height: 150rpx;">{{userInfo.nickName}}，您好</view>&ndash;&gt;-->
-        <!--<text style="display: block;margin-top: 20rpx;">系统提示：您累计发布了{{requireNum}}个需求，得到{{replyNum}}个回复</text>-->
-      <!--</view>-->
-
-      <!--<repeat for="{{requireList}}"  item="item">-->
-        <!--<view style="height: 60rpx;background-color: #fff;padding-left: 30rpx;line-height: 60rpx;border-bottom: gray 1rpx solid;"-->
-              <!--@tap="conversion()">-->
-          <!--{{ item.cat_name }}-->
-        <!--</view>-->
-        <!--<view class="m20" style="padding-bottom: 10rpx;">-->
           <view class="mb20">{{item.text}}</view>
           <view class="mb20">
             审核状态：
@@ -186,7 +166,7 @@
     </view>
     <view class="card-wrapper {{activess ? 'actives' : ''}}" @tap="closeCard()">
       <!--catchtap="stopClose"-->
-      <view class="cardContent p30" catchtap="stopClose()">
+      <view class="cardContent p30" catchtap="stopClose()" wx:if="{{ del }}">
         <view class="lh50"><text class="name">称呼：</text><text>{{ cardItem.username }}</text></view>
         <view class="lh50"><text class="name">手机号：</text><text>{{ cardItem.mobile }}</text></view>
         <view class="lh50"><text class="name">微信号：</text><text>{{ cardItem.wechat }}</text></view>
@@ -194,6 +174,7 @@
         <view class="lh50"><text class="name">邮 箱：</text><text>{{ cardItem.email }}</text></view>
         <view class="lh50"><text class="name">机构名称：</text><text>{{ cardItem.shop_name }}</text></view>
       </view>
+      <view class="cardContent p30" catchtap="stopClose()" wx:else>用户名片已删除</view>
     </view>
 
     <!--我回复的-->
@@ -211,47 +192,47 @@
       <!--</repeat>-->
     </view>
 
-    <view hidden="{{selectId != 2}}" >
-      <!--<web-view src="https://www.zhaowoce.com/c_orderlist/m_show_contract/order_sn/P114523500580464.html"></web-view>-->
-      <view>
-        <text style="margin:20rpx;" @tap="is_sign(0)">未签署</text>
-        <text  style="margin:20rpx;" @tap="is_sign(1)">已签署</text>
-      </view>
-      <!--未签署-->
-      <view wx:if="{{is_sign == 0}}">
-        <repeat for="{{orderList}}">
-          <view class="item">
-            <view class="lh50" ><text>订单号：{{item.order_sn}}</text></view>
-            <view class="lh50">
-              <text wx:if="{{item.fback_id == '0'}}">订单类型：询价订单</text>
-              <text wx:else>订单类型：普通订单</text>
-            </view>
-            <view class="lh50"><text>委托单位名称：{{item.consig_com}}</text></view>
-            <view class="lh50">
-              <!--<text>用户签约时间：{{item.end_pay_time}}</text>-->
-              <!--<text style="color:#1296db;" class="fr" @tap="viewDetail()">查看详细内容</text>-->
-            </view>
-          </view>
-        </repeat>
-      </view>
-      <!--已签署-->
-      <view wx:else>
-        <repeat for="{{orderList1}}">
-          <view class="item">
-            <view class="lh50" ><text>订单号：{{item.order_sn}}</text></view>
-            <view class="lh50">
-              <text wx:if="{{item.fback_id == '0'}}">订单类型：询价订单</text>
-              <text wx:else>订单类型：普通订单</text>
-            </view>
-            <view class="lh50"><text>委托单位名称：{{item.consig_com}}</text></view>
-            <view class="lh50">
-              <!--<text>用户签约时间：{{item.end_pay_time}}</text>-->
-              <!--<text style="color:#1296db;" class="fr" @tap="viewDetail()">查看详细内容</text>-->
-            </view>
-          </view>
-        </repeat>
-      </view>
-    </view>
+    <!--<view hidden="{{selectId != 2}}" >-->
+      <!--&lt;!&ndash;<web-view src="https://www.zhaowoce.com/c_orderlist/m_show_contract/order_sn/P114523500580464.html"></web-view>&ndash;&gt;-->
+      <!--<view>-->
+        <!--<text style="margin:20rpx;" @tap="is_sign(0)">未签署</text>-->
+        <!--<text  style="margin:20rpx;" @tap="is_sign(1)">已签署</text>-->
+      <!--</view>-->
+      <!--&lt;!&ndash;未签署&ndash;&gt;-->
+      <!--&lt;!&ndash;<view wx:if="{{is_sign == 0}}">&ndash;&gt;-->
+        <!--&lt;!&ndash;<repeat for="{{orderList}}">&ndash;&gt;-->
+          <!--&lt;!&ndash;<view class="item">&ndash;&gt;-->
+            <!--&lt;!&ndash;<view class="lh50" ><text>订单号：{{item.order_sn}}</text></view>&ndash;&gt;-->
+            <!--&lt;!&ndash;<view class="lh50">&ndash;&gt;-->
+              <!--&lt;!&ndash;<text wx:if="{{item.fback_id == '0'}}">订单类型：询价订单</text>&ndash;&gt;-->
+              <!--&lt;!&ndash;<text wx:else>订单类型：普通订单</text>&ndash;&gt;-->
+            <!--&lt;!&ndash;</view>&ndash;&gt;-->
+            <!--&lt;!&ndash;<view class="lh50"><text>委托单位名称：{{item.consig_com}}</text></view>&ndash;&gt;-->
+            <!--&lt;!&ndash;<view class="lh50">&ndash;&gt;-->
+              <!--&lt;!&ndash;&lt;!&ndash;<text>用户签约时间：{{item.end_pay_time}}</text>&ndash;&gt;&ndash;&gt;-->
+              <!--&lt;!&ndash;&lt;!&ndash;<text style="color:#1296db;" class="fr" @tap="viewDetail()">查看详细内容</text>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;</view>&ndash;&gt;-->
+          <!--&lt;!&ndash;</view>&ndash;&gt;-->
+        <!--&lt;!&ndash;</repeat>&ndash;&gt;-->
+      <!--&lt;!&ndash;</view>&ndash;&gt;-->
+      <!--&lt;!&ndash;已签署&ndash;&gt;-->
+      <!--&lt;!&ndash;<view wx:else>&ndash;&gt;-->
+        <!--&lt;!&ndash;<repeat for="{{orderList1}}">&ndash;&gt;-->
+          <!--&lt;!&ndash;<view class="item">&ndash;&gt;-->
+            <!--&lt;!&ndash;<view class="lh50" ><text>订单号：{{item.order_sn}}</text></view>&ndash;&gt;-->
+            <!--&lt;!&ndash;<view class="lh50">&ndash;&gt;-->
+              <!--&lt;!&ndash;<text wx:if="{{item.fback_id == '0'}}">订单类型：询价订单</text>&ndash;&gt;-->
+              <!--&lt;!&ndash;<text wx:else>订单类型：普通订单</text>&ndash;&gt;-->
+            <!--&lt;!&ndash;</view>&ndash;&gt;-->
+            <!--&lt;!&ndash;<view class="lh50"><text>委托单位名称：{{item.consig_com}}</text></view>&ndash;&gt;-->
+            <!--&lt;!&ndash;<view class="lh50">&ndash;&gt;-->
+              <!--&lt;!&ndash;&lt;!&ndash;<text>用户签约时间：{{item.end_pay_time}}</text>&ndash;&gt;&ndash;&gt;-->
+              <!--&lt;!&ndash;&lt;!&ndash;<text style="color:#1296db;" class="fr" @tap="viewDetail()">查看详细内容</text>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;</view>&ndash;&gt;-->
+          <!--&lt;!&ndash;</view>&ndash;&gt;-->
+        <!--&lt;!&ndash;</repeat>&ndash;&gt;-->
+      <!--&lt;!&ndash;</view>&ndash;&gt;-->
+    <!--</view>-->
     </view>
   </view>
 </template>
@@ -283,6 +264,7 @@
       // },
       this_setdata:"",
       is_sign:0,
+      del: true
     };
     onLoad(){
       this.mobile = wepy.$instance.globalData.phoneNumber;
@@ -327,19 +309,6 @@
           _this.$apply();
         }
       });
-      // wepy.request({  // 我回复的
-      //   url: url + "/usercard/getcard",
-      //   data: {
-      //     re_type: "3",
-      //     from_type: 'xcx_shop',
-      //     shop_id: wepy.$instance.globalData.shopId
-      //   },
-      //   success(res){
-      //     let reply = Utils.formatJson(res.data);
-      //     _this.replyList = reply.data.data;
-      //     _this.$apply();
-      //   }
-      // });
 
       // wepy.request({  // 我的订单
       //   url: url + "/userorder/orderlist",
@@ -402,8 +371,12 @@
         let url = wepy.$instance.globalData.url;
         let _this = this;
         if(num == 1){
+          this.del = true;
           this.shop_name = data.shop_name;
           this.cardItem = data.card[0];
+          if(this.cardItem == undefined){
+            this.del = false;
+          }
         }else if(num == 2){
           // _this.cardItem = "";
           wepy.request({
@@ -412,12 +385,15 @@
               id: Utils.get( data ),
             },
             success(res){
+              _this.cardItem = [];
               let data = Utils.formatJson(res.data);
               _this.cardItem = data.data[0];
-              // console.log(data.data.mobile);
-              // _this.orderList1 = data.data.data;
+              if(_this.cardItem == undefined){
+                _this.del = false;
+              }else{
+                _this.del = true;
+              }
               _this.$apply();
-              // console.log(_this.cardItem)
             }
           })
 

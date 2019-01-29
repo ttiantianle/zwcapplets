@@ -92,7 +92,7 @@
 </style>
 <template>
   <view style="padding-top: 2rpx;">
-    <view class="df m30" style="padding: 24rpx 24rpx 0;">
+    <view class="df" style="padding: 24rpx 24rpx 0;">
       <input type="text" bindinput="bindKeyInput" class="borderGray"/><button class="search" @tap="search()">搜 索</button>
     </view>
     <repeat>
