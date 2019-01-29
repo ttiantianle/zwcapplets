@@ -97,8 +97,8 @@
       </view>
 
       <view class="box_show">
-        <view class="db shopDetailbtn" @tap="shopPicture()">机构相册 >></view>
-        <view class="db shopDetailbtn" @tap="shopDevice()">仪器设备 >></view>
+        <!--<view class="db shopDetailbtn" @tap="shopPicture()">机构相册 >></view>-->
+        <view class="db shopDetailbtn" style="margin-bottom: 15rpx;" @tap="shopDevice()">仪器设备 >></view>
 
          <view class="synopsis">公司简介</view>
           <import src="../../wxParse/wxParse.wxml"/>
