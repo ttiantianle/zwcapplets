@@ -130,7 +130,13 @@
       </view>
       <!--<image mode="scaleToFill" style="width: 150rpx;height: 150rpx;border-radius: 200rpx;display: inline-block" class="userinfo-avatar" src="{{userInfo.avatarUrl}}"/>-->
       <!--<view class="userinfo-nickname" style="margin-left:50rpx;vertical-align:top;display: inline-block;line-height: 150rpx;height: 150rpx;">{{userInfo.nickName}}，您好</view>-->
-      <text style="display: block;margin-top: 20rpx;">系统提示：您累计发布了{{requireNum}}个需求，得到{{replyNum}}个回复</text>
+      <text style="display: block;margin-top: 20rpx;">
+        系统提示：<text wx:if="{{requireNum != 0 }}">您累计发布了{{requireNum}}个需求，</text>
+        <text wx:else>您暂未发布需求</text>
+       <text wx:if="{{replyNum!=0}}"> 得到{{replyNum}}个回复</text>
+        <text wx:else>您暂未收到回复</text>
+      </text>
+      <!--<text style="display: block;margin-top: 20rpx;">系统提示：您累计发布了{{requireNum}}个需求，得到{{replyNum}}个回复</text>-->
     </view>
     <view class="demandTitle">
       <view class="tabTitle{{selectId == 0 ? '_active':''}}" @tap="select(0)" ><text>我发布的</text></view>
@@ -248,8 +254,8 @@
       navigationBarTitleText: "个人中心"
     };
     data = {
-      requireNum:"暂未",
-      replyNum:"暂未",
+      requireNum:"",
+      replyNum:"",
       requireList:[],  // 需求列表
       infoList:[],
       replyList:[],  // 我回复的
@@ -310,16 +316,8 @@
           str = str.substr(0, str.length-1);
           let data = JSON.parse(str);
           // console.log(data);
-          if(data.data.total.total_requi == 0){
-
-          }else{
-            _this.requireNum = data.data.total.total_requir;
-          }
-         if(data.data.total.total_reply == 0){
-
-         }else{
+          _this.requireNum = data.data.total.total_requir;
            _this.replyNum = data.data.total.total_reply;
-         }
           _this.requireList = data.data.data;
           _this.$apply();
         }

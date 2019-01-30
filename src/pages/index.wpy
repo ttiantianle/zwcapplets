@@ -112,10 +112,10 @@
         </view>
 
         <view style="height: 350rpx;margin: 20rpx 0;">
-           <textarea style="z-index:1!important;border: 2px solid #edece8;padding: 10rpx;margin: 0 auto;width: 80%;"
+           <textarea wx:if="{{ addCard && showCards }}" style="z-index:1!important;border: 2px solid #edece8;padding: 10rpx;margin: 0 auto;width: 80%;"
                      bindinput="bindKeyInput"
                      placeholder="请输入您的需求" maxlength="300" value="{{desc}}" />
-          <!--<view wx:else style="height: 300rpx;"></view>-->
+          <view wx:else style="height: 300rpx;border:2px solid #edece8;padding:4px 5px 6px;margin:0 auto;width:80%;color: #808080;">请输入您的需求</view>
 
         </view>
         <image src="../images/upload1.png" style="display:inline-block;width:60rpx;height: 60rpx;margin-left: 8%" @tap="upload()"></image>
@@ -242,7 +242,7 @@
       email:"",
     };
     onLoad(){
-      wx.removeStorageSync('is_show');
+      // wx.removeStorageSync('is_show');
       if((wx.getStorageSync('is_show') > Date.parse(new Date()))){
         this.$parent.globalData.phoneNumber = wx.getStorageSync('mobile');
         this.$parent.globalData.shopId = wx.getStorageSync('shop_id');

@@ -54,8 +54,8 @@
                   success(re){
                     // console.log(re);
                     let dat = Utils.formatJson(re.data);
-                    console.log(dat);
-                    console.log(dat.code)
+                    // console.log(dat);
+                    // console.log(dat.code)
                     if(dat.code == 0){
                       wx.setStorage({
                         key:"is_show",
