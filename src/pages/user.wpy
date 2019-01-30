@@ -254,8 +254,8 @@
       navigationBarTitleText: "个人中心"
     };
     data = {
-      requireNum:"",
-      replyNum:"",
+      requireNum:"",  // 累计发布需求
+      replyNum:"",  // 累计收到回复
       requireList:[],  // 需求列表
       infoList:[],
       replyList:[],  // 我回复的
@@ -272,7 +272,10 @@
       // },
       this_setdata:"",
       is_sign:0,
-      del: true
+      del: true,
+      pagtotal: "",  // 数据总数量
+      reduxPagtotal: "",  // 我回复的总数量
+      pageNum: 1,  // 页数
     };
     onLoad(){
 
@@ -296,51 +299,12 @@
         });
         return;
       }
-
-
       this.mobile = this.$parent.globalData.phoneNumber;
-
       let url = this.$parent.globalData.url;
       let userId =this.$parent.globalData.userId;
       let _this = this;
-      wepy.request({  // 我发布的
-        url: url + "/releaserequir/releaselist",
-        data: {
-          re_type: "2",
-          from_type: 'xcx_user',
-          user_id: userId
-        },
-        success(res){
-          // console.log(res.data);
-          let str = res.data.substr(1);
-          str = str.substr(0, str.length-1);
-          let data = JSON.parse(str);
-          // console.log(data);
-          _this.requireNum = data.data.total.total_requir;
-           _this.replyNum = data.data.total.total_reply;
-          _this.requireList = data.data.data;
-          _this.$apply();
-        }
-      });
-      wepy.request({  // 我回复的
-        url: url + "/releaserequir/releaselist",
-        data: {
-          re_type: "3",
-          from_type: 'xcx_shop',
-          shop_id: _this.$parent.globalData.shopId
-        },
-        success(res){
-
-          let reply = Utils.formatJson(res.data);
-          // console.log(reply);
-          if(_this.$parent.globalData.shopId <= 0){
-            _this.replyList = ''
-          }else{
-            _this.replyList = reply.data.data;
-          }
-          _this.$apply();
-        }
-      });
+      this.released();  // 我发布的
+      this.redux();  // 我回复的
 
       // wepy.request({  // 我的订单
       //   url: url + "/userorder/orderlist",
@@ -392,6 +356,7 @@
 
     methods = {
       select(idx,evt){
+        this.pageNum = 1;
         this.selectId = +idx;
       },
       conversion(evt){
@@ -443,6 +408,101 @@
 
       }
     };
+    onReachBottom() {
+      // 上拉加载更多loading
+      // this.updateLoadShow = true;
+      let _length;
+      let pagtotal;
+      // 列表长度与列表总数对比
+      if(this.selectId == 0){
+        _length = this.requireList.length;
+        pagtotal = this.pagtotal
+      }else{
+        _length = this.replyList.length;
+        pagtotal = this.reduxPagtotal
+      }
+      if (_length == pagtotal) {
+        return
+      } else {
+        wx.showLoading({
+          title: '加载中',
+          icon: 'loading',
+        });
+        // 当前页码加一
+        this.pageNum++;
+        // 更新数据
+        if(this.selectId == 0){
+          this.released();
+        }else if(this.selectId == 1){
+          this.redux()
+        }
+      }
+    }
+    redux(){
+      let _this = this;
+      wepy.request({  // 我回复的
+        url: _this.$parent.globalData.url + "/releaserequir/releaselist",
+        data: {
+          re_type: "3",
+          from_type: 'xcx_shop',
+          shop_id:_this.$parent.globalData.shopId,
+          page: _this.pageNum
+        },
+        success(res){
+          let reply = Utils.formatJson(res.data);
+          // console.log(reply);
+
+          if(_this.$parent.globalData.shopId <= 0){
+            _this.replyList = ''
+          }else{
+            if (_this.pageNum == 1) {
+              _this.replyList = reply.data.data;
+              _this.reduxPagtotal = reply.data.page.total_rows
+
+            } else {
+              _this.replyList = _this.replyList.concat(reply.data.data)
+            }
+            // _this.replyList = reply.data.data;
+          }
+          _this.$apply();
+        }
+      });
+    }
+    released(){  // 我发布的
+      let _this = this;
+      wepy.request({  // 我发布的
+        url: _this.$parent.globalData.url + "/releaserequir/releaselist",
+        data: {
+          re_type: "2",
+          from_type: 'xcx_user',
+          user_id: _this.$parent.globalData.userId,
+          page: _this.pageNum
+        },
+        success(res){
+          // console.log(res.data);
+          let str = res.data.substr(1);
+          str = str.substr(0, str.length-1);
+          let data = JSON.parse(str);
+          // console.log(data);
+          if (_this.pageNum == 1) {
+            _this.requireList = data.data.data;
+            _this.pagtotal = data.data.page.total_rows
+          } else {
+            _this.requireList = _this.requireList.concat(data.data.data)
+          }
+          wx.showToast({ //期间为了显示效果可以添加一个过度的弹出框提示“加载中”
+            title: '',
+            icon: 'success',
+            duration: 100
+          });
+          _this.requireNum = data.data.total.total_requir;
+          _this.replyNum = data.data.total.total_reply;
+          // _this.requireList = data.data.data;
+          _this.$apply();
+
+        }
+      });
+    }
     components ={
 
     }
