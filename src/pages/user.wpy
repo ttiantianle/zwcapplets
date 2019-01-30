@@ -277,6 +277,11 @@
       reduxPagtotal: "",  // 我回复的总数量
       pageNum: 1,  // 页数
     };
+    onShow() {
+      this.mobile = this.$parent.globalData.phoneNumber;
+      this.released();  // 我发布的
+      this.redux();  // 我回复的
+    }
     onLoad(){
 
       if(!this.$parent.globalData.Authorization){
@@ -300,9 +305,6 @@
         return;
       }
       this.mobile = this.$parent.globalData.phoneNumber;
-      let url = this.$parent.globalData.url;
-      let userId =this.$parent.globalData.userId;
-      let _this = this;
       this.released();  // 我发布的
       this.redux();  // 我回复的
 
@@ -479,6 +481,7 @@
           page: _this.pageNum
         },
         success(res){
+          // console.log( _this.$parent.globalData.userId);
           // console.log(res.data);
           let str = res.data.substr(1);
           str = str.substr(0, str.length-1);

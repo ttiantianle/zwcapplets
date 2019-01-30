@@ -41,6 +41,7 @@ export default class extends wepy.app {
       navigationBarTitleText: '',
       navigationBarTextStyle: 'white',
       onReachBottomDistance: 200,
+      withShareTicket: true,
     },
     tabBar: {    //
       color: '#000',
