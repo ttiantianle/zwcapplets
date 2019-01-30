@@ -71,10 +71,11 @@
     background-color: #3388ff;
     color: #fff;
     text-align: center;
-    margin-top: 20rpx;
+    margin-bottom: 20rpx;
     height: 80rpx;
     line-height: 80rpx;
     font-size: 40rpx;
+    border-radius: 10rpx;
   }
   .synopsis{
     text-align: center;
@@ -98,7 +99,8 @@
 
       <view class="box_show">
         <!--<view class="db shopDetailbtn" @tap="shopPicture()">机构相册 >></view>-->
-        <view class="db shopDetailbtn" style="margin-bottom: 15rpx;" @tap="shopDevice()">仪器设备 >></view>
+        <button class="db shopDetailbtn" open-type="share">分享此机构</button>
+        <view class="db shopDetailbtn" @tap="shopDevice()">仪器设备 >></view>
 
          <view class="synopsis">公司简介</view>
           <import src="../../wxParse/wxParse.wxml"/>
@@ -124,7 +126,9 @@
           shopId: "",
         };
         onLoad(params) {
-
+          wx.showShareMenu({
+            withShareTicket: true
+          });
           this.shopId = params.id;
           wx.setNavigationBarTitle({
             title: '机构详情'

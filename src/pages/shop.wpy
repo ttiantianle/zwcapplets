@@ -134,6 +134,10 @@
       // onReachBottomDistance: 20,
     };
     onLoad(){
+      wepy.showLoading({
+        title: '加载中',
+        icon: 'loading',
+      });
       this.datas();
       // wepy.getSystemInfo({
       //   success: (res) => {
