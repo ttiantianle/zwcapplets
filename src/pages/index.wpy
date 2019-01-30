@@ -253,6 +253,9 @@
     };
     onLoad(){
       // wx.removeStorageSync('is_show');
+      wx.showShareMenu({
+        withShareTicket: true
+      });
       if((wx.getStorageSync('is_show') > Date.parse(new Date()))){
         this.$parent.globalData.phoneNumber = wx.getStorageSync('mobile');
         this.$parent.globalData.shopId = wx.getStorageSync('shop_id');

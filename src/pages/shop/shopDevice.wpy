@@ -56,6 +56,9 @@
         };
 
         onLoad(params) {
+          wx.showShareMenu({
+            withShareTicket: true
+          });
           wx.setNavigationBarTitle({
             title: '机构设备'
           });

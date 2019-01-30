@@ -283,7 +283,9 @@
       this.redux();  // 我回复的
     }
     onLoad(){
-
+      wx.showShareMenu({
+        withShareTicket: true
+      });
       if(!this.$parent.globalData.Authorization){
         wx.showModal({
           title: '您还未授权',

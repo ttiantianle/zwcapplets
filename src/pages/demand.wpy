@@ -124,12 +124,8 @@
       // onReachBottomDistance: "300"
     };
     onLoad(){
-      wepy.getSystemInfo({
-        success: (res) => {
-          // this.height = res.windowHeight;
-          // this.pageSize = Math.round(res.windowHeight / 103) + 1;
-          this.$apply()
-        }
+      wx.showShareMenu({
+        withShareTicket: true
       });
       let _this = this;
       _this.datasa();
@@ -154,6 +150,8 @@
     };
     methods = {
       fieldItem(num){
+        this.demandList = [];
+        this.pageNum = 1;
         this.items = num;
         this.datasa();
       },
