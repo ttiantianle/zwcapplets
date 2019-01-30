@@ -248,8 +248,8 @@
       navigationBarTitleText: "个人中心"
     };
     data = {
-      requireNum:5,
-      replyNum:10,
+      requireNum:"暂未",
+      replyNum:"暂未",
       requireList:[],  // 需求列表
       infoList:[],
       replyList:[],  // 我回复的
@@ -308,9 +308,17 @@
           let str = res.data.substr(1);
           str = str.substr(0, str.length-1);
           let data = JSON.parse(str);
-          // console.log(data)
-          _this.requireNum = data.data.total.total_requir;
-          _this.replyNum = data.data.total.total_reply;
+          // console.log(data);
+          if(data.data.total.total_requi == 0){
+
+          }else{
+            _this.requireNum = data.data.total.total_requir;
+          }
+         if(data.data.total.total_reply == 0){
+
+         }else{
+           _this.replyNum = data.data.total.total_reply;
+         }
           _this.requireList = data.data.data;
           _this.$apply();
         }

@@ -159,7 +159,7 @@
     <view class="p20 box_show">
       <view class="lh40 filelist">检测领域：<text>{{ details.cat_name }}</text> <text class="fr">{{ details.create_time }}</text></view>
       <view class="lh40 filelist">详细描述：<text>{{ details.text }}</text></view>
-      <view class="lh40" wx:if="{{details.file_path!=''}}">样图：<image @tap="imgPreview({{details.file_path}})" src="http://img.zhaowoce.com{{details.file_path}}"></image></view>
+      <view class="lh40" wx:if="{{details.file_path!=''}}">样图：<image @tap="imgPreview({{ details.file_path }})" src="https://img.zhaowoce.com{{details.file_path}}"></image></view>
       <!--<image wx:if="{{item.status==4}}" src="../../images/complete.png"></image>-->
     </view>
     <view class="mb25">
@@ -269,11 +269,11 @@
         };
 
         methods = {
-          cardName(e){ this.username = e.detail.value;console.log(this.username)},
-          cardMobile(e){ this.mobile = e.detail.value;},
-          cardWechat(e){ this.wechat = e.detail.value;},
-          cardQNum(e){ this.qqNnum = e.detail.value;},
-          cardEmail(e){ this.email = e.detail.value;},
+          cardName(e){ this.username = e.detail.value; },
+          cardMobile(e){ this.mobile = e.detail.value; },
+          cardWechat(e){ this.wechat = e.detail.value; },
+          cardQNum(e){ this.qqNnum = e.detail.value; },
+          cardEmail(e){ this.email = e.detail.value; },
           createCard(){  // 创建名片
             let that = this;
             let mobile = /^(0|86|17951)?(13[0-9]|15[012356789]|16[5]|17[012345678]|18[0-9]|14[579][0-9]|19[9])[0-9]{8}$/; // 手机号
