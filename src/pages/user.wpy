@@ -281,7 +281,8 @@
               });
               // console.log('用户点击确定')
             } else if (res.cancel) {
-              wepy.redirectTo({
+
+              wx.reLaunch({
                 url:"/pages/index",
               });
             }
