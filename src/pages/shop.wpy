@@ -157,20 +157,9 @@
         })
       },
       search(){
-        let that = this;
-        // console.log(that.key)
-        wepy.request({
-          url:that.$parent.globalData.url+"/shop/list",
-          data:{
-            search:that.key
-          },
-          success(res){
-            console.log(res)
-            let dat = Utils.formatJson(res.data);
-            that.shopList = dat.data.data;
-            that.$apply();
-          }
-        })
+        this.pageNum = 1;
+        this.shopList = [];
+        this.datas();
       }
     };
     onReachBottom() {
@@ -202,7 +191,8 @@
         url: _this.$parent.globalData.url + "/shop/list",
         // method: "POST",
         data: {
-          page: _this.pageNum
+          search: _this.key,
+          page: _this.pageNum,
         },
         success(res){
           // console.log(res.data);

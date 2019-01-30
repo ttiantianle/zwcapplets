@@ -167,6 +167,8 @@
       },
       search(){
         // console.log(this.inputData);
+        this.demandList = [];
+        this.pageNum = 1;
         this.datasa();
       }
     };
