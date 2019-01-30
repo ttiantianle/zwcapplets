@@ -40,6 +40,7 @@ export default class extends wepy.app {
       navigationBarBackgroundColor: '#000',
       navigationBarTitleText: '',
       navigationBarTextStyle: 'white',
+      onReachBottomDistance: "200px"
     },
     tabBar: {    //
       color: '#000',
@@ -76,6 +77,9 @@ export default class extends wepy.app {
     },
 
   };
+    data = {
+      onReachBottomDistance: 200,
+    };
     globalData = {
       // userInfo: null,
       url: "https://zwcap.zhaowoce.com:4433",
@@ -85,6 +89,7 @@ export default class extends wepy.app {
       phoneNumber:"",
       shopId:"",
       userId: "",
+
     };
     constructor () {
       super();

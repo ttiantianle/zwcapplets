@@ -120,7 +120,8 @@
       updateLoadShow: false,
       pagtotal: "",  // 数据总数量
       pageNum: 1,
-      onReachBottomDistance: 20,
+      // onReachBottomDistance: "200",
+      // onReachBottomDistance: "300"
     };
     onLoad(){
       wepy.getSystemInfo({
