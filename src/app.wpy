@@ -40,7 +40,7 @@ export default class extends wepy.app {
       navigationBarBackgroundColor: '#000',
       navigationBarTitleText: '',
       navigationBarTextStyle: 'white',
-      onReachBottomDistance: "200px"
+      onReachBottomDistance: 200,
     },
     tabBar: {    //
       color: '#000',
