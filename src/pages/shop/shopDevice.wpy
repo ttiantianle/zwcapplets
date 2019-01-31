@@ -20,12 +20,12 @@
 <template>
   <view>
     <view wx:if="{{device!=''}}" class="device">
-      <swiper style="height:800rpx;"
+      <swiper style="min-height:1000rpx;"
               autoplay="true" interval="4000" duration="800" circular="true" >
         <view wx:for="{{device}}" wx:key="index">
           <swiper-item>
             <view style="float:left;width: 100%;background-color: rgba(0,0,0,0.5);text-align: center;color: #fff;">{{index+1}}/{{device.length}}</view>
-              <image src="http://img.zhaowoce.com/{{item.img_path}}" class="slide-image" style="display:block;width:100%;height:500rpx"/>
+              <image src="http://img.zhaowoce.com/{{item.img_path}}" class="slide-image" style="display:block;width:100%;height:666rpx"/>
             <view class="mt20">
               <view class="lh50">设备名称：{{ item.equipment_name }}</view>
               <view class="lh50">设备型号：{{ item.equipment_model }}</view>
@@ -36,7 +36,7 @@
         </view>
       </swiper>
     </view>
-    <view wx:else class="available"><text>此机构暂无设备</text></view>
+    <view wx:if="{{ not }}" class="available"><text>此机构暂无设备</text></view>
   </view>
 </template>
 
@@ -52,7 +52,8 @@
 
         };
         data = {
-          device:[]
+          device:[],
+          not: false,
         };
 
         onLoad(params) {
@@ -77,6 +78,9 @@
               str = str.substr(0, str.length-1);
               let data = JSON.parse(str);
               _this.device = data.data;
+              if(_this.device == ''){
+                _this.not = true;
+              }
 
               // console.log( _this.device,data);
               _this.$apply();

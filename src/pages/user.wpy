@@ -179,7 +179,7 @@
       <view class="card-wrapper {{activess ? 'actives' : ''}}" @tap="closeCard()">
         <!--catchtap="stopClose"-->
         <view class="cardContent p30" catchtap="stopClose()" wx:if="{{ del }}">
-          <view class="lh50"><text class="name">称呼： </text><text selectable="true">{{ cardItem.username }}</text></view>
+          <view class="lh50"><text class="name">称呼： </text><text selectable="{{ true }}">{{ cardItem.username }}</text></view>
           <view class="lh50"><text class="name">手机号： </text><text selectable="true" @tap="call({{ cardItem.mobile }})">{{ cardItem.mobile }}</text></view>
           <view class="lh50"><text class="name">微信号： </text><text selectable="true">{{ cardItem.wechat }}</text></view>
           <view class="lh50"><text class="name">QQ 号： </text><text selectable="true">{{ cardItem.qq_num }}</text></view>
@@ -370,8 +370,9 @@
         let urls = 'https://img.zhaowoce.com';
         wx.previewImage({
           current: urls + file_path, // 当前显示图片的http链接
-          urls: urls + file_path,  // 需要预览的图片http链接列表
+          urls: [urls + file_path],  // 需要预览的图片http链接列表
         })
+        this.pageNum++;
       },
       call(mobile){  // 拨打电话
         wx.makePhoneCall({
@@ -444,7 +445,7 @@
         _length = this.replyList.length;
         pagtotal = this.reduxPagtotal
       }
-      if (_length == pagtotal) {
+      if (_length >= pagtotal) {
         return
       } else {
         wx.showLoading({
@@ -512,7 +513,11 @@
             _this.requireList = data.data.data;
             _this.pagtotal = data.data.page.total_rows
           } else {
-            _this.requireList = _this.requireList.concat(data.data.data)
+            if(_this.requireList.length>=_this.pagtotal){
+              return ;
+            }else{
+              _this.requireList = _this.requireList.concat(data.data.data)
+            }
           }
           // console.log(_this.requireList);
           wx.showToast({ //期间为了显示效果可以添加一个过度的弹出框提示“加载中”

@@ -48,6 +48,9 @@
     font-size: 40rpx;
     font-weight: bold ;
   }
+  .intro image{
+    max-width: 100% !important;
+  }
 </style>
 <template>
     <view>
@@ -69,8 +72,11 @@
         <view class="db shopDetailbtn" @tap="shopDevice()">仪器设备 >></view>
 
          <view class="synopsis">公司简介</view>
+        <view class="intro">
           <import src="../../wxParse/wxParse.wxml"/>
           <template is="wxParse" data="{{wxParseData:article.nodes}}" />
+        </view>
+
       </view>
     </view>
 </template>
