@@ -93,8 +93,9 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 400rpx;
+    height: 350rpx;
     background: #ffffff;
+    box-sizing: border-box;
   }
   .name{
     display: inline-block;
@@ -116,6 +117,10 @@
   }
   .demandTitle{
     background: #ffffff;
+  }
+  image{
+    width: 200rpx;
+    height: 150rpx;
   }
 </style>
 <template>
@@ -149,8 +154,9 @@
 
         <view wx:for="{{requireList}}" class="box_show" wx:key="index">
           <view class="p20">
-            <view class="mb20">{{ item.cat_name }}</view>
+            <view class="mb20">{{ item.cat_name }} <text class="fr">{{ item.create_time }}</text></view>
             <view class="mb20">{{item.text}}</view>
+            <view class="mb20" wx:if="{{item.file_path != ''}}"><image @tap="imgPreview({{ item.file_path }})" src="https://img.zhaowoce.com{{item.file_path}}"></image></view>
             <view class="mb20">
               审核状态：
               <text class="red" wx:if="{{ item.status==1 }}">审核通过</text>
@@ -173,12 +179,12 @@
       <view class="card-wrapper {{activess ? 'actives' : ''}}" @tap="closeCard()">
         <!--catchtap="stopClose"-->
         <view class="cardContent p30" catchtap="stopClose()" wx:if="{{ del }}">
-          <view class="lh50"><text class="name">称呼：</text><text>{{ cardItem.username }}</text></view>
-          <view class="lh50"><text class="name">手机号：</text><text>{{ cardItem.mobile }}</text></view>
-          <view class="lh50"><text class="name">微信号：</text><text>{{ cardItem.wechat }}</text></view>
-          <view class="lh50"><text class="name">QQ 号：</text><text>{{ cardItem.qq_num }}</text></view>
-          <view class="lh50"><text class="name">邮 箱：</text><text>{{ cardItem.email }}</text></view>
-          <view class="lh50"><text class="name">机构名称：</text><text>{{ cardItem.shop_name }}</text></view>
+          <view class="lh50"><text class="name">称呼： </text><text selectable="true">{{ cardItem.username }}</text></view>
+          <view class="lh50"><text class="name">手机号： </text><text selectable="true" @tap="call({{ cardItem.mobile }})">{{ cardItem.mobile }}</text></view>
+          <view class="lh50"><text class="name">微信号： </text><text selectable="true">{{ cardItem.wechat }}</text></view>
+          <view class="lh50"><text class="name">QQ 号： </text><text selectable="true">{{ cardItem.qq_num }}</text></view>
+          <view class="lh50"><text class="name">邮 箱： </text><text selectable="true">{{ cardItem.email }}</text></view>
+          <!--<view class="lh50"><text class="name">机构名称：</text><text>{{ cardItem.shop_name }}</text></view>-->
         </view>
         <view class="cardContent p30" catchtap="stopClose()" wx:else>用户名片已删除</view>
       </view>
@@ -359,6 +365,19 @@
     }
 
     methods = {
+
+      imgPreview(file_path){  // 图片预览
+        let urls = 'https://img.zhaowoce.com';
+        wx.previewImage({
+          current: urls + file_path, // 当前显示图片的http链接
+          urls: urls + file_path,  // 需要预览的图片http链接列表
+        })
+      },
+      call(mobile){  // 拨打电话
+        wx.makePhoneCall({
+          phoneNumber: mobile // 仅为示例，并非真实的电话号码
+        })
+      },
       select(idx,evt){
         this.pageNum = 1;
         this.selectId = +idx;
@@ -495,6 +514,7 @@
           } else {
             _this.requireList = _this.requireList.concat(data.data.data)
           }
+          // console.log(_this.requireList);
           wx.showToast({ //期间为了显示效果可以添加一个过度的弹出框提示“加载中”
             title: '',
             icon: 'success',

@@ -19,6 +19,7 @@
 <script>
 import wepy from 'wepy'
 import 'wepy-async-function'
+
 // import "/pages/wxParse/wxParse.wxss";
 export default class extends wepy.app {
   config = {
@@ -43,7 +44,7 @@ export default class extends wepy.app {
       onReachBottomDistance: 200,
       withShareTicket: true,
     },
-    tabBar: {    //
+    tabBar: {
       color: '#000',
       selectedColor: '#1296db',
       backgroundColor: '#f7f7f7',
