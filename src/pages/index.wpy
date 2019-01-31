@@ -255,7 +255,6 @@
       const updateManager = wx.getUpdateManager();
       updateManager.onCheckForUpdate(function (res) {
         // 请求完新版本信息的回调
-        console.log("垃圾垃圾垃圾啊");
         console.log(res.hasUpdate)
       });
       updateManager.onUpdateReady(function () {
@@ -270,6 +269,9 @@
             }
           }
         })
+      });
+      updateManager.onUpdateFailed(function () {
+        // 新版本下载失败
       });
 
       // wx.removeStorageSync('is_show');
