@@ -89,6 +89,9 @@
     padding-left: 10rpx;
     margin-left: 10rpx;
   }
+  .red{
+    color: red;
+  }
 </style>
 <template>
   <view style="padding-top: 2rpx;">
@@ -96,6 +99,7 @@
       <input type="text" bindinput="bindKeyInput" class="borderGray"/><button class="search" @tap="search()">搜 索</button>
     </view>
     <repeat>
+      <view wx:if="{{ shopListNull }}" class="box_show">很抱歉！没有找到与" <text class="red">{{ key }}</text> "相关的内容.</view>
       <view class="itemShop df box_show" wx:for="{{ shopList }}" wx:key="index" @tap="shopDetails({{item.shop_id}})">
         <view class="f4">
           <image src="https://img.zhaowoce.com/{{item.shop_avatar}}"></image>
@@ -127,10 +131,11 @@
     };
     data = {
       key:"",
-      shopList: "",
+      shopList: [],
       updateLoadShow: false,
       pagtotal: "",  // 数据总数量
       pageNum: 1,
+      shopListNull: false
       // onReachBottomDistance: 20,
     };
     onLoad(){
@@ -153,6 +158,7 @@
     methods = {
       bindKeyInput(e){
         this.key = e.detail.value;
+        this.shopListNull = false
       },
       shopDetails(id){
         wx.navigateTo({
@@ -202,11 +208,18 @@
           let str = res.data.substr(1);
           str = str.substr(0, str.length-1);
           let data = JSON.parse(str);
+
           if (_this.pageNum == 1) {
             _this.shopList = data.data.data;
             _this.pagtotal = data.data.page.total_rows
           } else {
             _this.shopList = _this.shopList.concat(data.data.data)
+          }
+
+          if(_this.shopList.length == 0){
+            _this.shopListNull = true;
+          }else{
+            _this.shopListNull = false
           }
           wx.showToast({ //期间为了显示效果可以添加一个过度的弹出框提示“加载中”
             title: '',
