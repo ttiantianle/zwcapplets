@@ -78,6 +78,7 @@
               str = str.substr(0, str.length-1);
               let data = JSON.parse(str);
               _this.device = data.data;
+              console.log( _this.device );
               if(_this.device == ''){
                 _this.not = true;
               }
