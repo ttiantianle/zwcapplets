@@ -174,7 +174,7 @@
       <view class="p30">
         <view wx:for="{{reply}}" wx:key="index" class="list mb25">
           <image src="../../images/shop.png"></image>
-          <text class="ml15">{{item.shop_name}}</text>
+          <text class="ml15" @tap="shopDetails({{ item.shop_id }})">{{item.shop_name}}</text>
         </view>
       </view>
     </view>
@@ -372,6 +372,12 @@
               urls: ['https://img.zhaowoce.com'+file_path,] // 需要预览的图片http链接列表
             })
           },
+          shopDetails(id){
+            wx.navigateTo({
+              url: '/pages/shop/shopDetail?id='+id
+            })
+
+          },
           replyCart(){
             if(wepy.$instance.globalData.Authorization==false){
               wx.showModal({
@@ -466,7 +472,7 @@
               let str = Utils.formatJson(res.data);
               _this.details = str.data.require;
               _this.reply = str.data.reply;
-              // console.log( _this.details,str.data,);
+              console.log( _this.reply);
               _this.$apply();
             }
           });
