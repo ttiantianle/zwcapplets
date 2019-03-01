@@ -122,6 +122,14 @@
     width: 200rpx;
     height: 150rpx;
   }
+   .reply{
+     background: #1296DB;
+     color: #ffffff;
+     font-size: 25rpx;
+     width: 155rpx;
+     display: inline-block;
+     margin-left: 70%;
+   }
 </style>
 <template>
   <view>
@@ -158,7 +166,7 @@
             <view class="mb20">{{item.text}}</view>
             <view class="mb20" wx:if="{{item.file_path != ''}}"><image @tap="imgPreview({{ item.file_path }})" src="https://img.zhaowoce.com{{item.file_path}}"></image></view>
             <view class="mb20">
-              审核状态：
+              需求状态：
               <text class="red" wx:if="{{ item.status==1 }}">审核通过</text>
               <text class="red" wx:if="{{ item.status==0 }}">审核中</text>
               <text class="red" wx:if="{{ item.status==2 }}">审核未通过</text>
@@ -171,7 +179,9 @@
                 <view class="lh50">{{itemCard.shop_name}} 回复了您 <text class="ml20 card" @tap="lookCard({{ itemCard }},1)"> 查看名片</text></view>
               </repeat>
             </view>
+            <view><button class="reply" @tap="closeDemand({{ item.id }})">关闭需求</button></view>
           </view>
+
         </view>
 
 
@@ -282,6 +292,7 @@
       pagtotal: "",  // 数据总数量
       reduxPagtotal: "",  // 我回复的总数量
       pageNum: 1,  // 页数
+      scroll: true,
     };
     onShow() {
       this.mobile = this.$parent.globalData.phoneNumber;
@@ -365,7 +376,61 @@
     }
 
     methods = {
+      closeDemand(id){
+        this.scroll = false;
+        let _this = this;
+        let num = _this.pageNum;
+         wepy.request({
+           url: _this.$parent.globalData.url + "/releaserequir/completerequire",
+           data:{
+             require_id: id,
+           },
+           success(res){
+             let data = Utils.formatJson(res.data);
+             if(data.code == 0){
+              _this.requireList = [];
+              for(var i = 1; i <= _this.pageNum; i++){
+                wepy.request({  // 我发布的
+                  url: _this.$parent.globalData.url + "/releaserequir/releaselist",
+                  data: {
+                    re_type: "2",
+                    from_type: 'xcx_user',
+                    user_id: _this.$parent.globalData.userId,
+                    page: i
+                  },
+                  success(res){
+                    let str = res.data.substr(1);
+                    str = str.substr(0, str.length-1);
+                    let data = JSON.parse(str);
+                    console.log(data);
+                    if (i == 1) {
+                      _this.requireList = data.data.data;
+                      _this.pagtotal = data.data.page.total_rows
+                    } else {
+                      if(_this.requireList.length>=_this.pagtotal){
+                        return ;
+                      }else{
+                        _this.requireList = _this.requireList.concat(data.data.data)
+                      }
+                      console.log(i,"==i",)
+                    }
+                    // console.log(_this.requireList);
+                    wx.showToast({ //期间为了显示效果可以添加一个过度的弹出框提示“加载中”
+                      title: '',
+                      icon: 'success',
+                      duration: 100
+                    });
+                    _this.$apply();
+                    console.log(_this.requireList )
+                  }
+                });
+              }
 
+             }
+             console.log( _this.pageNum ,_this.requireList )
+           }
+         })
+      },
       imgPreview(file_path){  // 图片预览
         let urls = 'https://img.zhaowoce.com';
         wx.previewImage({
@@ -453,7 +518,13 @@
           icon: 'loading',
         });
         // 当前页码加一
-        this.pageNum++;
+        //console.log(this.scroll)
+        if(this.scroll){
+         this.pageNum++;
+        }else{
+
+        }
+
         // 更新数据
         if(this.selectId == 0){
           this.released();
@@ -492,7 +563,7 @@
         }
       });
     }
-    released(){  // 我发布的
+    released(num){  // 我发布的
       let _this = this;
       wepy.request({  // 我发布的
         url: _this.$parent.globalData.url + "/releaserequir/releaselist",
