@@ -156,18 +156,29 @@
     width: 200rpx;
     height: 150rpx;
   }
+  .status{
+    width: 80rpx;
+    height: 70rpx;
+    position: absolute;
+    right: 30rpx;
+    bottom: 20rpx;
+  }
+  .complete{
+    background: #CFDDFA;
+  }
 </style>
 
 <template>
   <view class="demandDetails">
-    <view class="p20 box_show">
+    <view class="p20 box_show {{ details.status==4||details.status==3 ? 'complete': ''}}" style="position: relative;">
       <view class="lh40 filelist">检测领域：<text>{{ details.cat_name }}</text> <text class="fr">{{ details.create_time }}</text></view>
       <view class="lh40 filelist">详细描述：<text>{{ details.text }}</text></view>
       <view class="lh40" wx:if="{{details.file_path!=''}}">样图：<image class="masterDrawing" @tap="imgPreview({{ details.file_path }})" src="https://img.zhaowoce.com{{details.file_path}}"></image></view>
-      <!--<image wx:if="{{item.status==4}}" src="../../images/complete.png"></image>-->
+      <image wx:if="{{details.status==4}}" src="../../images/complete.png" class="status"></image>
+      <image wx:if="{{details.status==3}}" src="/images/overdue.png" class="status"></image>
     </view>
     <view class="mb25">
-      <button class="reply" @tap="replyCart">立即回复</button><button class="share" open-type="share">分享需求</button>
+      <button class="reply" disabled="{{details.status == 4 || details.status == 3 }}" @tap="replyCart">立即回复</button><button class="share" open-type="share">分享需求</button>
     </view>
     <view class="p20 box_show replyList" wx:if="{{reply.length != 0 }}">
       <view class="lh40 filelist">回复列表</view>
@@ -472,7 +483,7 @@
               let str = Utils.formatJson(res.data);
               _this.details = str.data.require;
               _this.reply = str.data.reply;
-              console.log( _this.reply);
+               console.log( _this.details);
               _this.$apply();
             }
           });
