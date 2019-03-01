@@ -254,13 +254,19 @@
       reduxPagtotal: "",  // 我回复的总数量
       pageNum: 1,  // 页数
       scroll: true,
+
+      share:'root',
     };
     onShow() {
       this.mobile = this.$parent.globalData.phoneNumber;
       this.released();  // 我发布的
       this.redux();  // 我回复的
     }
-    onLoad(){
+    onLoad(para){
+      if(para){
+        this.share = para.share;
+      }
+
       wx.showShareMenu({
         withShareTicket: true
       });

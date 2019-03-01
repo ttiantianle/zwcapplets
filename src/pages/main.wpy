@@ -22,9 +22,13 @@
     };
     data = {
       next:false,
+      share:'root',
     };
 
-    onLoad() {
+    onLoad(para) {
+      if(para){
+        this.share = para.share;
+      }
 
     };
     methods = {

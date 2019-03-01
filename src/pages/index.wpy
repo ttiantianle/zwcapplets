@@ -250,12 +250,14 @@
       wechat:"",
       QQ:"",
       email:"",
+
+      share:'root',
     };
-    onLoad(){
-
-
-
-
+    onLoad(para){
+      // console.log(param)
+      if(para){
+        this.share = para.share;
+      }
       // wx.removeStorageSync('is_show');
       wx.showShareMenu({
         withShareTicket: true

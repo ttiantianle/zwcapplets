@@ -123,8 +123,15 @@
       pageNum: 1,
       // onReachBottomDistance: "200",
       // onReachBottomDistance: "300"
+
+      share:'root',//分享记录
     };
-    onLoad(){
+    onLoad(para){
+
+      if(para){
+        this.share = para.share;
+      }
+
       wx.showShareMenu({
         withShareTicket: true
       });

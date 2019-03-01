@@ -135,10 +135,16 @@
       updateLoadShow: false,
       pagtotal: "",  // 数据总数量
       pageNum: 1,
-      shopListNull: false
+      shopListNull: false,
       // onReachBottomDistance: 20,
+
+      share:'root',
     };
-    onLoad(){
+    onLoad(para){
+      if(para){
+        this.share = para.share;
+      }
+
       wx.showShareMenu({
         withShareTicket: true
       });
