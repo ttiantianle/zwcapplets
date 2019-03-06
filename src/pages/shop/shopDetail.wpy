@@ -96,9 +96,23 @@
         data = {
           shopDetail: [],
           shopId: "",
+          share:'root'
         };
         onLoad(params) {
-
+          let tat = this;
+          if(params.share){
+            this.share = params.share;
+          }
+          wepy.request({
+            url:wepy.$instance.globalData.url + "/wxdata/xcxsharelog",
+            data:{
+              url:'pages/shop/shopDetail',
+              share:tat.share
+            },
+            success(res){
+              // console.log(res);
+            }
+          });
           wx.showShareMenu({
             withShareTicket: true
           });

@@ -162,7 +162,7 @@
 
         <view wx:for="{{requireList}}" class="box_show" wx:key="index">
           <view class="p20">
-            <view class="mb20">{{index}} {{ item.cat_name }} <text class="fr">{{ item.create_time }}</text></view>
+            <view class="mb20"> {{ item.cat_name }} <text class="fr">{{ item.create_time }}</text></view>
             <view class="mb20">{{item.text}}</view>
             <view class="mb20" wx:if="{{item.file_path != ''}}"><image @tap="imgPreview({{ item.file_path }})" src="https://img.zhaowoce.com{{item.file_path}}"></image></view>
             <view class="mb20">
@@ -263,10 +263,20 @@
       this.redux();  // 我回复的
     }
     onLoad(para){
-      if(para){
+      let tat = this;
+      if(para.share){
         this.share = para.share;
       }
-
+      wepy.request({
+        url:wepy.$instance.globalData.url + "/wxdata/xcxsharelog",
+        data:{
+          url:'pages/user',
+          share:tat.share
+        },
+        success(res){
+          // console.log(res);
+        }
+      });
       wx.showShareMenu({
         withShareTicket: true
       });

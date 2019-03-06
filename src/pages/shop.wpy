@@ -141,10 +141,20 @@
       share:'root',
     };
     onLoad(para){
-      if(para){
+      let tat = this;
+      if(para.share){
         this.share = para.share;
       }
-
+      wepy.request({
+        url:wepy.$instance.globalData.url + "/wxdata/xcxsharelog",
+        data:{
+          url:'pages/shop',
+          share:tat.share
+        },
+        success(res){
+          // console.log(res);
+        }
+      });
       wx.showShareMenu({
         withShareTicket: true
       });

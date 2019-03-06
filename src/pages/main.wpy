@@ -26,9 +26,20 @@
     };
 
     onLoad(para) {
+      let tat = this;
       if(para){
         this.share = para.share;
       }
+      wepy.request({
+        url:wepy.$instance.globalData.url + "/wxdata/xcxsharelog",
+        data:{
+          url:'pages/main',
+          share:tat.share
+        },
+        success(res){
+          // console.log(res);
+        }
+      });
 
     };
     methods = {

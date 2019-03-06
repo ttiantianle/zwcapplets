@@ -269,10 +269,24 @@
           qqNnum: "",  // qq号
           email: "",  // 邮箱
           showCard: false,
+          share:'root',
         };
 
         onLoad(option) {
-
+          let tat = this;
+          if(option.share){
+            this.share = option.share;
+          }
+          wepy.request({
+            url:wepy.$instance.globalData.url + "/wxdata/xcxsharelog",
+            data:{
+              url:'pages/demand/demandDetails',
+              share:tat.share
+            },
+            success(res){
+              // console.log(res);
+            }
+          });
           this.datas(option.id);
           this.cardLists();
           wx.showShareMenu({
@@ -483,7 +497,7 @@
               let str = Utils.formatJson(res.data);
               _this.details = str.data.require;
               _this.reply = str.data.reply;
-               console.log( _this.details);
+               // console.log( _this.details);
               _this.$apply();
             }
           });

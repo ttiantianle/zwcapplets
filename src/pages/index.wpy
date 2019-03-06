@@ -255,9 +255,22 @@
     };
     onLoad(para){
       // console.log(param)
-      if(para){
+      let tat = this;
+      if(para.share){
         this.share = para.share;
       }
+      wepy.request({
+        url:wepy.$instance.globalData.url + "/wxdata/xcxsharelog",
+        data:{
+          url:'pages/index',
+          share:tat.share
+        },
+        success(res){
+          // console.log(res);
+        }
+      });
+
+
       // wx.removeStorageSync('is_show');
       wx.showShareMenu({
         withShareTicket: true
