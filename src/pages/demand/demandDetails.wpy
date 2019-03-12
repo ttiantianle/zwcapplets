@@ -172,6 +172,11 @@
   <view class="demandDetails">
     <view class="p20 box_show {{ details.status==4||details.status==3 ? 'complete': ''}}" style="position: relative;">
       <view class="lh40 filelist">检测领域：<text>{{ details.cat_name }}</text> <text class="fr">{{ details.create_time }}</text></view>
+      <view class="lh40 filelist">样品名称：
+        <text wx:if="{{details.sample_name == ''}}">暂无数据</text>
+        <text wx:else>{{details.sample_name}}</text></view>
+      <view class="lh40 filelist">标准名称：<text wx:if="{{details.standard_name == ''}}">暂无数据</text><text wx:else>{{details.standard_name}}</text></view>
+      <view class="lh40 filelist">参数名称：<text wx:if="{{details.param_name == ''}}">暂无数据</text><text wx:else>{{details.param_name}}</text></view>
       <view class="lh40 filelist">详细描述：<text>{{ details.text }}</text></view>
       <view class="lh40" wx:if="{{details.file_path!=''}}">样图：<image class="masterDrawing" @tap="imgPreview({{ details.file_path }})" src="https://img.zhaowoce.com{{details.file_path}}"></image></view>
       <image wx:if="{{details.status==4}}" src="../../images/complete.png" class="status"></image>
@@ -284,7 +289,6 @@
               share:tat.share
             },
             success(res){
-              // console.log(res);
             }
           });
           this.datas(option.id);
@@ -296,7 +300,6 @@
             title: '需求详情'
           });
         };
-
         methods = {
           cardName(e){ this.username = e.detail.value; },
           cardMobile(e){ this.mobile = e.detail.value; },
@@ -364,8 +367,6 @@
                 shop_id: Utils.get(that.$parent.globalData.shopId),
               },
               success(res){
-                // console.log(that.$parent.globalData.userId);
-                // console.log(res)
                 let data = Utils.formatJson(res.data);
                 if(data.code == 0){
                   that.username = "";
@@ -382,8 +383,6 @@
                     duration: 2000
                   })
                 }
-                // console.log(data);
-
               }
             });
 
@@ -401,7 +400,6 @@
             wx.navigateTo({
               url: '/pages/shop/shopDetail?id='+id
             })
-
           },
           replyCart(){
             if(wepy.$instance.globalData.Authorization==false){
@@ -413,17 +411,13 @@
                     wepy.navigateTo({
                       url:"/pages/main",
                     });
-
-                    // console.log('用户点击确定')
                   } else if (res.cancel) {
-                    // console.log('用户点击取消')
                   }
                 }
               });
               return false;
             }
             let _this = this;
-            // console.log(wepy.$instance.globalData.shopId);
             if(wepy.$instance.globalData.shopId > 0 ){
               this.cart = true;
             }else{
@@ -448,7 +442,6 @@
             if( wepy.$instance.globalData.shopId > 0){
               wepy.request({
                 url: wepy.$instance.globalData.url + "/releaserequir/savereply",
-                // method: "POST",
                 data: {
                   from_type: 'xcx_shop',
                   card_id: _this.cardId,
@@ -471,7 +464,6 @@
                       duration: 2000
                     })
                   }
-                  // console.log( data );
                   _this.$apply();
                 }
               });
@@ -482,14 +474,12 @@
                 duration: 3000
               })
             }
-
           }
         };
         datas(id){
           let _this = this;
           wepy.request({
             url: wepy.$instance.globalData.url + "/releaserequir/redetail",
-            // method: "POST",
             data: {
               id: id,
             },

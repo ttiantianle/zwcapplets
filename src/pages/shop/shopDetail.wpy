@@ -67,16 +67,13 @@
       </view>
 
       <view class="box_show">
-        <!--<view class="db shopDetailbtn" @tap="shopPicture()">机构相册 >></view>-->
         <button class="db shopDetailbtn" open-type="share">分享此机构</button>
         <view class="db shopDetailbtn" @tap="shopDevice()">仪器设备 >></view>
-
          <view class="synopsis">公司简介</view>
         <view class="intro">
           <import src="../../wxParse/wxParse.wxml"/>
           <template is="wxParse" data="{{wxParseData:article.nodes}}" />
         </view>
-
       </view>
     </view>
 </template>
@@ -84,14 +81,11 @@
 <script>
     import wepy from 'wepy';
     var WxParse = require('../../wxParse/wxParse.js');
-
     export default class shopDetail extends wepy.page {
-
         config = {
             navigationBarTitleText: "国标（北京）检验认证有限公司"
         };
         props = {
-
         };
         data = {
           shopDetail: [],
@@ -110,7 +104,6 @@
               share:tat.share
             },
             success(res){
-              // console.log(res);
             }
           });
           wx.showShareMenu({
@@ -121,27 +114,22 @@
             title: '机构详情'
           });
           let _this = this;
-          // console.log(params);
           wepy.request({
             url: wepy.$instance.globalData.url + "/shop/detail",
-            // method: "POST",
             data: {
               shop_id: params.id
             },
             success(res){
-              // console.log(res.data);
               let str = res.data.substr(1);
               str = str.substr(0, str.length-1);
               let data = JSON.parse(str);
               _this.shopDetail = data.data;
               var article = _this.shopDetail.introduction;
               WxParse.wxParse('article', 'html', article, _this,5);
-              // console.log( _this.shopDetail,);
               _this.$apply();
             }
           })
         };
-
         methods = {
           shopPicture(){
             wx.navigateTo({

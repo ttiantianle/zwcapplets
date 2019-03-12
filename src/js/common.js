@@ -1,10 +1,7 @@
 import wepy from 'wepy';
 export default {
-// const common = (param, datat, _this, obj = {} ) => {
   common (param, datat, _this, obj = {} ){
-
     let url = "https://zwcap.zhaowoce.com:4433";
-    // new Promise(function(){
     let shuju = [];
       wepy.request({
         url: url + param,
@@ -16,16 +13,11 @@ export default {
           let data = JSON.parse(str);
           console.log(datat);
           datat = data;
-          // _this.territory = data;
           shuju = data;
           console.log(shuju);
           _this.$apply()
         }
       });
     return shuju
-    // });
   }
-// module.exports = {
-//   common,
-// };
 }

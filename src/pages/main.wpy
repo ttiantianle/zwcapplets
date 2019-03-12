@@ -24,7 +24,6 @@
       next:false,
       share:'root',
     };
-
     onLoad(para) {
       let tat = this;
       if(para){
@@ -37,15 +36,12 @@
           share:tat.share
         },
         success(res){
-          // console.log(res);
         }
       });
-
     };
     methods = {
       getPhoneNumber: function (e) {
         let that = this;
-
         if (e.detail.errMsg == "getPhoneNumber:fail user deny") {
           this.$parent.globalData.Authorization = false;
           wepy.redirectTo({
@@ -54,7 +50,6 @@
         }else{
           //用户允许授权
           wx.showLoading();
-          // var self=this;
           //1. 调用登录接口获取临时登录code
           wx.login({
             success(res) {
@@ -67,10 +62,7 @@
                     'encryptedData': e.detail.encryptedData,
                   },
                   success(re){
-                    // console.log(re);
                     let dat = Utils.formatJson(re.data);
-                    // console.log(dat);
-                    // console.log(dat.code)
                     if(dat.code == 0){
                       wx.setStorage({
                         key:"is_show",
@@ -96,9 +88,6 @@
                       wx.navigateBack({
                         delta: 1,
                       });
-                      // wepy.redirectTo({
-                      //   url:"./index"
-                      // })
                     }else{
                       //授权失败 todo
                     }

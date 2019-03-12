@@ -254,7 +254,6 @@
       reduxPagtotal: "",  // 我回复的总数量
       pageNum: 1,  // 页数
       scroll: true,
-
       share:'root',
     };
     onShow() {
@@ -274,7 +273,6 @@
           share:tat.share
         },
         success(res){
-          // console.log(res);
         }
       });
       wx.showShareMenu({
@@ -291,7 +289,6 @@
               });
               // console.log('用户点击确定')
             } else if (res.cancel) {
-
               wx.reLaunch({
                 url:"/pages/index",
               });
@@ -304,7 +301,6 @@
       this.released();  // 我发布的
       this.redux();  // 我回复的
     }
-
     methods = {
       closeDemand(id,index){
         this.scroll = false;
@@ -376,7 +372,6 @@
               _this.$apply();
             }
           })
-
         }
         // console.log(data);
       },
@@ -384,11 +379,9 @@
         this.activess = false;
       },
       stopClose(){
-
       },
       is_sign(idx){
         this.is_sign = idx;
-
       }
     };
     onReachBottom() {
@@ -416,9 +409,7 @@
         if(this.scroll){
          this.pageNum++;
         }else{
-
         }
-
         // 更新数据
         if(this.selectId == 0){
           this.released();
@@ -447,11 +438,9 @@
             if (_this.pageNum == 1) {
               _this.replyList = reply.data.data;
               _this.reduxPagtotal = reply.data.page.total_rows
-
             } else {
               _this.replyList = _this.replyList.concat(reply.data.data)
             }
-            // _this.replyList = reply.data.data;
           }
           _this.$apply();
         }
@@ -494,7 +483,6 @@
           _this.replyNum = data.data.total.total_reply;
           // _this.requireList = data.data.data;
           _this.$apply();
-
         }
       });
     }

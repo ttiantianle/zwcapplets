@@ -85,9 +85,6 @@
     </view>
     <view class="field demand">
       <view class="text {{ items == '' ? 'active': ''}}" @tap="fieldItem('')">全部</view>
-      <!--<repeat class="text" for="{{ territory }}" key="index" item="item">aaa-->
-      <!--<view>{{ item}}</view>-->
-      <!--</repeat>-->
       <view class="dsb" wx:for="{{ territory }}" wx:key="index">
         <view class="text {{ items == item.cat_id ? 'active': ''}}" @tap="fieldItem({{ item.cat_id }})">{{ item.cat_name}}</view>
       </view>
@@ -95,6 +92,9 @@
     <view class="demand">
       <view wx:for="{{ demandList }}" class="p1020 box_show {{ item.status==4||item.status==3 ? 'complete': ''}}" wx:key="index" @tap="demandDetails({{ item.id }})">
         <view class="lh40 filelist">检测领域：<text>{{ item.cat_name }}</text> <text class="fr">{{ item.create_time }}</text></view>
+        <view class="lh40 filelist">样品名称：<text wx:if="{{item.sample_name == ''}}">暂无数据</text><text wx:else>{{item.sample_name}}</text></view>
+        <view class="lh40 filelist">标准名称：<text wx:if="{{item.standard_name == ''}}">暂无数据</text><text wx:else>{{item.standard_name}}</text></view>
+        <view class="lh40 filelist">参数名称：<text wx:if="{{item.param_name ==''}}">暂无数据</text><text wx:else>{{item.param_name}}</text></view>
         <view class="lh40 filelist">详细描述：<text>{{ item.text }}</text></view>
         <image wx:if="{{item.status==4}}" src="/images/complete.png"></image>
         <image wx:if="{{item.status==3}}" src="/images/overdue.png"></image>
@@ -121,9 +121,6 @@
       updateLoadShow: false,
       pagtotal: "",  // 数据总数量
       pageNum: 1,
-      // onReachBottomDistance: "200",
-      // onReachBottomDistance: "300"
-
       share:'root',//分享记录
     };
     onLoad(para){
@@ -147,10 +144,6 @@
       let _this = this;
       _this.datasa();
       let url = this.$parent.globalData.url;
-      // wx.setNavigationBarTitle({
-      //   title: '需求列表'
-      // });
-      // let _this = this;
       wepy.request({
         url: url + "/releaserequir/fieldlist",
         method: "POST",
@@ -159,7 +152,6 @@
           str = str.substr(0, str.length-1);
           let data = JSON.parse(str);
           _this.territory = data.data;
-          // console.log(_this.territory);
           _this.$apply()
         }
       })
@@ -181,7 +173,6 @@
         this.inputData = e.detail.value;
       },
       search(){
-        // console.log(this.inputData);
         this.demandList = [];
         this.pageNum = 1;
         this.datasa();
@@ -242,7 +233,6 @@
             icon: 'success',
             duration: 100
           });
-          // console.log( _this.demandList);
           _this.$apply();
         }
       })

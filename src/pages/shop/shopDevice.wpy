@@ -69,7 +69,6 @@
               share:tat.share
             },
             success(res){
-              // console.log(res);
             }
           });
           wx.showShareMenu({
@@ -79,31 +78,24 @@
             title: '机构设备'
           });
           let _this = this;
-          // console.log(params);
           wepy.request({
             url: wepy.$instance.globalData.url + "/equipment/list",
-            // method: "POST",
             data: {
               shop_id: Utils.get(params.id),
               user_from: Utils.get('app'),
             },
             success(res){
-              // console.log(res.data);
               let str = res.data.substr(1);
               str = str.substr(0, str.length-1);
               let data = JSON.parse(str);
               _this.device = data.data;
-              // console.log( _this.device );
               if(_this.device == ''){
                 _this.not = true;
               }
-
-              // console.log( _this.device,data);
               _this.$apply();
             }
           })
         };
-
         methods = {};
     }
 </script>

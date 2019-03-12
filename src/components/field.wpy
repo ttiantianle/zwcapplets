@@ -60,13 +60,10 @@
       }
     }
     onLoad(){
-
     };
     methods = {
       change(idx,evt){
-        //感觉+没有意义
         this.activeField = +idx;
-        // console.log(idx)
       }
     };
 

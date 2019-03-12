@@ -26,7 +26,6 @@
 <script>
   import wepy from 'wepy';
   var WxParse = require('../../wxParse/wxParse.js');
-
   export default class shopPicture extends wepy.page {
     config = {
 
@@ -51,33 +50,25 @@
           share:tat.share
         },
         success(res){
-          // console.log(res);
         }
       });
-
-      // this.shopId = params.id;
       let _this = this;
-      // console.log(params);
       wx.setNavigationBarTitle({
         title: '机构相册'
       });
       wepy.request({
         url: wepy.$instance.globalData.url + "/shop/picture",
-        // method: "POST",
         data: {
           shop_id: params.id
         },
         success(res){
-          // console.log(res.data);
           let str = res.data.substr(1);
           str = str.substr(0, str.length-1);
           let data = JSON.parse(str);
           _this.shopPicture = data.data;
           _this.shopPicture = _this.shopPicture.shop_picture;
-          // console.log( _this.shopPicture,data);
           var article = data.data.shop_info.introduction;
           WxParse.wxParse('article', 'html', article, _this,5);
-
           _this.$apply();
         }
       })

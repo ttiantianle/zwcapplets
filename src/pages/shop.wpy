@@ -136,8 +136,6 @@
       pagtotal: "",  // 数据总数量
       pageNum: 1,
       shopListNull: false,
-      // onReachBottomDistance: 20,
-
       share:'root',
     };
     onLoad(para){
@@ -152,7 +150,6 @@
           share:tat.share
         },
         success(res){
-          // console.log(res);
         }
       });
       wx.showShareMenu({
@@ -163,13 +160,6 @@
         icon: 'loading',
       });
       this.datas();
-      // wepy.getSystemInfo({
-      //   success: (res) => {
-      //     this.height = res.windowHeight;
-      //     // this.pageSize = Math.round(res.windowHeight / 103) + 1;
-      //     this.$apply()
-      //   }
-      // });
     };
     methods = {
       bindKeyInput(e){
@@ -189,7 +179,6 @@
     };
     onReachBottom() {
       // 上拉加载更多loading
-
       this.updateLoadShow = true;
       let _length = this.shopList.length;
       // 列表长度与列表总数对比
@@ -220,7 +209,6 @@
           page: _this.pageNum,
         },
         success(res){
-          // console.log(res.data);
           let str = res.data.substr(1);
           str = str.substr(0, str.length-1);
           let data = JSON.parse(str);
