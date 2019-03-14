@@ -92,9 +92,9 @@
     <view class="demand">
       <view wx:for="{{ demandList }}" class="p1020 box_show {{ item.status==4||item.status==3 ? 'complete': ''}}" wx:key="index" @tap="demandDetails({{ item.id }})">
         <view class="lh40 filelist">检测领域：<text>{{ item.cat_name }}</text> <text class="fr">{{ item.create_time }}</text></view>
-        <view class="lh40 filelist">样品名称：<text wx:if="{{item.sample_name == ''}}">暂无数据</text><text wx:else>{{item.sample_name}}</text></view>
-        <view class="lh40 filelist">标准名称：<text wx:if="{{item.standard_name == ''}}">暂无数据</text><text wx:else>{{item.standard_name}}</text></view>
-        <view class="lh40 filelist">参数名称：<text wx:if="{{item.param_name ==''}}">暂无数据</text><text wx:else>{{item.param_name}}</text></view>
+        <view class="lh40 filelist" wx:if="{{item.sample_name != ''}}">样品名称：<text >{{item.sample_name}}</text></view>
+        <view class="lh40 filelist" wx:if="{{item.standard_name != ''}}">标准名称：<text >{{item.standard_name}}</text></view>
+        <view class="lh40 filelist" wx:if="{{item.param_name !=''}}">参数名称：<text >{{item.param_name}}</text></view>
         <view class="lh40 filelist">详细描述：<text>{{ item.text }}</text></view>
         <image wx:if="{{item.status==4}}" src="/images/complete.png"></image>
         <image wx:if="{{item.status==3}}" src="/images/overdue.png"></image>

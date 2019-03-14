@@ -172,11 +172,9 @@
   <view class="demandDetails">
     <view class="p20 box_show {{ details.status==4||details.status==3 ? 'complete': ''}}" style="position: relative;">
       <view class="lh40 filelist">检测领域：<text>{{ details.cat_name }}</text> <text class="fr">{{ details.create_time }}</text></view>
-      <view class="lh40 filelist">样品名称：
-        <text wx:if="{{details.sample_name == ''}}">暂无数据</text>
-        <text wx:else>{{details.sample_name}}</text></view>
-      <view class="lh40 filelist">标准名称：<text wx:if="{{details.standard_name == ''}}">暂无数据</text><text wx:else>{{details.standard_name}}</text></view>
-      <view class="lh40 filelist">参数名称：<text wx:if="{{details.param_name == ''}}">暂无数据</text><text wx:else>{{details.param_name}}</text></view>
+      <view class="lh40 filelist" wx:if="{{details.sample_name != ''}}">样品名称：<text>{{details.sample_name}}</text></view>
+      <view class="lh40 filelist" wx:if="{{details.standard_name != ''}}">标准名称：<text>{{details.standard_name}}</text></view>
+      <view class="lh40 filelist" wx:if="{{details.param_name != ''}}">参数名称：<text>{{details.param_name}}</text></view>
       <view class="lh40 filelist">详细描述：<text>{{ details.text }}</text></view>
       <view class="lh40" wx:if="{{details.file_path!=''}}">样图：<image class="masterDrawing" @tap="imgPreview({{ details.file_path }})" src="https://img.zhaowoce.com{{details.file_path}}"></image></view>
       <image wx:if="{{details.status==4}}" src="../../images/complete.png" class="status"></image>
