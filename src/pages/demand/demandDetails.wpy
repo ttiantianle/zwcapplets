@@ -260,6 +260,7 @@
 
         };
         data = {
+          demandid:'',
           details: [],  // 需求详情
           reply: [],  // 回复列表
           cart: false,  // 名片列表显示与否
@@ -274,7 +275,18 @@
           showCard: false,
           share:'root',
         };
-
+      onShareAppMessage(res) {
+        var id = this.demandid;
+        var title = this.details.text;
+          return {
+            title: title,
+            imageUrl: '../../images/share.jpg', //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径。支持PNG及JPG。显示图片长宽比是 5:4。
+            path: '/pages/demand/demandDetails?id='+id,
+            success(res) {
+              console.log(res)
+            }
+          }
+        }
         onLoad(option) {
           let tat = this;
           if(option.share){
@@ -289,6 +301,7 @@
             success(res){
             }
           });
+          this.demandid = option.id;
           this.datas(option.id);
           this.cardLists();
           wx.showShareMenu({

@@ -29,25 +29,24 @@ export default class extends wepy.app {
       'pages/user',
       'pages/demand',
       'pages/shop',
-
       // 'pages/card/addCard',     //添加名片
-      'pages/shop/shopDetail', //机构详情
-      'pages/shop/shopPicture',//机构相册
-      'pages/shop/shopDevice', //仪器设备
-      'pages/demand/demandDetails',
+      // 'pages/shop/shopDetail', //机构详情
+      // 'pages/shop/shopPicture',//机构相册
+      // 'pages/shop/shopDevice', //仪器设备
+      // 'pages/demand/demandDetails',
     ],
-    // subpackages: [
-    //   {
-    //     "root": "pages/shop",
-    //     "name":"shop",
-    //     "pages": ["shopDetail", 'shopDevice']
-    //   },
-    //   {
-    //     "root": "pages/demand",
-    //     "name":"demand",
-    //     "pages": ["demandDetails"]
-    //   },
-    // ],
+    subPackages: [
+      {
+        "root": "pages/shop",
+        "name":"shop",
+        "pages": ["shopDetail", 'shopDevice']
+      },
+      {
+        "root": "pages/demand",
+        "name":"demand",
+        "pages": ["demandDetails"]
+      },
+    ],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#000',

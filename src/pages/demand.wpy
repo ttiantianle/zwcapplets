@@ -129,10 +129,11 @@
       share:'root',//分享记录
     };
     onShareAppMessage(res) {
+      let share=wepy.$instance.globalData.phoneNumber?wepy.$instance.globalData.phoneNumber:'root';
       return {
-        title: '需求对接',
-        imageUrl: '../images/share.jpg', //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径。支持PNG及JPG。显示图片长宽比是 5:4。
-        path: '/pages/demand',
+        title: '检测快对接-需求对接',
+        // imageUrl: '../images/share.jpg', //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径。支持PNG及JPG。显示图片长宽比是 5:4。
+        path: '/pages/demand?share='+share,
         success(res) {
           console.log(res)
         }

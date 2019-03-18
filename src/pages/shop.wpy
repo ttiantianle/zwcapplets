@@ -139,10 +139,11 @@
       share:'root',
     };
     onShareAppMessage(res) {
+      let share=wepy.$instance.globalData.phoneNumber?wepy.$instance.globalData.phoneNumber:'root';
       return {
-        title: '检测机构',
-        imageUrl: '../images/share.jpg', //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径。支持PNG及JPG。显示图片长宽比是 5:4。
-        path: '/pages/index',
+        title: '检测快对接-检测机构',
+        // imageUrl: '../images/share.jpg', //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径。支持PNG及JPG。显示图片长宽比是 5:4。
+        path: '/pages/index?share='+share,
         success(res) {
           console.log(res)
         }
