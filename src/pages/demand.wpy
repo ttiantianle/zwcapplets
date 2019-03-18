@@ -96,6 +96,11 @@
         <view class="lh40 filelist" wx:if="{{item.standard_name != ''}}">标准名称：<text >{{item.standard_name}}</text></view>
         <view class="lh40 filelist" wx:if="{{item.param_name !=''}}">参数名称：<text >{{item.param_name}}</text></view>
         <view class="lh40 filelist">详细描述：<text>{{ item.text }}</text></view>
+        <view class="lh40 filelist fr" >
+          <text wx:if="{{ item.page_view <99 }}" >浏览量：{{ item.page_view }}</text>
+          <text wx:else>浏览量：99+</text>
+        </view>
+        <view style="clear: both;"></view>
         <image wx:if="{{item.status==4}}" src="/images/complete.png"></image>
         <image wx:if="{{item.status==3}}" src="/images/overdue.png"></image>
       </view>

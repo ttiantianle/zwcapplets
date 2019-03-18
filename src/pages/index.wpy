@@ -91,7 +91,7 @@
 <template>
   <view>
     <view>
-      <image src="../images/default.png" class="homeImg"></image>
+      <image src="../images/default.jpg" class="homeImg"></image>
     </view>
     <field :activeField.sync="currentField"></field>
     <view class="newDemand">
