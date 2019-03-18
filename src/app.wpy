@@ -36,6 +36,18 @@ export default class extends wepy.app {
       'pages/shop/shopDevice', //仪器设备
       'pages/demand/demandDetails',
     ],
+    // subpackages: [
+    //   {
+    //     "root": "pages/shop",
+    //     "name":"shop",
+    //     "pages": ["shopDetail", 'shopDevice']
+    //   },
+    //   {
+    //     "root": "pages/demand",
+    //     "name":"demand",
+    //     "pages": ["demandDetails"]
+    //   },
+    // ],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#000',
@@ -84,7 +96,6 @@ export default class extends wepy.app {
       onReachBottomDistance: 200,
     };
     globalData = {
-      // userInfo: null,
       url: "https://zwcap.zhaowoce.com:4433",
       img: "https://img.zhaowoce.com/",
       Authorization:false,
@@ -92,12 +103,10 @@ export default class extends wepy.app {
       phoneNumber:"",
       shopId:"",
       userId: "",
-
     };
     constructor () {
       super();
       this.use('requestfix')//修复小程序请求并发问题
-      // this.use('promisify');//使用wepy.xxx的方式请求小程序原生API都将Promise化
     }
 
     onLaunch() {
@@ -112,8 +121,6 @@ export default class extends wepy.app {
               content: '新版本已经准备好，是否重启应用？',
               success(res) {
                 if (res.confirm) {
-                  // console.log(133456);
-                  // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
                   updateManager.applyUpdate()
                 }
               }

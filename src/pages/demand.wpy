@@ -128,6 +128,16 @@
       pageNum: 1,
       share:'root',//分享记录
     };
+    onShareAppMessage(res) {
+      return {
+        title: '需求对接',
+        imageUrl: '../images/share.jpg', //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径。支持PNG及JPG。显示图片长宽比是 5:4。
+        path: '/pages/demand',
+        success(res) {
+          console.log(res)
+        }
+      }
+    }
     onLoad(para){
       let tat = this;
       if(para.share){
