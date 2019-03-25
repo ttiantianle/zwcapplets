@@ -143,6 +143,7 @@
       let tat = this;
       if(para.share){
         this.share = para.share;
+        wx.setStorageSync('share', para.share);
       }
       wepy.request({
         url:wepy.$instance.globalData.url + "/wxdata/xcxsharelog",

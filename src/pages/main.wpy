@@ -6,7 +6,6 @@
     <image src="/images/login.jpg" style="width: 100%">
     </image>
     <view style="margin:20rpx 30rpx 0rpx;color:gray;">授权之后，您可以体验当前小程序的所有功能。</view>
-    <!--<button open-type="getUserInfo"></button>-->
     <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" type="primary" style="margin: 30rpx">
      微信手机授权
     </button>
@@ -24,20 +23,11 @@
       next:false,
       share:'root',
     };
-    // onShareAppMessage(res) {
-    //   return {
-    //     title: '',
-    //     imageUrl: '../images/share.jpg', //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径。支持PNG及JPG。显示图片长宽比是 5:4。
-    //     path: '/pages/main',
-    //     success(res) {
-    //       console.log(res)
-    //     }
-    //   }
-    // }
     onLoad(para) {
       let tat = this;
       if(para){
         this.share = para.share;
+        wx.setStorageSync('share', para.share);
       }
       wepy.request({
         url:wepy.$instance.globalData.url + "/wxdata/xcxsharelog",
@@ -58,6 +48,7 @@
             url:"./index"
           })
         }else{
+          let from_user = wx.getStorageSync('share')?wx.getStorageSync('share'):'root';
           //用户允许授权
           wx.showLoading();
           //1. 调用登录接口获取临时登录code
@@ -70,6 +61,7 @@
                     'js_code':res.code,
                     'iv':e.detail.iv,
                     'encryptedData': e.detail.encryptedData,
+                    'from_user':from_user,
                   },
                   success(re){
                     let dat = Utils.formatJson(re.data);
