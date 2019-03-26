@@ -25,7 +25,7 @@
     };
     onLoad(para) {
       let tat = this;
-      if(para){
+      if(para.share){
         this.share = para.share;
         wx.setStorageSync('share', para.share);
       }
